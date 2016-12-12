@@ -1,0 +1,35 @@
+<div ng-controller="scratcheCtrl as vm">
+
+  <md-content layout-gt-xs="column" layout-padding>
+    <div flex layout="column">
+      <md-input-container>
+      <label>Scratch here</label>
+      <input ng-model="vm.scratch">
+      </md-input-container>
+      <md-button ng-click="vm.log()" class="md-primary">Store</md-button>
+    </div>
+  </md-content>
+
+    <md-content class="md-padding" layout-xs="column" layout="row">
+    <div flex layout="column">
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Card with image</span>
+            <span class="md-subhead"></span>
+            Coucou this is the content of the card lorem ipsum patati patata
+          </md-card-title-text>
+        </md-card-title>
+      </md-card>
+      <md-card>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">Card with image</span>
+            <span class="md-subhead"></span>
+            Coucou this is the content
+          </md-card-title-text>
+        </md-card-title>
+      </md-card>
+    </div>
+    </md-content>
+</div>
