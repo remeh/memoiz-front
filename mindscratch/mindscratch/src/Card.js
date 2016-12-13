@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Card.css';
 
 class Card extends Component {
   componentDidMount() {};
@@ -9,8 +10,8 @@ class Card extends Component {
 
   render() {
     return (
-      <div onClick={this.handleClick}>
-        Content of the card {this.props.text}
+      <div className="card">
+        {this.props.text}
       </div>
     );
   }
