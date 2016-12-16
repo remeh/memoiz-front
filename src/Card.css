@@ -11,3 +11,12 @@
 .large-text {
   font-size: 1.5em;
 }
+
+.dragged {
+  border-style: dashed;
+}
+
+.dragged-over {
+  background-color: #eeeeee;
+  border-style: dotted;
+}

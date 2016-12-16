@@ -2,15 +2,31 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Cards from './Cards.js';
+import randomUuid from './Uuid.js';
 
 class Scratch extends Component {
   constructor(props) {
     super(props);
+
+    var id1 = 'aaa';
+    var id2 = 'bbb';
+
     this.state = {
       scratchValue: "",
-      cards: [ {
+      cards: [
+        {
+          id: id1,
           text: 'Hello',
-       }],
+        },
+        {
+          id: id2,
+          text: 'World',
+        },
+      ],
+      idx: {
+        aaa: 0,
+        bbb: 1,
+      }
     };
   }
 
@@ -29,6 +45,7 @@ class Scratch extends Component {
 
   newCard(text) {
     return {
+      id: randomUuid(),
       text: text,
     }
   }
@@ -46,7 +63,7 @@ class Scratch extends Component {
         <RaisedButton id="scratchButton" onClick={this.scratch} label="Store" fullWidth={true} />
         <hr />
         <div>
-          <Cards cards={this.state.cards} />
+          <Cards cards={this.state.cards} idx={this.state.idx} />
         </div>
       </div>
     )
