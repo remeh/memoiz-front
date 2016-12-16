@@ -16,6 +16,11 @@ class Scratch extends Component {
 
   scratch = () => {
     var d = this.state.scratchValue;
+
+    if (!d.length) {
+      return;
+    }
+
     this.setState({
       scratchValue: '',
     });
