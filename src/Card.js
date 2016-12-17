@@ -8,6 +8,7 @@ class Card extends Component {
 
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       dragged: false,
       draggedOver: false,
@@ -50,13 +51,13 @@ class Card extends Component {
     event.dataTransfer.setData("text/plain", this.props.card_id);
     event.dataTransfer.dropEffect = "copy";
     this.setState({dragged: true});
-    this.props.cardDragStart(event, this.props.card_id);
+    this.props.onDragStart(event, this.props.card_id);
   }
 
   onDragOver = (event) => {
     event.preventDefault();
     this.setState({draggedOver: true});
-    this.props.cardDragOver(event, this.props.card_id);
+    this.props.onDragOver(event, this.props.card_id);
   }
 
   onDragLeave = (event) => {
@@ -67,7 +68,7 @@ class Card extends Component {
   onDragExit = (event) => {
     event.preventDefault();
     this.setState({dragged: false});
-    this.props.cardDragEnd(event, this.props.card_id);
+    this.props.onDragEnd(event, this.props.card_id);
   }
 
   onDragEnd = (event) => {
@@ -77,7 +78,7 @@ class Card extends Component {
   onDrop = (event) => {
     event.preventDefault();
     this.reset();
-    this.props.cardDrop(event, this.props.card_id);
+    this.props.onDrop(event, this.props.card_id);
   }
 
   // ----------------------
