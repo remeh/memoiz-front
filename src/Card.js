@@ -73,6 +73,8 @@ class Card extends Component {
 
   onDragEnd = (event) => {
     event.preventDefault();
+    this.setState({dragged: false});
+    this.props.onDragEnd(event, this.props.card_id);
   }
 
   onDrop = (event) => {
