@@ -43,6 +43,13 @@ class Card extends Component {
     this.setState({draggedOver: false});
   }
 
+  getText = () => {
+    if (this.props.text.length > 140) {
+      return this.props.text.slice(0, 140) + '...';
+    }
+    return this.props.text;
+  }
+
   // Drag'n'drop
   // ----------------------
 
@@ -97,7 +104,7 @@ class Card extends Component {
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
         >
-        {this.props.text}
+        {this.getText()}
       </div>
     );
   }

@@ -3,6 +3,7 @@
   padding: 0.6em;
   min-width: 180px;
   width: 180px;
+  min-height: 150px;
   box-shadow: 1px 1px 4px rgba(230,230,230,50);
   border: 1px solid rgba(200,200,200,50);
   word-wrap: break-word;
@@ -19,4 +20,6 @@
 .dragged-over {
   background-color: #eeeeee;
   border-style: dotted;
+  border: 1px solid #999999;
+  transition: background-color 1s;
 }

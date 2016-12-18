@@ -52,12 +52,16 @@ class Scratch extends Component {
     // ----------------------
 
     var cards = this.state.cards.slice();
-    var l = cards.push(card) - 1;
+    cards.unshift(card);
 
     var idx = Object.assign({}, this.state.idx);
-    idx[card.id] = l;
+    for (var k in idx) { // offset every existing indexes.
+      if (idx[k] !== undefined) {
+        idx[k] += 1;
+      }
+    }
 
-    // TODO(remy): backend call
+    idx[card.id] = 0; // new entry at first position
 
     this.setState({
       scratchValue: "",
@@ -116,12 +120,17 @@ class Scratch extends Component {
     });
   };
 
+  // ----------------------
+
   render() {
     return (
       <div>
-        <TextField id="scratchInput" onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
-        <RaisedButton id="scratchButton" onClick={this.scratch} label="Store" fullWidth={true} />
-        <hr />
+        <div className="scratcher-container">
+          <div className="scratcher">
+            <TextField id="scratcher-input" onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
+            <RaisedButton id="scratcher-button" onClick={this.scratch} label="Store" fullWidth={true} />
+          </div>
+        </div>
         <div>
           <div className="card-container" onClick={this.handleClick}>
             {this.state.cards.map(

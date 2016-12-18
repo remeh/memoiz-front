@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import './App.css';
+
 import Scratch from './Scratch.js';
+import './App.css';
 
 injectTapEventPlugin();
 
@@ -11,8 +14,11 @@ class App extends Component {
     return (
       <MuiThemeProvider>
         <div className="app">
+          <AppBar
+            title="Scratche"
+            iconClassNameRight="muidocs-icon-navigation-expand-more"
+          />
           <div className="app-container">
-            <h1>MindScratch</h1>
             <Scratch />
           </div>
         </div>
