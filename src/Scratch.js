@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Cards from './Cards.js';
+
 import Card from './Card.js';
 import randomUuid from './Uuid.js';
+
+import './Scratch.css';
 
 class Scratch extends Component {
   constructor(props) {
     super(props);
+
+    // TODO(remy): backend call to get recent cards.
 
     var cards = [];
     var idx = {};
@@ -18,6 +22,10 @@ class Scratch extends Component {
     cards.push(this.newCard('A'));
     cards.push(this.newCard('B'));
     cards.push(this.newCard('C'));
+
+    for (var j = 0; j < 10; j++) {
+      cards.push(this.newCard('Card ' + j));
+    }
 
     for (var i = 0; i < cards.length; i++) {
       idx[cards[i].id] = i;
@@ -48,6 +56,8 @@ class Scratch extends Component {
 
     var idx = Object.assign({}, this.state.idx);
     idx[card.id] = l;
+
+    // TODO(remy): backend call
 
     this.setState({
       scratchValue: "",
@@ -113,7 +123,7 @@ class Scratch extends Component {
         <RaisedButton id="scratchButton" onClick={this.scratch} label="Store" fullWidth={true} />
         <hr />
         <div>
-          <Cards>
+          <div className="card-container" onClick={this.handleClick}>
             {this.state.cards.map(
               (card) => <Card
                   key={card.id}
@@ -126,7 +136,7 @@ class Scratch extends Component {
                   onDrop={this.cardDrop}
                 />
             )}
-          </Cards>
+          </div>
         </div>
       </div>
     )

@@ -1,8 +1,8 @@
 .card {
-  margin: 0.5em;
-  padding: 1em;
-  min-width: 300px;
-  width: 300px;
+  margin: 4px;
+  padding: 0.6em;
+  min-width: 180px;
+  width: 180px;
   box-shadow: 1px 1px 4px rgba(230,230,230,50);
   border: 1px solid rgba(200,200,200,50);
   word-wrap: break-word;

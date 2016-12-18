@@ -8,7 +8,6 @@ class Card extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       dragged: false,
       draggedOver: false,

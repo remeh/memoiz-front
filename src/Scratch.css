@@ -1,8 +1,7 @@
 .card-container {
-  padding: 1em;
+  padding: 2px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
 }
-
