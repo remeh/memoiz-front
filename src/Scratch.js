@@ -4,7 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import Card from './Card.js';
 import randomUuid from './Uuid.js';
-import XHRScratch from './XHRScratch.js';
 
 import './Scratch.css';
 
@@ -12,21 +11,17 @@ class Scratch extends Component {
   constructor(props) {
     super(props);
 
-    let cards = [];
-    let idx = {};
-
-    let v = new XHRScratch().fetchCards();
-    v.map(value => cards.push(this.newCard(value)));
-
-    for (let i = 0; i < cards.length; i++) {
-      idx[cards[i].id] = i;
+    this.state =  {
+      scratchValue: "",
+      cards: [],
+      idx: {},
     }
 
-    this.state = {
-      scratchValue: "",
-      cards: cards,
-      idx: idx,
-    };
+    this.fetchCards();
+  }
+
+  // onReceiveCards is called
+  onReceiveCards = (texts) => {
   }
 
   // scratch adds a new card entry in the cards.
@@ -52,7 +47,7 @@ class Scratch extends Component {
       }
     }
 
-    idx[card.id] = 0; // new entry at first position
+    idx[card.uid] = 0; // new entry at first position
 
     this.setState({
       scratchValue: "",
@@ -64,7 +59,7 @@ class Scratch extends Component {
   // newCard generates a card object.
   newCard(text) {
     return {
-      id: randomUuid(),
+      uid: randomUuid(),
       text: text,
     }
   }
@@ -74,6 +69,38 @@ class Scratch extends Component {
   onScratchChange = (event) => {
     this.setState({
       scratchValue: event.target.value
+    });
+  }
+
+  // XHR
+  // ----------------------
+
+  fetchCards = () => {
+    // XXX(remy):
+    fetch('http://localhost:8080/api/1.0/cards?u=12341234-1234-1234-1234-123412341234')
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((json) => {
+            let cards = [];
+            let idx = {};
+
+            for (let i = 0; i < json.length; i++) {
+              cards.push(json[i]);
+            }
+
+            for (let i = 0; i < cards.length; i++) {
+              idx[cards[i].uid] = i;
+            }
+
+            console.log(cards);
+
+            this.setState({
+              scratchValue: "",
+              cards: cards,
+              idx: idx,
+            });
+          });
+        }
     });
   }
 
@@ -129,8 +156,8 @@ class Scratch extends Component {
           <div className="card-container" onClick={this.handleClick}>
             {this.state.cards.map(
               (card) => <Card
-                  key={card.id}
-                  card_id={card.id}
+                  key={card.uid}
+                  card_id={card.uid}
                   text={card.text}
                   onDragStart={this.cardDragStart}
                   onDragOver={this.cardDragOver}
