@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import Card from './Card.js';
 import randomUuid from './Uuid.js';
+import XHRScratch from './XHRScratch.js';
 
 import './Scratch.css';
 
@@ -11,23 +12,13 @@ class Scratch extends Component {
   constructor(props) {
     super(props);
 
-    // TODO(remy): backend call to get recent cards.
+    let cards = [];
+    let idx = {};
 
-    var cards = [];
-    var idx = {};
+    let v = new XHRScratch().fetchCards();
+    v.map(value => cards.push(this.newCard(value)));
 
-    cards.push(this.newCard('Hello'));
-    cards.push(this.newCard('World'));
-    cards.push(this.newCard('!'));
-    cards.push(this.newCard('A'));
-    cards.push(this.newCard('B'));
-    cards.push(this.newCard('C'));
-
-    for (var j = 0; j < 10; j++) {
-      cards.push(this.newCard('Card ' + j));
-    }
-
-    for (var i = 0; i < cards.length; i++) {
+    for (let i = 0; i < cards.length; i++) {
       idx[cards[i].id] = i;
     }
 
@@ -85,6 +76,9 @@ class Scratch extends Component {
       scratchValue: event.target.value
     });
   }
+
+  // Drag'n'drop.
+  // ----------------------
 
   cardDragStart = (event) => {};
   cardDragOver = (event) => {};

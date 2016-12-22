@@ -18,8 +18,8 @@
 }
 
 .dragged-over {
-  background-color: #eeeeee;
+  background-color: #dddddd;
   border-style: dotted;
   border: 1px solid #999999;
-  transition: background-color 1s;
+  transition: background-color 0.750s;
 }
