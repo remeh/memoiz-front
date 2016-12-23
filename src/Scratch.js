@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import Card from './Card.js';
+import XHRScratch from './xhr/Scratch.js';
 import randomUuid from './Uuid.js';
 
 import './Scratch.css';
@@ -76,31 +77,25 @@ class Scratch extends Component {
   // ----------------------
 
   fetchCards = () => {
-    // XXX(remy):
-    fetch('http://localhost:8080/api/1.0/cards?u=12341234-1234-1234-1234-123412341234')
-      .then((response) => {
-        if (response.ok) {
-          response.json().then((json) => {
-            let cards = [];
-            let idx = {};
+    XHRScratch.getCards('12341234-1234-1234-1234-123412341234').then((json) => {
+      let cards = [];
+      let idx = {};
 
-            for (let i = 0; i < json.length; i++) {
-              cards.push(json[i]);
-            }
+      for (let i = 0; i < json.length; i++) {
+        cards.push(json[i]);
+      }
 
-            for (let i = 0; i < cards.length; i++) {
-              idx[cards[i].uid] = i;
-            }
+      for (let i = 0; i < cards.length; i++) {
+        idx[cards[i].uid] = i;
+      }
 
-            console.log(cards);
+      console.log(cards);
 
-            this.setState({
-              scratchValue: "",
-              cards: cards,
-              idx: idx,
-            });
-          });
-        }
+      this.setState({
+        scratchValue: "",
+        cards: cards,
+        idx: idx,
+      });
     });
   }
 
