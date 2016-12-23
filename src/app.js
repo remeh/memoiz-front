@@ -4,8 +4,8 @@ import AppBar from 'material-ui/AppBar';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import Scratch from './Scratch.js';
-import './App.css';
+import Scratch from './scratch.js';
+import './app.css';
 
 injectTapEventPlugin();
 

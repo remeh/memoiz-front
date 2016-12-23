@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import Card from './Card.js';
-import XHRScratch from './xhr/Scratch.js';
-import randomUuid from './Uuid.js';
+import Card from './card.js';
+import XHRScratch from './xhr/scratch.js';
+import randomUuid from './uuid.js';
 
-import './Scratch.css';
+import './scratch.css';
 
 class Scratch extends Component {
   constructor(props) {
