@@ -26,7 +26,7 @@ class Scratch extends Component {
   }
 
   // scratch adds a new card entry in the cards.
-  scratch = () => {
+  addCard = () => {
     var d = this.state.scratchValue;
 
     if (!d.length) {
@@ -49,6 +49,17 @@ class Scratch extends Component {
     }
 
     idx[card.uid] = 0; // new entry at first position
+
+    // backend hit to add the card
+    // ----------------------
+
+    XHRScratch.postCard('12341234-1234-1234-1234-123412341234', d)
+      .then((json) => {
+        console.log(json);
+    });
+
+    // re-render the view
+    // ----------------------
 
     this.setState({
       scratchValue: "",
@@ -144,7 +155,7 @@ class Scratch extends Component {
         <div className="scratcher-container">
           <div className="scratcher">
             <TextField id="scratcher-input" onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
-            <RaisedButton id="scratcher-button" onClick={this.scratch} label="Store" fullWidth={true} />
+            <RaisedButton id="scratcher-button" onClick={this.addCard} label="Store" fullWidth={true} />
           </div>
         </div>
         <div>

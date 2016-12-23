@@ -1,17 +1,20 @@
+import XHR from './xhr.js';
+
 class XHRScratch {
   static getCards(uid) {
-    let q = new Promise(
-      (resolve, reject) => {
-        fetch('http://localhost:8080/api/1.0/cards?u='+uid).then((response) => {
-          if (response.ok) {
-            response.json().then(resolve);
-          } else {
-            reject();
-          }
-      }, reject);
-    });
-    return q;
-  } 
+    return XHR.getJson(
+      'http://localhost:8080/api/1.0/cards', // XXX(remy): fix url
+      {u: uid}
+    );
+  }
+
+  static postCard(uid, text) {
+    return XHR.postJson(
+      'http://localhost:8080/api/1.0/cards', // XXX(remy): fix url
+      {u: uid},
+      {text: text},
+    );
+  }
 }
 
 export default XHRScratch;
