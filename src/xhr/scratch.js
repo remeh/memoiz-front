@@ -15,6 +15,14 @@ class XHRScratch {
       {text: text},
     );
   }
+
+  static switchCard(uid, left, right) {
+    return XHR.postJson(
+      'http://localhost:8080/api/1.0/cards/switch', // XXX(remy): fix url
+      {u: uid},
+      {l: left, r: right},
+    );
+  }
 }
 
 export default XHRScratch;

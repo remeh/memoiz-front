@@ -132,6 +132,13 @@ class Scratch extends Component {
       return;
     }
 
+    // backend call
+
+    // TODO(remy): handle error
+    XHRScratch.switchCard('12341234-1234-1234-1234-123412341234', src_id, dst_id);
+
+    // visually move the card
+
     var idx = Object.assign({}, this.state.idx);
     var cards = this.state.cards.slice();
 
