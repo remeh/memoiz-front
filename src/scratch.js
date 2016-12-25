@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
 
 import Card from './card.js';
 import XHRScratch from './xhr/scratch.js';
@@ -16,6 +17,7 @@ class Scratch extends Component {
       scratchValue: "",
       cards: [],
       idx: {},
+      scratchDialogOpen: false,
     }
 
     this.fetchCards();
@@ -33,38 +35,40 @@ class Scratch extends Component {
       return;
     }
 
-    var card = this.newCard(d);
-
-    // add the scratch
+    // add a loader
     // ----------------------
 
-    var cards = this.state.cards.slice();
-    cards.unshift(card);
-
-    var idx = Object.assign({}, this.state.idx);
-    for (var k in idx) { // offset every existing indexes.
-      if (idx[k] !== undefined) {
-        idx[k] += 1;
-      }
-    }
-
-    idx[card.uid] = 0; // new entry at first position
+    // TODO(remy): add a loader here.
 
     // backend hit to add the card
     // ----------------------
 
     XHRScratch.postCard('12341234-1234-1234-1234-123412341234', d)
-      .then((json) => {
-        console.log(json);
-    });
+      .then((card) => {
+      // add the scratch
+      // ----------------------
 
-    // re-render the view
-    // ----------------------
+      var cards = this.state.cards.slice();
+      cards.unshift(card);
 
-    this.setState({
-      scratchValue: "",
-      cards: cards,
-      idx: idx,
+      var idx = Object.assign({}, this.state.idx);
+      for (var k in idx) { // offset every existing indexes.
+        if (idx[k] !== undefined) {
+          idx[k] += 1;
+        }
+      }
+
+      idx[card.uid] = 0; // new entry at first position
+
+      // re-render the view with the new card
+      // ----------------------
+
+      this.setState({
+        scratchValue: "",
+        cards: cards,
+        idx: idx,
+        scratchDialogOpen: false,
+      });
     });
   }
 
@@ -129,6 +133,8 @@ class Scratch extends Component {
 
     if (!left || !right) {
       console.warn('undefined left or right.');
+      console.log('left:', left);
+      console.log('right:', right);
       return;
     }
 
@@ -154,15 +160,39 @@ class Scratch extends Component {
     });
   };
 
+  // Scratche dialog
+  // ----------------------
+
+  onScratchDialogClose = () => {
+    this.setState({scratchDialogOpen: false});
+  }
+
+  onScratchDialogOpen = () => {
+    this.setState({scratchDialogOpen: true});
+    setTimeout(() => {
+      document.querySelector("#scratcher-input-modal").focus();
+    }, 50);
+  }
+
   // ----------------------
 
   render() {
     return (
       <div>
+        <Dialog
+          title="Scratch something"
+          modal={false}
+          open={this.state.scratchDialogOpen}
+          autoScrollBodyContent={true}
+          onRequestClose={this.onScratchDialogClose}
+        >
+          <TextField className="scratcher-input" id="scratcher-input-modal" onClick={this.onScratchDialogOpen} onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
+          <RaisedButton className="scratcher-button" onClick={this.addCard} label="Store" fullWidth={true} />
+        </Dialog>
         <div className="scratcher-container">
           <div className="scratcher">
-            <TextField id="scratcher-input" onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
-            <RaisedButton id="scratcher-button" onClick={this.addCard} label="Store" fullWidth={true} />
+            <TextField className="scratcher-input" id="scratcher-input-page" onClick={this.onScratchDialogOpen} onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
+            <RaisedButton className="scratcher-button" onClick={this.addCard} label="Store" fullWidth={true} />
           </div>
         </div>
         <div>
