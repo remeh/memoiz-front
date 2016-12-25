@@ -89,6 +89,11 @@ class Card extends Component {
     this.props.onDrop(event, this.props.card_id);
   }
 
+  onClick = (event) => {
+    event.preventDefault();
+    this.props.onClick(event, this.props.card_id, this.props.text);
+  }
+
   // ----------------------
 
   render() {
@@ -103,6 +108,7 @@ class Card extends Component {
         onDragExit={this.onDragExit}
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
+        onClick={this.onClick}
         >
         {this.getText()}
       </div>

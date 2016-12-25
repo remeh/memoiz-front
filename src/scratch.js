@@ -13,6 +13,8 @@ class Scratch extends Component {
   constructor(props) {
     super(props);
 
+    this.openedCardId = null; // id of the currently opened card
+
     this.state =  {
       scratchValue: "",
       cards: [],
@@ -23,27 +25,34 @@ class Scratch extends Component {
     this.fetchCards();
   }
 
-  // onReceiveCards is called
-  onReceiveCards = (texts) => {
+  putChanges = (id, text) => {
+    XHRScratch.putCard('12341234-1234-1234-1234-123412341234', id, text)
+      .then((card) => {
+        // TODO(remy): loader in the card?
+
+        // edit the scratch
+        // ----------------------
+
+        var cards = this.state.cards.slice();
+
+        for (let i = 0; i < cards.length; i++) {
+          if (cards[i].uid === id) {
+            cards[i].text = text;
+            break;
+          }
+        }
+
+        this.setState({
+          cards: cards,
+          scratchValue: '',
+        });
+
+        this.onScratchDialogClose();
+    });
   }
 
-  // scratch adds a new card entry in the cards.
-  addCard = () => {
-    var d = this.state.scratchValue;
-
-    if (!d.length) {
-      return;
-    }
-
-    // add a loader
-    // ----------------------
-
-    // TODO(remy): add a loader here.
-
-    // backend hit to add the card
-    // ----------------------
-
-    XHRScratch.postCard('12341234-1234-1234-1234-123412341234', d)
+  postNewCard = (text) => {
+    XHRScratch.postCard('12341234-1234-1234-1234-123412341234', text)
       .then((card) => {
       // add the scratch
       // ----------------------
@@ -70,6 +79,28 @@ class Scratch extends Component {
         scratchDialogOpen: false,
       });
     });
+  }
+
+  // scratch adds a new card entry in the cards
+  // or sends modification of the current one.
+  submit = () => {
+    var d = this.state.scratchValue;
+
+    if (!d.length) {
+      return;
+    }
+
+    // TODO(remy): add a loader here.
+
+    // backend hit to add the card
+    // ----------------------
+
+    if (this.openedCardId) {
+      this.putChanges(this.openedCardId, d);
+    } else {
+      this.postNewCard(d);
+    }
+    this.openedCardId = null;
   }
 
   // newCard generates a card object.
@@ -104,8 +135,6 @@ class Scratch extends Component {
         idx[cards[i].uid] = i;
       }
 
-      console.log(cards);
-
       this.setState({
         scratchValue: "",
         cards: cards,
@@ -114,8 +143,14 @@ class Scratch extends Component {
     });
   }
 
-  // Drag'n'drop.
+  // Card actions
   // ----------------------
+
+  cardClick = (event, id, text) => {
+    this.onScratchDialogOpen();
+    this.openedCardId = id;
+    this.setState({scratchValue: text});
+  }
 
   cardDragStart = (event) => {};
   cardDragOver = (event) => {};
@@ -133,8 +168,8 @@ class Scratch extends Component {
 
     if (!left || !right) {
       console.warn('undefined left or right.');
-      console.log('left:', left);
-      console.log('right:', right);
+      console.warn('left:', left);
+      console.warn('right:', right);
       return;
     }
 
@@ -164,6 +199,13 @@ class Scratch extends Component {
   // ----------------------
 
   onScratchDialogClose = () => {
+    if (this.openedCardId) {
+      this.openedCardId = null;
+      this.setState({
+        scratchValue: '',
+      });
+    }
+
     this.setState({scratchDialogOpen: false});
   }
 
@@ -187,12 +229,12 @@ class Scratch extends Component {
           onRequestClose={this.onScratchDialogClose}
         >
           <TextField className="scratcher-input" id="scratcher-input-modal" onClick={this.onScratchDialogOpen} onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
-          <RaisedButton className="scratcher-button" onClick={this.addCard} label="Store" fullWidth={true} />
+          <RaisedButton className="scratcher-button" onClick={this.submit} label="Store" fullWidth={true} />
         </Dialog>
         <div className="scratcher-container">
           <div className="scratcher">
             <TextField className="scratcher-input" id="scratcher-input-page" onClick={this.onScratchDialogOpen} onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
-            <RaisedButton className="scratcher-button" onClick={this.addCard} label="Store" fullWidth={true} />
+            <RaisedButton className="scratcher-button" onClick={this.submit} label="Store" fullWidth={true} />
           </div>
         </div>
         <div>
@@ -207,6 +249,7 @@ class Scratch extends Component {
                   onDragEnd={this.cardDragEnd}
                   onDragLeave={this.cardDragLeave}
                   onDrop={this.cardDrop}
+                  onClick={this.cardClick}
                 />
             )}
           </div>

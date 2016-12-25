@@ -16,6 +16,14 @@ class XHRScratch {
     );
   }
 
+  static putCard(uid, cardId, text) {
+    return XHR.postJson(
+      'http://localhost:8080/api/1.0/cards', // XXX(remy): fix url
+      {u: uid},
+      {card_uid: cardId, text: text},
+    );
+  }
+
   static switchCard(uid, left, right) {
     return XHR.postJson(
       'http://localhost:8080/api/1.0/cards/switch', // XXX(remy): fix url

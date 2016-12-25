@@ -7,10 +7,6 @@ class XHR {
     return XHR.requestJson(url, 'POST', params, body);
   }
 
-  static putJson(url, params, body) {
-    return XHR.requestJson(url, 'PUT', params, body);
-  }
-
   static deleteJson(url, params, body) {
     return XHR.requestJson(url, 'DELETE', params, body);
   }
