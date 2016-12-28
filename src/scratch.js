@@ -244,6 +244,7 @@ class Scratch extends Component {
                   key={card.uid}
                   card_id={card.uid}
                   text={card.text}
+                  category={card.category}
                   onDragStart={this.cardDragStart}
                   onDragOver={this.cardDragOver}
                   onDragEnd={this.cardDragEnd}

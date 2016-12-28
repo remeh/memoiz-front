@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import Chip from 'material-ui/Chip';
+
 import './card.css';
 
 class Card extends Component {
@@ -11,6 +13,7 @@ class Card extends Component {
     this.state = {
       dragged: false,
       draggedOver: false,
+      category: props.category,
     }
   }
 
@@ -111,6 +114,11 @@ class Card extends Component {
         onClick={this.onClick}
         >
         {this.getText()}
+        {this.state.category !== 'Unknown' &&
+          <Chip>
+            {this.state.category}
+          </Chip>
+        }
       </div>
     );
   }

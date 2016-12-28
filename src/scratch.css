@@ -12,7 +12,16 @@
   margin-top: 1em;
 }
 
-.scratcher {
-  width: 500px;
-  padding-bottom: 3em;
+@media screen and (max-width: 440px) {
+  .scratcher {
+    width: 90%;
+    padding-bottom: 3em;
+  }
+}
+
+@media screen and (min-width:  440px) {
+  .scratcher {
+    width: 450px;
+    padding-bottom: 3em;
+  }
 }

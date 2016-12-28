@@ -23,3 +23,7 @@
   border: 1px solid #999999;
   transition: background-color 0.750s;
 }
+
+.category {
+  font-size: 0.5em !important;
+}
