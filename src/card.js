@@ -1,7 +1,19 @@
 import React, { Component, PropTypes } from 'react';
+import {grey900} from 'material-ui/styles/colors';
 import Chip from 'material-ui/Chip';
+import IconButton from 'material-ui/IconButton';
 
 import './card.css';
+
+let styles = {
+  chipStyle: {
+    fontSize: '0.6em',
+    color: grey900,
+  },
+  iconStyle: {
+    color: 'rgba(75,75,75,1)',
+  },
+};
 
 class Card extends Component {
   MaximumForLargeText = 80;
@@ -58,7 +70,6 @@ class Card extends Component {
 
   onDragStart = (event) => {
     event.dataTransfer.setData("text/plain", this.props.card_id);
-    event.dataTransfer.dropEffect = "copy";
     this.setState({dragged: true});
     this.props.onDragStart(event, this.props.card_id);
   }
@@ -97,6 +108,11 @@ class Card extends Component {
     this.props.onClick(event, this.props.card_id, this.props.text);
   }
 
+  onArchive = (event) => {
+    event.preventDefault()
+    this.props.onArchive(event, this.props.card_id);
+  }
+
   // ----------------------
 
   render() {
@@ -111,14 +127,18 @@ class Card extends Component {
         onDragExit={this.onDragExit}
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
-        onClick={this.onClick}
         >
-        {this.getText()}
-        {this.state.category !== 'Unknown' &&
-          <Chip>
-            {this.state.category}
-          </Chip>
-        }
+        <div className="content" onClick={this.onClick}>
+          {this.getText()}
+          {this.state.category !== 'Unknown' &&
+            <Chip labelStyle={styles.chipStyle}>
+              {this.state.category}
+            </Chip>
+          }
+        </div>
+        <div className="actions">
+          <IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>
+        </div>
       </div>
     );
   }

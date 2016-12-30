@@ -195,6 +195,13 @@ class Scratch extends Component {
     });
   };
 
+  // cards actions
+  // ----------------------
+
+  archiveCard = (event, card_id) => {
+    console.log('archive:', card_id);
+  }
+
   // Scratche dialog
   // ----------------------
 
@@ -229,12 +236,12 @@ class Scratch extends Component {
           onRequestClose={this.onScratchDialogClose}
         >
           <TextField className="scratcher-input" id="scratcher-input-modal" onClick={this.onScratchDialogOpen} onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
-          <RaisedButton className="scratcher-button" onClick={this.submit} label="Store" fullWidth={true} />
+          <RaisedButton className="scratcher-button" onClick={this.submit} label="Save" fullWidth={true} />
         </Dialog>
         <div className="scratcher-container">
           <div className="scratcher">
             <TextField className="scratcher-input" id="scratcher-input-page" onClick={this.onScratchDialogOpen} onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
-            <RaisedButton className="scratcher-button" onClick={this.submit} label="Store" fullWidth={true} />
+            <RaisedButton className="scratcher-button" onClick={this.submit} label="Save" fullWidth={true} />
           </div>
         </div>
         <div>
@@ -251,6 +258,7 @@ class Scratch extends Component {
                   onDragLeave={this.cardDragLeave}
                   onDrop={this.cardDrop}
                   onClick={this.cardClick}
+                  onArchive={this.archiveCard}
                 />
             )}
           </div>
