@@ -1,12 +1,16 @@
 .card {
+  font-family: 'Open Sans', sans-serif;
   margin: 4px;
   padding: 0.6em;
   min-width: 180px;
   width: 180px;
-  min-height: 150px;
-  box-shadow: 1px 1px 4px rgba(230,230,230,50);
+  min-height: 190px;
+  box-shadow: 2px 2px 6px rgba(230,230,230,50);
   border: 1px solid rgba(200,200,200,50);
   word-wrap: break-word;
+  /* to be able to put the inside as position absolute */
+  position: relative;
+  cursor: pointer;
 }
 
 .large-text {
@@ -15,6 +19,8 @@
 
 .dragged {
   border-style: dashed;
+  box-shadow: 0px 0px 2px rgba(230,230,230,50);
+  opacity: 0.4;
 }
 
 .dragged-over {
@@ -26,4 +32,14 @@
 
 .category {
   font-size: 0.5em !important;
+}
+
+.card .content {
+  height: 100%;
+}
+
+.card .actions {
+  font-size: 0.6em;
+  position: absolute;
+  bottom: 2px;
 }

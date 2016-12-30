@@ -1,5 +1,20 @@
 import React, { Component } from 'react';
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {lightBlue900,
+        lightBlue700,
+        grey400,
+        pinkA200,
+        grey100,
+        grey300,
+        grey500,
+        grey600,
+        grey900,
+        white,
+        fullBlack,
+        cyan500} from 'material-ui/styles/colors';
+
 import AppBar from 'material-ui/AppBar';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -9,10 +24,30 @@ import './app.css';
 
 injectTapEventPlugin();
 
+let scratcheTheme = getMuiTheme({
+  fontFamily: 'Open Sans, sans-serif',
+  palette: {
+    primary1Color: lightBlue900,
+    primary2Color: lightBlue700,
+    primary3Color: grey400,
+    accent1Color: pinkA200,
+    accent2Color: grey100,
+    accent3Color: grey500,
+    textColor: grey900,
+    alternateTextColor: white,
+    canvasColor: white,
+    borderColor: grey300,
+    disabledColor: grey600,
+    pickerHeaderColor: cyan500,
+    clockCircleColor: grey600,
+    shadowColor: fullBlack,
+  },
+});
+
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={scratcheTheme}>
         <div className="app">
           <AppBar
             title="Scratche"
