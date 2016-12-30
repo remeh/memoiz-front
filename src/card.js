@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {grey900} from 'material-ui/styles/colors';
 import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
+import Snackbar from 'material-ui/Snackbar';
 
 import './card.css';
 
@@ -17,6 +18,7 @@ let styles = {
 
 class Card extends Component {
   MaximumForLargeText = 80;
+  AutoHideSnackBar = 5000; // ms
 
   // ----------------------
 
@@ -26,6 +28,10 @@ class Card extends Component {
       dragged: false,
       draggedOver: false,
       category: props.category,
+      snackbar: {
+        open: false,
+        message: '',
+      }
     }
   }
 
@@ -110,7 +116,15 @@ class Card extends Component {
 
   onArchive = (event) => {
     event.preventDefault()
+    this.openSnackbar('This note has been archived');
     this.props.onArchive(event, this.props.card_id);
+  }
+
+  openSnackbar = (message) => {
+    this.setState({snackbar: {
+      open: true,
+      message: message,
+    }});
   }
 
   // ----------------------
@@ -139,6 +153,15 @@ class Card extends Component {
         <div className="actions">
           <IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>
         </div>
+
+        <Snackbar
+          open={this.state.snackbar.open}
+          message={this.state.snackbar.message}
+          action="undo"
+          autoHideDuration={this.AutoHideSnackBar}
+          //onActionTouchTap={this.handleActionTouchTap}
+          //onRequestClose={this.handleRequestClose}
+        />
       </div>
     );
   }

@@ -5,7 +5,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {lightBlue900,
         lightBlue700,
         grey400,
-        pinkA200,
+        lightBlue500,
         grey100,
         grey300,
         grey500,
@@ -27,10 +27,10 @@ injectTapEventPlugin();
 let scratcheTheme = getMuiTheme({
   fontFamily: 'Open Sans, sans-serif',
   palette: {
-    primary1Color: lightBlue900,
-    primary2Color: lightBlue700,
+    primary1Color: lightBlue700,
+    primary2Color: lightBlue900,
     primary3Color: grey400,
-    accent1Color: pinkA200,
+    accent1Color: lightBlue500,
     accent2Color: grey100,
     accent3Color: grey500,
     textColor: grey900,

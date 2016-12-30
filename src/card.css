@@ -27,7 +27,7 @@
   background-color: #dddddd;
   border-style: dotted;
   border: 1px solid #999999;
-  transition: background-color 0.750s;
+  transition: background-color 0.500s;
 }
 
 .category {
