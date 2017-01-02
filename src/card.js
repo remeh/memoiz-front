@@ -75,15 +75,16 @@ class Card extends Component {
   // ----------------------
 
   onDragStart = (event) => {
-    event.dataTransfer.setData("text/plain", this.props.text);
+    event.dataTransfer.setData("text", this.props.text);
     event.dataTransfer.setData("application/id", this.props.card_id);
     event.dataTransfer.dropEffect = "move";
-
     // create a copy rendered hidden
     var img = document.createElement('div');
-    img.innerHTML = this.props.text.slice(0, 140) + '...';
+    var end = '';
+    if (this.props.text.length >= 139) { end = '...'; }
+    img.innerHTML = this.props.text.slice(0, 140) + end;
     img.className = 'card';
-    img.style.cssText = 'top: -250px; position: absolute; max-height: 200px';
+    img.style.cssText = 'background-color: white; top: -250px; position: absolute; max-height: 200px';
     img.id = 'drop-mirror';
     document.querySelector('body').appendChild(img);
     event.dataTransfer.setDragImage(img, -5, -5);
@@ -91,13 +92,12 @@ class Card extends Component {
       let element = document.querySelector('#drop-mirror');
       if (element && element.parentNode) { element.parentNode.removeChild(element); }
     }, 150);
-
     this.setState({dragged: true});
     this.props.onDragStart(event, this.props.card_id);
   }
 
   onDragOver = (event) => {
-    if (event.dataTransfer.getData("application/id") === this.props.card_id) {
+    if (!event.dataTransfer || event.dataTransfer.getData("application/id") === this.props.card_id) {
       return;
     }
     event.preventDefault();
@@ -106,7 +106,7 @@ class Card extends Component {
   }
 
   onDragLeave = (event) => {
-    if (event.dataTransfer.getData("application/id") === this.props.card_id) {
+    if (!event.dataTransfer || event.dataTransfer.getData("application/id") === this.props.card_id) {
       return;
     }
     event.preventDefault();
@@ -114,7 +114,7 @@ class Card extends Component {
   }
 
   onDragExit = (event) => {
-    if (event.dataTransfer.getData("application/id") === this.props.card_id) {
+    if (!event.dataTransfer || event.dataTransfer.getData("application/id") === this.props.card_id) {
       return;
     }
     event.preventDefault();
