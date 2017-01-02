@@ -157,7 +157,7 @@ class Scratch extends Component {
   cardDragEnd = (event) => {};
   cardDragLeave = (event) => {};
   cardDrop = (event, id) => {
-    var src_id = event.dataTransfer.getData("text/plain");
+    var src_id = event.dataTransfer.getData("application/id");
     var dst_id = id;
 
     var left_idx = this.state.idx[src_id];

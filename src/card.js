@@ -75,23 +75,48 @@ class Card extends Component {
   // ----------------------
 
   onDragStart = (event) => {
-    event.dataTransfer.setData("text/plain", this.props.card_id);
+    event.dataTransfer.setData("text/plain", this.props.text);
+    event.dataTransfer.setData("application/id", this.props.card_id);
+    event.dataTransfer.dropEffect = "move";
+
+    // create a copy rendered hidden
+    var img = document.createElement('div');
+    img.innerHTML = this.props.text.slice(0, 140) + '...';
+    img.className = 'card';
+    img.style.cssText = 'top: -250px; position: absolute; max-height: 200px';
+    img.id = 'drop-mirror';
+    document.querySelector('body').appendChild(img);
+    event.dataTransfer.setDragImage(img, -5, -5);
+    setTimeout(() => { // automatically destroy this copy
+      let element = document.querySelector('#drop-mirror');
+      if (element && element.parentNode) { element.parentNode.removeChild(element); }
+    }, 150);
+
     this.setState({dragged: true});
     this.props.onDragStart(event, this.props.card_id);
   }
 
   onDragOver = (event) => {
+    if (event.dataTransfer.getData("application/id") === this.props.card_id) {
+      return;
+    }
     event.preventDefault();
     this.setState({draggedOver: true});
     this.props.onDragOver(event, this.props.card_id);
   }
 
   onDragLeave = (event) => {
+    if (event.dataTransfer.getData("application/id") === this.props.card_id) {
+      return;
+    }
     event.preventDefault();
     this.setState({draggedOver: false});
   }
 
   onDragExit = (event) => {
+    if (event.dataTransfer.getData("application/id") === this.props.card_id) {
+      return;
+    }
     event.preventDefault();
     this.setState({dragged: false});
     this.props.onDragEnd(event, this.props.card_id);

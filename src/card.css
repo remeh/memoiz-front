@@ -34,10 +34,6 @@
   font-size: 0.5em !important;
 }
 
-.card .content {
-  height: 100%;
-}
-
 .card .actions {
   font-size: 0.6em;
   position: absolute;
