@@ -20,6 +20,7 @@ class Card extends Component {
   MaximumForLargeText = 80;
   AutoHideSnackBar = 5000; // ms
 
+  // Lifecycle
   // ----------------------
 
   constructor(props) {
@@ -37,6 +38,13 @@ class Card extends Component {
 
   componentDidMount() {};
   componentWillUnmount() {};
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      category: nextProps.category,
+    })
+  }
+
+  // ----------------------
 
   handleClick = () => {
   }
@@ -78,7 +86,10 @@ class Card extends Component {
     event.dataTransfer.setData("text", this.props.text);
     event.dataTransfer.setData("application/id", this.props.card_id);
     event.dataTransfer.dropEffect = "move";
+
     // create a copy rendered hidden
+    // ----------------------
+
     var img = document.createElement('div');
     var end = '';
     if (this.props.text.length >= 139) { end = '...'; }
@@ -92,6 +103,9 @@ class Card extends Component {
       let element = document.querySelector('#drop-mirror');
       if (element && element.parentNode) { element.parentNode.removeChild(element); }
     }, 150);
+
+    // ----------------------
+
     this.setState({dragged: true});
     this.props.onDragStart(event, this.props.card_id);
   }

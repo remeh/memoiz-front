@@ -78,6 +78,37 @@ class Scratch extends Component {
         idx: idx,
         scratchDialogOpen: false,
       });
+
+      // in 2s, fetch for some rich infos
+      // about this cards.
+      // ----------------------
+      setTimeout(() => { this.enrich(card) }, 2000);
+    });
+
+    // TODO(remy): manage error
+  }
+
+  enrich = (card) => {
+    XHRScratch.enrichCard('12341234-1234-1234-1234-123412341234', card.uid)
+      .then((rich) => {
+        // edit the scratch
+        // ----------------------
+
+        var cards = this.state.cards.slice();
+
+        for (let i = 0; i < cards.length; i++) {
+          if (cards[i].uid === card.uid) {
+            // found! edit it.
+            if (rich.category !== 'Unknown') {
+              cards[i].category = rich.category;
+            }
+            break;
+          }
+        }
+
+        this.setState({
+          cards: cards,
+        });
     });
   }
 
