@@ -18,7 +18,6 @@ class Scratch extends Component {
     this.state =  {
       scratchValue: "",
       cards: [],
-      idx: {},
       scratchDialogOpen: false,
     }
 
@@ -60,22 +59,12 @@ class Scratch extends Component {
       var cards = this.state.cards.slice();
       cards.unshift(card);
 
-      var idx = Object.assign({}, this.state.idx);
-      for (var k in idx) { // offset every existing indexes.
-        if (idx[k] !== undefined) {
-          idx[k] += 1;
-        }
-      }
-
-      idx[card.uid] = 0; // new entry at first position
-
       // re-render the view with the new card
       // ----------------------
 
       this.setState({
         scratchValue: "",
         cards: cards,
-        idx: idx,
         scratchDialogOpen: false,
       });
 
@@ -156,20 +145,14 @@ class Scratch extends Component {
   fetchCards = () => {
     XHRScratch.getCards('12341234-1234-1234-1234-123412341234').then((json) => {
       let cards = [];
-      let idx = {};
 
       for (let i = 0; i < json.length; i++) {
         cards.push(json[i]);
       }
 
-      for (let i = 0; i < cards.length; i++) {
-        idx[cards[i].uid] = i;
-      }
-
       this.setState({
         scratchValue: "",
         cards: cards,
-        idx: idx,
       });
     });
   }
@@ -191,8 +174,22 @@ class Scratch extends Component {
     var src_id = event.dataTransfer.getData("application/id");
     var dst_id = id;
 
-    var left_idx = this.state.idx[src_id];
-    var right_idx = this.state.idx[dst_id];
+    let left_idx = -1;
+    let right_idx = -1;
+
+    for (let i = 0; i < this.state.cards.length; i++) {
+      if (src_id === this.state.cards[i].uid) {
+        left_idx = i;
+        break;
+      }
+    }
+
+    for (let i = 0; i < this.state.cards.length; i++) {
+      if (dst_id === this.state.cards[i].uid) {
+        right_idx = i;
+        break;
+      }
+    }
 
     var left = this.state.cards[left_idx];
     var right = this.state.cards[right_idx];
@@ -211,17 +208,12 @@ class Scratch extends Component {
 
     // visually move the card
 
-    var idx = Object.assign({}, this.state.idx);
     var cards = this.state.cards.slice();
 
     cards[left_idx] = right;
     cards[right_idx] = left;
 
-    idx[src_id] = right_idx;
-    idx[dst_id] = left_idx;
-
     this.setState({
-      idx: idx,
       cards: cards,
     });
   };
@@ -229,8 +221,25 @@ class Scratch extends Component {
   // cards actions
   // ----------------------
 
-  archiveCard = (event, card_id) => {
-    console.log('archive:', card_id);
+  archiveCard = (event, cardUid) => {
+    XHRScratch.archiveCard('12341234-1234-1234-1234-123412341234', cardUid).then((json) => {
+        // edit the scratch
+        // ----------------------
+
+        var cards = this.state.cards.slice();
+
+        for (let i = 0; i < cards.length; i++) {
+          if (cards[i].uid === cardUid) {
+            // remove this entry
+            cards.splice(i, 1);
+            break;
+          }
+        }
+
+        this.setState({
+          cards: cards,
+        });
+    });
   }
 
   // Scratche dialog
