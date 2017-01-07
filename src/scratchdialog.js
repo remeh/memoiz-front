@@ -8,7 +8,7 @@ class ScratchDialog extends Component {
     super(props);
 
     this.state = {
-      scratchValue: '',
+      scratchValue: this.props.initialValue,
     }
   }
 

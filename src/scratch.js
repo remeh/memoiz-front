@@ -15,10 +15,10 @@ class Scratch extends Component {
     super(props);
 
     this.openedCardId = null; // id of the currently opened card
+    this.scratchValue = null; // sent to the dialog when opening a card
 
     this.state =  {
-      scratchValue: "",
-      cards: [],
+      cards: [], // list of displayed cards
       scratchDialogOpen: false,
     }
 
@@ -44,7 +44,6 @@ class Scratch extends Component {
 
         this.setState({
           cards: cards,
-          scratchValue: '',
         });
 
         this.onScratchDialogClose();
@@ -64,7 +63,6 @@ class Scratch extends Component {
       // ----------------------
 
       this.setState({
-        scratchValue: "",
         cards: cards,
         scratchDialogOpen: false,
       });
@@ -122,7 +120,6 @@ class Scratch extends Component {
       }
 
       this.setState({
-        scratchValue: "",
         cards: cards,
       });
     });
@@ -132,9 +129,8 @@ class Scratch extends Component {
   // ----------------------
 
   cardClick = (event, id, text) => {
-    this.onScratchDialogOpen();
+    this.openDialog(event, null, text);
     this.openedCardId = id;
-    this.setState({scratchValue: text});
   }
 
   cardDragStart = (event) => {};
@@ -219,16 +215,16 @@ class Scratch extends Component {
   onScratchDialogClose = () => {
     if (this.openedCardId) {
       this.openedCardId = null;
-      this.setState({
-        scratchValue: '',
-      });
     }
 
     this.setState({scratchDialogOpen: false});
   }
 
-  onScratchDialogOpen = () => {
-    this.setState({scratchDialogOpen: true});
+  openDialog = (event, rEvent, text) => {
+    this.scratchValue = text;
+    this.setState({
+      scratchDialogOpen: true,
+    });
     setTimeout(() => {
       document.querySelector("#scratcher-input-modal").focus();
     }, 50);
@@ -266,11 +262,11 @@ class Scratch extends Component {
           autoScrollBodyContent={true}
           onRequestClose={this.onScratchDialogClose}
         >
-          <ScratchDialog submit={this.onSubmit} />
+          <ScratchDialog submit={this.onSubmit} initialValue={this.scratchValue} />
         </Dialog>
         <div className="scratcher-container">
           <div className="scratcher">
-            <TextField className="scratcher-input" id="scratcher-input-page" onClick={this.onScratchDialogOpen} fullWidth={true} multiLine={true} placeholder="Scratch here" />
+            <TextField className="scratcher-input" id="scratcher-input-page" onClick={this.openDialog} fullWidth={true} multiLine={true} placeholder="Scratch here" />
             <RaisedButton className="scratcher-button" onClick={this.submit} label="Save" fullWidth={true} />
           </div>
         </div>
