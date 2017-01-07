@@ -1,19 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 let styles = {
   iconStyle: {
-    top: '5px',
+    top: '8px',
     color: 'rgba(75,75,75,1)',
   },
   menuIconStyle: {
-    top: '5px',
+    top: '8px',
     marginRight: '5px',
     color: 'rgba(75,75,75,1)',
   },
@@ -58,28 +58,38 @@ class ScratchDialog extends Component {
 
   openWikipedia = (event) => {
     var txt = this.state.scratchValue.replace(' ', '_');
-    window.open('https://en.wikipedia.org/wiki/' + txt);
+    window.open('https://en.wikipedia.org/wiki/' + encodeURIComponent(txt));
+  }
+
+  openGoogle = (event) => {
+    window.open('https://google.com/?q=' + encodeURIComponent(this.state.scratchValue));
   }
 
   dialogActions = () => {
+    var actions = [];
+
     if (!this.props.cardId) {
-      return <div>
-        <RaisedButton className="scratcher-button" onClick={this.submit} label="Save" fullWidth={false} />
-      </div>
+      actions.push(<FlatButton className="scratcher-button" style={styles.cancelButton} onClick={this.onScratchDialogClose} label="Cancel" />);
+    } else {
+      // Delete
+      actions.push(<IconButton onClick={this.onDelete} tooltip="Delete" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>delete</IconButton>);
+      // Archive
+      actions.push(<IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>);
+      // Menu
+      actions.push(<IconMenu
+          iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+          anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+          targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          style={styles.menuIconStyle}
+        >
+          <MenuItem onClick={this.openWikipedia} primaryText="Open on Wikipedia" />
+          <MenuItem onClick={this.openGoogle} primaryText="Search on Google" />
+        </IconMenu>
+      );
     }
 
-    return <div>
-      <IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>
-      <IconMenu
-        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-        targetOrigin={{horizontal: 'left', vertical: 'top'}}
-        style={styles.menuIconStyle}
-      >
-        <MenuItem onClick={this.openWikipedia} primaryText="Open on Wikipedia" />
-      </IconMenu>
-      <RaisedButton className="scratcher-button" onClick={this.submit} label="Save" fullWidth={false} />
-    </div>
+    actions.push(<FlatButton className="scratcher-button" onClick={this.submit} primary={true} label="Save"/>);
+    return actions;
   }
 
   onScratchDialogClose = () => {
@@ -88,6 +98,7 @@ class ScratchDialog extends Component {
     }
 
     this.setState({scratchDialogOpen: false});
+    this.props.onDialogClose();
   }
 
   // ----------------------
@@ -114,6 +125,9 @@ class ScratchDialog extends Component {
 
 ScratchDialog.propTypes = {
   submit: PropTypes.func.isRequired,
+  openDialog: PropTypes.bool.isRequired,
+  onArchive: PropTypes.func.isRequired,
+  onDialogClose: PropTypes.func.isRequired,
 }
 
 export default ScratchDialog;

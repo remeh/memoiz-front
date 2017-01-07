@@ -202,6 +202,7 @@ class Scratch extends Component {
 
         this.setState({
           cards: cards,
+          scratchDialogOpen: false,
         });
     });
   }
@@ -248,6 +249,7 @@ class Scratch extends Component {
       <div>
         <ScratchDialog 
           openDialog={this.state.scratchDialogOpen}
+          onDialogClose={() => { this.setState({scratchDialogOpen: false}); }}
           submit={this.onSubmit}
           initialValue={this.scratchValue}
           cardId={this.openedCardId}
