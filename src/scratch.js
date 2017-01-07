@@ -275,12 +275,12 @@ class Scratch extends Component {
           autoScrollBodyContent={true}
           onRequestClose={this.onScratchDialogClose}
         >
-          <TextField className="scratcher-input" id="scratcher-input-modal" onClick={this.onScratchDialogOpen} onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
+          <TextField className="scratcher-input" id="scratcher-input-modal" onClick={this.onScratchDialogOpen} onBlur={this.onScratchChange} fullWidth={true} multiLine={true} placeholder="Scratch here" />
           <RaisedButton className="scratcher-button" onClick={this.submit} label="Save" fullWidth={true} />
         </Dialog>
         <div className="scratcher-container">
           <div className="scratcher">
-            <TextField className="scratcher-input" id="scratcher-input-page" onClick={this.onScratchDialogOpen} onChange={this.onScratchChange} value={this.state.scratchValue} fullWidth={true} multiLine={true} placeholder="Scratch here" />
+            <TextField className="scratcher-input" id="scratcher-input-page" onClick={this.onScratchDialogOpen} fullWidth={true} multiLine={true} placeholder="Scratch here" />
             <RaisedButton className="scratcher-button" onClick={this.submit} label="Save" fullWidth={true} />
           </div>
         </div>
