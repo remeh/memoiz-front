@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Dialog from 'material-ui/Dialog';
 
 import Card from './card.js';
 import ScratchDialog from './scratchdialog.js';
@@ -14,8 +13,8 @@ class Scratch extends Component {
   constructor(props) {
     super(props);
 
-    this.openedCardId = null; // id of the currently opened card
-    this.scratchValue = null; // sent to the dialog when opening a card
+    this.openedCardId = undefined; // id of the currently opened card
+    this.scratchValue = ''; // sent to the dialog when opening a card
 
     this.state =  {
       cards: [], // list of displayed cards
@@ -44,9 +43,8 @@ class Scratch extends Component {
 
         this.setState({
           cards: cards,
+          scratchDialogOpen: false,
         });
-
-        this.onScratchDialogClose();
     });
   }
 
@@ -129,8 +127,7 @@ class Scratch extends Component {
   // ----------------------
 
   cardClick = (event, id, text) => {
-    this.openDialog(event, null, text);
-    this.openedCardId = id;
+    this.openDialog(event, null, text, id);
   }
 
   cardDragStart = (event) => {};
@@ -212,22 +209,16 @@ class Scratch extends Component {
   // Scratche dialog
   // ----------------------
 
-  onScratchDialogClose = () => {
-    if (this.openedCardId) {
-      this.openedCardId = null;
-    }
-
-    this.setState({scratchDialogOpen: false});
-  }
-
-  openDialog = (event, rEvent, text) => {
-    this.scratchValue = text;
+  openDialog = (event, rEvent, text, id) => {
+    this.openedCardId = id;
+    this.scratchValue = text ? text : '';
     this.setState({
       scratchDialogOpen: true,
     });
     setTimeout(() => {
-      document.querySelector("#scratcher-input-modal").focus();
-    }, 50);
+      var el = document.querySelector('#scratcher-input-modal');
+      if (el) { el.focus(); }
+    }, 100);
   }
 
   // scratch adds a new card entry in the cards
@@ -255,15 +246,13 @@ class Scratch extends Component {
   render() {
     return (
       <div>
-        <Dialog
-          title="Scratch something"
-          modal={false}
-          open={this.state.scratchDialogOpen}
-          autoScrollBodyContent={true}
-          onRequestClose={this.onScratchDialogClose}
-        >
-          <ScratchDialog submit={this.onSubmit} initialValue={this.scratchValue} />
-        </Dialog>
+        <ScratchDialog 
+          openDialog={this.state.scratchDialogOpen}
+          submit={this.onSubmit}
+          initialValue={this.scratchValue}
+          cardId={this.openedCardId}
+          onArchive={this.archiveCard}
+        />
         <div className="scratcher-container">
           <div className="scratcher">
             <TextField className="scratcher-input" id="scratcher-input-page" onClick={this.openDialog} fullWidth={true} multiLine={true} placeholder="Scratch here" />
