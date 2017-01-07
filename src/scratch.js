@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
 
 import Card from './card.js';
+import ScratchDialog from './scratchdialog.js';
 import XHRScratch from './xhr/scratch.js';
 import randomUuid from './uuid.js';
 
@@ -101,42 +102,12 @@ class Scratch extends Component {
     });
   }
 
-  // scratch adds a new card entry in the cards
-  // or sends modification of the current one.
-  submit = () => {
-    var d = this.state.scratchValue;
-
-    if (!d.length) {
-      return;
-    }
-
-    // TODO(remy): add a loader here.
-
-    // backend hit to add the card
-    // ----------------------
-
-    if (this.openedCardId) {
-      this.putChanges(this.openedCardId, d);
-    } else {
-      this.postNewCard(d);
-    }
-    this.openedCardId = null;
-  }
-
   // newCard generates a card object.
   newCard(text) {
     return {
       uid: randomUuid(),
       text: text,
     }
-  }
-
-  // onScratchChange is called when the value in the
-  // text field is changing.
-  onScratchChange = (event) => {
-    this.setState({
-      scratchValue: event.target.value
-    });
   }
 
   // XHR
@@ -263,6 +234,26 @@ class Scratch extends Component {
     }, 50);
   }
 
+  // scratch adds a new card entry in the cards
+  // or sends modification of the current one.
+  onSubmit = (text) => {
+    if (!text.length) {
+      return;
+    }
+
+    // TODO(remy): add a loader here.
+
+    // backend hit to add the card
+    // ----------------------
+
+    if (this.openedCardId) {
+      this.putChanges(this.openedCardId, text);
+    } else {
+      this.postNewCard(text);
+    }
+    this.openedCardId = null;
+  }
+
   // ----------------------
 
   render() {
@@ -275,8 +266,7 @@ class Scratch extends Component {
           autoScrollBodyContent={true}
           onRequestClose={this.onScratchDialogClose}
         >
-          <TextField className="scratcher-input" id="scratcher-input-modal" onClick={this.onScratchDialogOpen} onBlur={this.onScratchChange} fullWidth={true} multiLine={true} placeholder="Scratch here" />
-          <RaisedButton className="scratcher-button" onClick={this.submit} label="Save" fullWidth={true} />
+          <ScratchDialog submit={this.onSubmit} />
         </Dialog>
         <div className="scratcher-container">
           <div className="scratcher">
