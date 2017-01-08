@@ -27,8 +27,6 @@ class Scratch extends Component {
   putChanges = (id, text) => {
     XHRScratch.putCard('12341234-1234-1234-1234-123412341234', id, text)
       .then((card) => {
-        // TODO(remy): loader in the card?
-
         // edit the scratch
         // ----------------------
 
@@ -45,7 +43,16 @@ class Scratch extends Component {
           cards: cards,
           scratchDialogOpen: false,
         });
+
+        // TODO(remy): loader in the card?
+
+        // in 2s, fetch for some rich infos
+        // about this cards.
+        // ----------------------
+        setTimeout(() => { this.enrich(card) }, 2000);
     });
+
+    // TODO(remy): manage error
   }
 
   postNewCard = (text) => {
@@ -88,6 +95,9 @@ class Scratch extends Component {
             if (rich.category !== 'Unknown') {
               cards[i].category = rich.category;
             }
+            if (rich.last_update) {
+              cards[i].last_update = rich.last_update;
+            }
             break;
           }
         }
@@ -126,8 +136,8 @@ class Scratch extends Component {
   // Card actions
   // ----------------------
 
-  cardClick = (event, id, text, category) => {
-    this.openDialog(event, null, text, id, category);
+  cardClick = (event, openedCard) => {
+    this.openDialog(event, null, openedCard);
   }
 
   cardDragStart = (event) => {};
@@ -210,12 +220,8 @@ class Scratch extends Component {
   // Scratche dialog
   // ----------------------
 
-  openDialog = (event, rEvent, text, id, category) => {
-    this.openedCard = {
-      id: id,
-      value: text ? text : '',
-      category: category,
-    };
+  openDialog = (event, rEvent, openedCard) => {
+    this.openedCard = openedCard;
     this.setState({
       scratchDialogOpen: true,
     });
@@ -268,9 +274,12 @@ class Scratch extends Component {
             {this.state.cards.map(
               (card) => <Card
                   key={card.uid}
-                  card_id={card.uid}
-                  text={card.text}
-                  category={card.category}
+                  card={{
+                    id: card.uid,
+                    value: card.text,
+                    category: card.category,
+                    last_update: card.last_update,
+                  }}
                   onDragStart={this.cardDragStart}
                   onDragOver={this.cardDragOver}
                   onDragEnd={this.cardDragEnd}

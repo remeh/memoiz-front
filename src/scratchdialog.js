@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import moment from 'moment';
+import Moment from 'react-moment';
 
 import {grey900} from 'material-ui/styles/colors';
 import Chip from 'material-ui/Chip';
@@ -28,7 +30,6 @@ let styles = {
 };
 
 class ScratchDialog extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -80,7 +81,7 @@ class ScratchDialog extends Component {
   dialogActions = () => {
     var actions = [];
 
-    if (this.props.card) {
+    if (this.props.card && this.props.card.id) {
       // Delete
       actions.push(<IconButton onClick={this.onDelete} tooltip="Delete" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>delete</IconButton>);
       // Archive
@@ -111,6 +112,9 @@ class ScratchDialog extends Component {
   // ----------------------
 
   render() {
+    if (this.props.card && this.props.card.last_update) {
+      var prettyTime = moment(this.props.card.last_update).format('LLL');
+    }
     return <div>
         <Dialog
           modal={false}
@@ -126,7 +130,9 @@ class ScratchDialog extends Component {
               {this.props.card.category}
             </Chip>
           }
-          <span className="scratche-creation-date">Last edit on </span>
+          {this.props.card && this.props.card.last_update &&
+            <span title={prettyTime} className="scratche-creation-date">Last edit <Moment fromNow>{this.props.card.last_update}</Moment></span>
+          }
         </Dialog>
 
     </div>

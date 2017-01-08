@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {grey900} from 'material-ui/styles/colors';
 import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
@@ -28,7 +28,7 @@ class Card extends Component {
     this.state = {
       dragged: false,
       draggedOver: false,
-      category: props.category,
+      category: this.props.card.category,
       snackbar: {
         open: false,
         message: '',
@@ -40,7 +40,7 @@ class Card extends Component {
   componentWillUnmount() {};
   componentWillReceiveProps(nextProps) {
     this.setState({
-      category: nextProps.category,
+      category: nextProps.card.category,
     })
   }
 
@@ -60,7 +60,7 @@ class Card extends Component {
       c += " dragged";
     }
 
-    if (this.props.text.length < this.MaximumForLargeText) {
+    if (this.props.card.value.length < this.MaximumForLargeText) {
       c += " large-text";
     }
 
@@ -73,18 +73,18 @@ class Card extends Component {
   }
 
   getText = () => {
-    if (this.props.text.length > 140) {
-      return this.props.text.slice(0, 140) + '...';
+    if (this.props.card.value.length > 140) {
+      return this.props.card.value.slice(0, 140) + '...';
     }
-    return this.props.text;
+    return this.props.card.value;
   }
 
   // Drag'n'drop
   // ----------------------
 
   onDragStart = (event) => {
-    event.dataTransfer.setData("text", this.props.text);
-    event.dataTransfer.setData("application/id", this.props.card_id);
+    event.dataTransfer.setData("text", this.props.card.value);
+    event.dataTransfer.setData("application/id", this.props.card.id);
     event.dataTransfer.dropEffect = "move";
 
     // create a copy rendered hidden
@@ -92,8 +92,8 @@ class Card extends Component {
 
     var img = document.createElement('div');
     var end = '';
-    if (this.props.text.length >= 139) { end = '...'; }
-    img.innerHTML = this.props.text.slice(0, 140) + end;
+    if (this.props.card.valuelength >= 139) { end = '...'; }
+    img.innerHTML = this.props.card.value.slice(0, 140) + end;
     img.className = 'card';
     img.style.cssText = 'background-color: white; top: -250px; position: absolute; max-height: 200px';
     img.id = 'drop-mirror';
@@ -111,16 +111,16 @@ class Card extends Component {
   }
 
   onDragOver = (event) => {
-    if (!event.dataTransfer || event.dataTransfer.getData("application/id") === this.props.card_id) {
+    if (!event.dataTransfer || event.dataTransfer.getData("application/id") === this.props.card.id) {
       return;
     }
     event.preventDefault();
     this.setState({draggedOver: true});
-    this.props.onDragOver(event, this.props.card_id);
+    this.props.onDragOver(event, this.props.card.id);
   }
 
   onDragLeave = (event) => {
-    if (!event.dataTransfer || event.dataTransfer.getData("application/id") === this.props.card_id) {
+    if (!event.dataTransfer || event.dataTransfer.getData("application/id") === this.props.card.id) {
       return;
     }
     event.preventDefault();
@@ -128,35 +128,35 @@ class Card extends Component {
   }
 
   onDragExit = (event) => {
-    if (!event.dataTransfer || event.dataTransfer.getData("application/id") === this.props.card_id) {
+    if (!event.dataTransfer || event.dataTransfer.getData("application/id") === this.props.card.id) {
       return;
     }
     event.preventDefault();
     this.setState({dragged: false});
-    this.props.onDragEnd(event, this.props.card_id);
+    this.props.onDragEnd(event, this.props.card.id);
   }
 
   onDragEnd = (event) => {
     event.preventDefault();
     this.setState({dragged: false});
-    this.props.onDragEnd(event, this.props.card_id);
+    this.props.onDragEnd(event, this.props.card.id);
   }
 
   onDrop = (event) => {
     event.preventDefault();
     this.reset();
-    this.props.onDrop(event, this.props.card_id);
+    this.props.onDrop(event, this.props.card.id);
   }
 
   onClick = (event) => {
     event.preventDefault();
-    this.props.onClick(event, this.props.card_id, this.props.text, this.state.category);
+    this.props.onClick(event, this.props.card);
   }
 
   onArchive = (event) => {
     event.preventDefault()
     this.openSnackbar('This note has been archived');
-    this.props.onArchive(event, this.props.card_id);
+    this.props.onArchive(event, this.props.card.id);
   }
 
   openSnackbar = (message) => {
@@ -172,7 +172,7 @@ class Card extends Component {
     return (
       <div
         className={this.computeClass()}
-        id={this.props.card_id}
+        id={this.props.card.id}
         draggable="true"
         onDragStart={this.onDragStart}
         onDragOver={this.onDragOver}
@@ -208,10 +208,5 @@ class Card extends Component {
 
 // constructor prototype
 // ----------------------
-
-Card.propTypes = {
-  card_id: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-}
 
 export default Card;
