@@ -24,8 +24,8 @@ class Scratch extends Component {
     this.fetchCards();
   }
 
-  putChanges = (id, text) => {
-    XHRScratch.putCard('12341234-1234-1234-1234-123412341234', id, text)
+  putChanges = (id, text, enrich) => {
+    XHRScratch.putCard('12341234-1234-1234-1234-123412341234', id, text, enrich)
       .then((card) => {
         // edit the scratch
         // ----------------------
@@ -49,14 +49,16 @@ class Scratch extends Component {
         // in 2s, fetch for some rich infos
         // about this cards.
         // ----------------------
-        setTimeout(() => { this.enrich(card) }, 2000);
+        if (enrich) {
+          setTimeout(() => { this.enrich(card) }, 2000);
+        }
     });
 
     // TODO(remy): manage error
   }
 
-  postNewCard = (text) => {
-    XHRScratch.postCard('12341234-1234-1234-1234-123412341234', text)
+  postNewCard = (text, enrich) => {
+    XHRScratch.postCard('12341234-1234-1234-1234-123412341234', text, enrich)
       .then((card) => {
       // add the scratch
       // ----------------------
@@ -75,7 +77,9 @@ class Scratch extends Component {
       // in 2s, fetch for some rich infos
       // about this cards.
       // ----------------------
-      setTimeout(() => { this.enrich(card) }, 2000);
+      if (enrich) {
+        setTimeout(() => { this.enrich(card) }, 2000);
+      }
     });
 
     // TODO(remy): manage error
@@ -233,7 +237,7 @@ class Scratch extends Component {
 
   // scratch adds a new card entry in the cards
   // or sends modification of the current one.
-  onSubmit = (text) => {
+  onSubmit = (text, enrich) => {
     if (!text.length) {
       return;
     }
@@ -244,9 +248,9 @@ class Scratch extends Component {
     // ----------------------
 
     if (this.openedCard) {
-      this.putChanges(this.openedCard.id, text);
+      this.putChanges(this.openedCard.id, text, enrich);
     } else {
-      this.postNewCard(text);
+      this.postNewCard(text, enrich);
     }
     this.openedCard = undefined;
   }

@@ -22,19 +22,21 @@ class XHRScratch {
     );
   }
 
-  static postCard(uid, text) {
+  static postCard(uid, text, enrich) {
+    enrich = !!enrich; // force boolean
     return XHR.postJson(
       'http://localhost:8080/api/1.0/cards', // XXX(remy): fix url
       {u: uid},
-      {text: text},
+      {text: text, enrich: enrich},
     );
   }
 
-  static putCard(uid, cardUid, text) {
+  static putCard(uid, cardUid, text, enrich) {
+    enrich = !!enrich; // force boolean
     return XHR.postJson(
       'http://localhost:8080/api/1.0/cards', // XXX(remy): fix url
       {u: uid},
-      {card_uid: cardUid, text: text},
+      {card_uid: cardUid, text: text, enrich: enrich},
     );
   }
 

@@ -3,6 +3,7 @@ import moment from 'moment';
 import Moment from 'react-moment';
 
 import {grey900} from 'material-ui/styles/colors';
+import Checkbox from 'material-ui/Checkbox';
 import Chip from 'material-ui/Chip';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -34,6 +35,7 @@ class ScratchDialog extends Component {
     super(props);
     this.state = {
       scratchDialogOpen: this.props.openDialog,
+      enrich: true,
     }
   }
 
@@ -51,7 +53,7 @@ class ScratchDialog extends Component {
   // ----------------------
 
   submit = () => {
-    this.props.submit(this.state.scratchValue);
+    this.props.submit(this.state.scratchValue, this.state.enrich);
   }
 
   // onChange is called when the value in the
@@ -59,6 +61,12 @@ class ScratchDialog extends Component {
   onChange = (event) => {
     this.setState({
       scratchValue: event.target.value
+    });
+  }
+
+  toggleEnrich = (event, state) => {
+    this.setState({
+      enrich: state,
     });
   }
 
@@ -105,7 +113,10 @@ class ScratchDialog extends Component {
   }
 
   onScratchDialogClose = () => {
-    this.setState({scratchDialogOpen: false});
+    this.setState({
+      scratchDialogOpen: false,
+      enrich: true, // force enrichment on next opening
+    });
     this.props.onDialogClose();
   }
 
@@ -130,6 +141,8 @@ class ScratchDialog extends Component {
               {this.props.card.category}
             </Chip>
           }
+          <br />
+          <Checkbox onCheck={this.toggleEnrich} checked={this.state.enrich} label="Automatically enrich scratch information" style={styles.checkbox} />
           {this.props.card && this.props.card.last_update &&
             <span title={prettyTime} className="scratche-creation-date">Last edit <Moment fromNow>{this.props.card.last_update}</Moment></span>
           }
