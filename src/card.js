@@ -150,7 +150,7 @@ class Card extends Component {
 
   onClick = (event) => {
     event.preventDefault();
-    this.props.onClick(event, this.props.card_id, this.props.text);
+    this.props.onClick(event, this.props.card_id, this.props.text, this.state.category);
   }
 
   onArchive = (event) => {

@@ -13,7 +13,7 @@ class Scratch extends Component {
   constructor(props) {
     super(props);
 
-    this.openedCardId = undefined; // id of the currently opened card
+    this.openedCard = undefined; // id of the currently opened card
     this.scratchValue = ''; // sent to the dialog when opening a card
 
     this.state =  {
@@ -126,8 +126,8 @@ class Scratch extends Component {
   // Card actions
   // ----------------------
 
-  cardClick = (event, id, text) => {
-    this.openDialog(event, null, text, id);
+  cardClick = (event, id, text, category) => {
+    this.openDialog(event, null, text, id, category);
   }
 
   cardDragStart = (event) => {};
@@ -210,9 +210,12 @@ class Scratch extends Component {
   // Scratche dialog
   // ----------------------
 
-  openDialog = (event, rEvent, text, id) => {
-    this.openedCardId = id;
-    this.scratchValue = text ? text : '';
+  openDialog = (event, rEvent, text, id, category) => {
+    this.openedCard = {
+      id: id,
+      value: text ? text : '',
+      category: category,
+    };
     this.setState({
       scratchDialogOpen: true,
     });
@@ -234,12 +237,12 @@ class Scratch extends Component {
     // backend hit to add the card
     // ----------------------
 
-    if (this.openedCardId) {
-      this.putChanges(this.openedCardId, text);
+    if (this.openedCard) {
+      this.putChanges(this.openedCard.id, text);
     } else {
       this.postNewCard(text);
     }
-    this.openedCardId = null;
+    this.openedCard = undefined;
   }
 
   // ----------------------
@@ -251,8 +254,7 @@ class Scratch extends Component {
           openDialog={this.state.scratchDialogOpen}
           onDialogClose={() => { this.setState({scratchDialogOpen: false}); }}
           submit={this.onSubmit}
-          initialValue={this.scratchValue}
-          cardId={this.openedCardId}
+          card={this.openedCard}
           onArchive={this.archiveCard}
         />
         <div className="scratcher-container">

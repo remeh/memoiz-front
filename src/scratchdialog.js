@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+
+import {grey900} from 'material-ui/styles/colors';
+import Chip from 'material-ui/Chip';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
@@ -6,6 +9,8 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import TextField from 'material-ui/TextField';
+
+import './scratchdialog.css';
 
 let styles = {
   iconStyle: {
@@ -17,22 +22,27 @@ let styles = {
     marginRight: '5px',
     color: 'rgba(75,75,75,1)',
   },
+  chipStyle: {
+    color: grey900,
+  },
 };
 
 class ScratchDialog extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       scratchDialogOpen: this.props.openDialog,
-      scratchValue: this.props.initialValue,
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    let val = '';
+    if (nextProps.card) {
+      val = nextProps.card.value;
+    }
     this.setState({
-      scratchValue: nextProps.initialValue,
+      scratchValue: val,
       scratchDialogOpen: nextProps.openDialog,
     })
   }
@@ -52,7 +62,9 @@ class ScratchDialog extends Component {
   }
 
   onArchive = (event) => {
-    this.props.onArchive(event, this.props.cardId);
+    if (this.props.card) {
+      this.props.onArchive(event, this.props.card.id);
+    }
     this.setState({scratchDialogOpen: false});
   } 
 
@@ -68,9 +80,7 @@ class ScratchDialog extends Component {
   dialogActions = () => {
     var actions = [];
 
-    if (!this.props.cardId) {
-      actions.push(<FlatButton className="scratcher-button" style={styles.cancelButton} onClick={this.onScratchDialogClose} label="Cancel" />);
-    } else {
+    if (this.props.card) {
       // Delete
       actions.push(<IconButton onClick={this.onDelete} tooltip="Delete" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>delete</IconButton>);
       // Archive
@@ -88,15 +98,12 @@ class ScratchDialog extends Component {
       );
     }
 
+    actions.push(<FlatButton className="scratcher-button" style={styles.cancelButton} onClick={this.onScratchDialogClose} label="Cancel" />);
     actions.push(<FlatButton className="scratcher-button" onClick={this.submit} primary={true} label="Save"/>);
     return actions;
   }
 
   onScratchDialogClose = () => {
-    if (this.openedCardId) {
-      this.openedCardId = null;
-    }
-
     this.setState({scratchDialogOpen: false});
     this.props.onDialogClose();
   }
@@ -106,7 +113,6 @@ class ScratchDialog extends Component {
   render() {
     return <div>
         <Dialog
-          title="Scratch something"
           modal={false}
           open={this.state.scratchDialogOpen}
           autoScrollBodyContent={true}
@@ -114,6 +120,13 @@ class ScratchDialog extends Component {
           actions={this.dialogActions()}
         >
           <TextField className="scratcher-input" id="scratcher-input-modal" value={this.state.scratchValue} onChange={this.onChange} onClick={this.onScratchDialogOpen} fullWidth={true} multiLine={true} placeholder="Scratch here" />
+
+          {this.props.card && this.props.card.category !== 'Unknown' &&
+            <Chip labelStyle={styles.chipStyle}>
+              {this.props.card.category}
+            </Chip>
+          }
+          <span className="scratche-creation-date">Last edit on </span>
         </Dialog>
 
     </div>
