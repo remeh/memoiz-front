@@ -1,0 +1,15 @@
+.chip-container {
+  font-size: 0.8em;
+  display: flex;
+  color: white;
+  flex-wrap: wrap;
+  align-items: start;
+}
+
+.chip {
+  background-color: #0288D1;
+  padding: 0.5em;
+  padding-top: 0.4em;
+  line-height: 1em;
+  border-radius: 3px;
+}

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import {grey900} from 'material-ui/styles/colors';
-import Chip from 'material-ui/Chip';
 import IconButton from 'material-ui/IconButton';
 import Snackbar from 'material-ui/Snackbar';
 
+import Chip from './chip.js';
 import './card.css';
 
 let styles = {
   chipStyle: {
-    fontSize: '0.6em',
-    color: grey900,
+    fontSize: '0.7em',
+    fontWeight: 'bold',
   },
   iconStyle: {
     color: 'rgba(75,75,75,1)',
@@ -184,9 +183,7 @@ class Card extends Component {
         <div className="content" onClick={this.onClick}>
           {this.getText()}
           {this.state.category !== 'Unknown' &&
-            <Chip labelStyle={styles.chipStyle}>
-              {this.state.category}
-            </Chip>
+            <Chip text={this.state.category} />
           }
         </div>
         <div className="actions">

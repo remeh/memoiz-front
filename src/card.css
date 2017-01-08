@@ -14,7 +14,7 @@
 }
 
 .large-text {
-  font-size: 1.5em;
+  font-size: 1.3em;
 }
 
 .dragged {
@@ -30,10 +30,6 @@
   border-style: dotted;
   border: 1px solid #999999;
   transition: background-color 0.25s;
-}
-
-.category {
-  font-size: 0.5em !important;
 }
 
 .card .actions {
