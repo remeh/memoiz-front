@@ -80,7 +80,7 @@ class ScratchDialog extends Component {
   }
 
   openGoogle = (event) => {
-    window.open('https://google.com/?q=' + encodeURIComponent(this.state.scratchValue));
+    window.open('https://google.com/search?q=' + encodeURIComponent(this.state.scratchValue));
   }
 
   dialogActions = () => {
