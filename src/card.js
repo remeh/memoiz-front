@@ -189,7 +189,11 @@ class Card extends Component {
         <div className="actions">
           <IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>
         </div>
-
+        { this.props.card.image &&
+          <div className="image">
+            <img src={this.props.card.image} role="presentation" />
+          </div>
+        }
         <Snackbar
           open={this.state.snackbar.open}
           message={this.state.snackbar.message}

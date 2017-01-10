@@ -13,6 +13,25 @@
   cursor: pointer;
 }
 
+.card .content {
+  height: 100%;
+}
+
+.card .image {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  width: 72px;
+  height: 72px;
+}
+
+.card .image img {
+  width: 72px;
+  height: 72px;
+  border: 1px dashed #eee;
+  border-radius: 5px;
+}
+
 .large-text {
   font-size: 1.3em;
 }

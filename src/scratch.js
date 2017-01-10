@@ -283,6 +283,7 @@ class Scratch extends Component {
                     value: card.text,
                     category: card.category,
                     last_update: card.last_update,
+                    image: card.img,
                   }}
                   onDragStart={this.cardDragStart}
                   onDragOver={this.cardDragOver}
