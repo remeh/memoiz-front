@@ -191,7 +191,9 @@ class Card extends Component {
         </div>
         { this.props.card.image &&
           <div className="image">
-            <img src={this.props.card.image} role="presentation" />
+            <a href={this.props.card.url} target="_blank" alt="Go to link">
+              <img src={this.props.card.image} role="presentation" />
+            </a>
           </div>
         }
         <Snackbar
