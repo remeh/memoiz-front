@@ -27,7 +27,7 @@ class Card extends Component {
     this.state = {
       dragged: false,
       draggedOver: false,
-      category: this.props.card.category,
+      category: this.props.card.r_category,
       snackbar: {
         open: false,
         message: '',
@@ -39,7 +39,7 @@ class Card extends Component {
   componentWillUnmount() {};
   componentWillReceiveProps(nextProps) {
     this.setState({
-      category: nextProps.card.category,
+      r_category: nextProps.card.r_category,
     })
   }
 
@@ -182,17 +182,17 @@ class Card extends Component {
         >
         <div className="content" onClick={this.onClick}>
           {this.getText()}
-          {this.state.category !== 'Unknown' &&
-            <Chip text={this.state.category} />
+          {this.state.r_category !== 'Unknown' &&
+            <Chip text={this.state.r_category} />
           }
         </div>
         <div className="actions">
           <IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>
         </div>
-        { this.props.card.image &&
+        { this.props.card.r_image &&
           <div className="image">
-            <a href={this.props.card.url} target="_blank" alt="Go to link">
-              <img src={this.props.card.image} role="presentation" />
+            <a href={this.props.card.r_url} target="_blank" alt="Go to link">
+              <img src={this.props.card.r_image} role="presentation" />
             </a>
           </div>
         }

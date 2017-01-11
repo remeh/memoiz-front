@@ -4,7 +4,7 @@
   padding: 0.6em;
   min-width: 220px;
   width: 220px;
-  min-height: 190px;
+  min-height: 200px;
   box-shadow: 2px 2px 6px rgba(210,210,210,50);
   border: 1px solid rgba(200,200,200,50);
   word-wrap: break-word;
@@ -19,21 +19,22 @@
 
 .card .image {
   position: absolute;
-  right: 1px;
   bottom: 1px;
-  width: 72px;
-  height: 72px;
+  right: 0px;
+  width: 100%;
+  height: 56px;
+  border-top: 1px solid #eee;
 }
 
 .card .image img {
-  width: 72px;
-  height: 72px;
-  border: 1px dashed #eee;
-  border-radius: 5px;
+  position: absolute;
+  right: 0px;
+  width: 56px;
+  height: 56px;
 }
 
 .large-text {
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 
 .dragged {

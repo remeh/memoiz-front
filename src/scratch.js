@@ -96,8 +96,8 @@ class Scratch extends Component {
         for (let i = 0; i < cards.length; i++) {
           if (cards[i].uid === card.uid) {
             // found! edit it.
-            if (rich.category !== 'Unknown') {
-              cards[i].category = rich.category;
+            if (rich.r_category !== 'Unknown') {
+              cards[i].r_category = rich.r_category;
             }
             if (rich.last_update) {
               cards[i].last_update = rich.last_update;
@@ -281,10 +281,10 @@ class Scratch extends Component {
                   card={{
                     id: card.uid,
                     value: card.text,
-                    category: card.category,
                     last_update: card.last_update,
-                    url: card.url,
-                    image: card.img,
+                    r_category: card.r_category,
+                    r_url: card.r_url,
+                    r_image: card.r_img,
                   }}
                   onDragStart={this.cardDragStart}
                   onDragOver={this.cardDragOver}
