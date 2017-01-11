@@ -284,6 +284,7 @@ class Scratch extends Component {
                     last_update: card.last_update,
                     r_category: card.r_category,
                     r_url: card.r_url,
+                    r_title: card.r_title,
                     r_image: card.r_img,
                   }}
                   onDragStart={this.cardDragStart}

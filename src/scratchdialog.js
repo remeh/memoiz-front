@@ -133,8 +133,8 @@ class ScratchDialog extends Component {
         >
           <TextField className="scratcher-input" id="scratcher-input-modal" value={this.state.scratchValue} onChange={this.onChange} onClick={this.onScratchDialogOpen} fullWidth={true} multiLine={true} placeholder="Scratch here" />
 
-          {this.props.card && this.props.card.category !== 'Unknown' &&
-            <Chip text={this.props.card.category} />
+          {this.props.card && this.props.card.r_category !== 'Unknown' &&
+            <Chip text={this.props.card.r_category} />
           }
           <br />
           <Checkbox onCheck={this.toggleEnrich} checked={this.state.enrich} label="Automatically enrich scratch information" style={styles.checkbox} />

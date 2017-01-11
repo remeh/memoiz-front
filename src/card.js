@@ -1,19 +1,8 @@
 import React, { Component } from 'react';
-import IconButton from 'material-ui/IconButton';
 import Snackbar from 'material-ui/Snackbar';
 
 import Chip from './chip.js';
 import './card.css';
-
-let styles = {
-  chipStyle: {
-    fontSize: '0.7em',
-    fontWeight: 'bold',
-  },
-  iconStyle: {
-    color: 'rgba(75,75,75,1)',
-  },
-};
 
 class Card extends Component {
   MaximumForLargeText = 80;
@@ -27,7 +16,7 @@ class Card extends Component {
     this.state = {
       dragged: false,
       draggedOver: false,
-      category: this.props.card.r_category,
+      r_category: this.props.card.r_category,
       snackbar: {
         open: false,
         message: '',
@@ -165,6 +154,16 @@ class Card extends Component {
     }});
   }
 
+  cut = (str, count) => {
+    if (!str) {
+      return '';
+    }
+    if (!count) {
+      count = 10E10;
+    }
+    return str.substring(0, count) + '...';
+  }
+
   // ----------------------
 
   render() {
@@ -186,14 +185,16 @@ class Card extends Component {
             <Chip text={this.state.r_category} />
           }
         </div>
-        <div className="actions">
-          <IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>
-        </div>
         { this.props.card.r_image &&
-          <div className="image">
-            <a href={this.props.card.r_url} target="_blank" alt="Go to link">
-              <img src={this.props.card.r_image} role="presentation" />
-            </a>
+          <div className="rich">
+            <div>
+              <a href={this.props.card.r_url} target="_blank" alt="Go to link">
+                <img src={this.props.card.r_image} role="presentation" />
+              </a>
+            </div>
+            <span className="title">{this.cut(this.props.card.r_title, 22)}</span>
+            <br />
+            <span className="url">{this.cut(this.props.card.r_url, 22)}</span>
           </div>
         }
         <Snackbar

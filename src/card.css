@@ -17,7 +17,7 @@
   height: 100%;
 }
 
-.card .image {
+.card .rich {
   position: absolute;
   bottom: 1px;
   right: 0px;
@@ -26,11 +26,21 @@
   border-top: 1px solid #eee;
 }
 
-.card .image img {
+.card .rich img {
   position: absolute;
   right: 0px;
   width: 56px;
   height: 56px;
+}
+
+.card .rich span {
+  padding-left: 1em;
+  font-size: 0.65em;
+  width: 164px;
+}
+
+.card .rich span.title {
+  font-weight: bold;
 }
 
 .large-text {
