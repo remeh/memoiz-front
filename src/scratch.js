@@ -95,12 +95,22 @@ class Scratch extends Component {
 
         for (let i = 0; i < cards.length; i++) {
           if (cards[i].uid === card.uid) {
+            let card = cards[i];
             // found! edit it.
             if (rich.r_category !== 'Unknown') {
-              cards[i].r_category = rich.r_category;
+              card.r_category = rich.r_category;
+            }
+            if (rich.r_img.length !== 0) {
+              card.r_img = rich.r_img;
+            }
+            if (rich.r_title.length !== 0) {
+              card.r_title = rich.r_title;
+            }
+            if (rich.r_url.length !== 0) {
+              card.r_url = rich.r_url;
             }
             if (rich.last_update) {
-              cards[i].last_update = rich.last_update;
+              card.last_update = rich.last_update;
             }
             break;
           }
