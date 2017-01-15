@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Router, IndexRoute, Route, browserHistory } from 'react-router'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -15,9 +16,9 @@ import {lightBlue900,
         fullBlack,
         cyan500} from 'material-ui/styles/colors';
 
-import AppBar from 'material-ui/AppBar';
-
 import injectTapEventPlugin from 'react-tap-event-plugin';
+
+import Login from './login.js';
 
 import Scratch from './scratch.js';
 import './app.css';
@@ -44,20 +45,25 @@ let scratcheTheme = getMuiTheme({
   },
 });
 
+const Webapp = React.createClass({
+  render() {
+      return <MuiThemeProvider muiTheme={scratcheTheme}>
+        {this.props.children}
+      </MuiThemeProvider>
+  }
+});
+
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider muiTheme={scratcheTheme}>
-        <div className="app">
-          <AppBar
-            title="Scratche"
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-          />
-          <div className="app-container">
-            <Scratch />
-          </div>
-        </div>
-      </MuiThemeProvider>
+      <Router history={browserHistory}>
+        <Route path="/" component={Webapp}>
+          <IndexRoute component={Login} />
+          <Route path="app" component={Scratch} />
+          <Route path="login" component={Login} />
+          <Route path="*" component={Login}/>
+        </Route>
+      </Router>
     );
   }
 }

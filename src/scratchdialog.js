@@ -55,9 +55,9 @@ class ScratchDialog extends Component {
 
   // onChange is called when the value in the
   // text field is changing.
-  onChange = (event) => {
+  onChange = (event, value) => {
     this.setState({
-      scratchValue: event.target.value
+      scratchValue: value,
     });
   }
 
@@ -131,7 +131,7 @@ class ScratchDialog extends Component {
           onRequestClose={this.onScratchDialogClose}
           actions={this.dialogActions()}
         >
-          <TextField className="scratcher-input" id="scratcher-input-modal" value={this.state.scratchValue} onChange={this.onChange} onClick={this.onScratchDialogOpen} fullWidth={true} multiLine={true} placeholder="Scratch here" />
+          <TextField className="scratcher-input" id="scratcher-input-modal" onChange={this.onChange} onClick={this.onScratchDialogOpen} fullWidth={true} multiLine={true} placeholder="Scratch here" />
 
           {this.props.card && this.props.card.r_category !== 'Unknown' &&
             <Chip text={this.props.card.r_category} />

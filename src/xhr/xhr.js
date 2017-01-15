@@ -14,24 +14,30 @@ class XHR {
   static requestJson(url, method, params, body) {
     var req = {
       method: method,
+      headers: {
+        'Accept': 'application/json',
+      },
+      credentials: 'include',
       mode: 'cors',
-      //credentials: 'include',
-      cache: 'default',
     };
 
     if (body) {
       req.body = JSON.stringify(body);
     }
 
-    let finalUrl = url + '?' + XHR.encodeQueryData(params);
+    let finalUrl = url;
+
+    if (params) {
+      finalUrl += '?' + XHR.encodeQueryData(params);
+    }
 
     let q = new Promise(
       (resolve, reject) => {
-        fetch(finalUrl, req).then((response) => {
+        return fetch(finalUrl, req).then((response) => {
           if (response.ok) {
             response.json().then(resolve);
           } else {
-            reject();
+            reject(response);
           }
       }, reject);
     });

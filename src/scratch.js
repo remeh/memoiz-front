@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import AppBar from 'material-ui/AppBar';
 
 import Card from './card.js';
 import ScratchDialog from './scratchdialog.js';
@@ -270,6 +271,7 @@ class Scratch extends Component {
   render() {
     return (
       <div>
+        <AppBar />
         <ScratchDialog 
           openDialog={this.state.scratchDialogOpen}
           onDialogClose={() => { this.setState({scratchDialogOpen: false}); }}
