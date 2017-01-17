@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import XHRLogin from './xhr/login.js';
+import XHRAccount from './xhr/account.js';
 import './login.css';
 
 class Login extends Component {
@@ -51,7 +51,7 @@ class Login extends Component {
       return;
     }
 
-    XHRLogin.sendLogin(this.state.email, this.state.password).then((resp) => {
+    XHRAccount.login(this.state.email, this.state.password).then((resp) => {
       // redirect to the app on success
       browserHistory.push('/app');
     }).catch((resp) => {

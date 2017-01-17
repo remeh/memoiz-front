@@ -19,8 +19,9 @@ import {lightBlue900,
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Login from './login.js';
-
 import Scratch from './scratch.js';
+import Signup from './signup.js';
+
 import './app.css';
 
 injectTapEventPlugin();
@@ -60,6 +61,7 @@ class App extends Component {
         <Route path="/" component={Webapp}>
           <IndexRoute component={Login} />
           <Route path="app" component={Scratch} />
+          <Route path="signup" component={Signup} />
           <Route path="login" component={Login} />
           <Route path="*" component={Login}/>
         </Route>
