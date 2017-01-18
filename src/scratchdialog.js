@@ -12,6 +12,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import TextField from 'material-ui/TextField';
 
 import Chip from './chip.js'
+import Strings from './strings.js'
 
 import './scratchdialog.css';
 
@@ -125,17 +126,32 @@ class ScratchDialog extends Component {
     }
     return <div>
         <Dialog
+          className="dialog"
           modal={false}
           open={this.state.scratchDialogOpen}
           autoScrollBodyContent={true}
           onRequestClose={this.onScratchDialogClose}
           actions={this.dialogActions()}
         >
-          <TextField className="scratcher-input" id="scratcher-input-modal" onChange={this.onChange} onClick={this.onScratchDialogOpen} fullWidth={true} multiLine={true} placeholder="Scratch here" />
+          <TextField className="scratcher-input" id="scratcher-input-modal" value={this.state.scratchValue} onChange={this.onChange} onClick={this.onScratchDialogOpen} fullWidth={true} multiLine={true} placeholder="Scratch here" />
 
           {this.props.card && this.props.card.r_category !== 'Unknown' &&
             <Chip text={this.props.card.r_category} />
           }
+
+          {this.props.card && this.props.card.r_image &&
+            <div className="rich">
+              <div>
+                <a href={this.props.card.r_url} target="_blank" alt="Go to link">
+                  <img src={this.props.card.r_image} role="presentation" />
+                </a>
+              </div>
+              <span className="title">{Strings.cut(this.props.card.r_title, 80)}</span>
+              <br />
+              <span className="url">{Strings.cut(this.props.card.r_url, 90)}</span>
+            </div>
+          }
+
           <br />
           <Checkbox onCheck={this.toggleEnrich} checked={this.state.enrich} label="Automatically enrich scratch information" style={styles.checkbox} />
           {this.props.card && this.props.card.last_update &&

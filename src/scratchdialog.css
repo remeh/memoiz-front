@@ -2,3 +2,29 @@
   font-size: 0.8em;
   color: #aaaaaa;
 }
+
+.dialog .rich {
+  margin-top: 1em;
+  width: 100%;
+  height: 72px;
+  border: 1px solid #eee;
+}
+
+.dialog .rich img {
+  align: right;
+  position: absolute;
+  width: 72px;
+  height: 72px;
+}
+
+.dialog .rich span {
+  padding-left: 78px;
+  font-size: 0.8em;
+  width: 164px;
+}
+
+.dialog .rich span.title {
+  padding-left: 78px;
+  font-weight: bold;
+}
+

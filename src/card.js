@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Snackbar from 'material-ui/Snackbar';
 
 import Chip from './chip.js';
+import Strings from './strings.js';
 import './card.css';
 
 class Card extends Component {
@@ -154,15 +155,6 @@ class Card extends Component {
     }});
   }
 
-  cut = (str, count) => {
-    if (!str) {
-      return '';
-    }
-    if (!count) {
-      count = 10E10;
-    }
-    return str.substring(0, count) + '...';
-  }
 
   // ----------------------
 
@@ -192,9 +184,9 @@ class Card extends Component {
                 <img src={this.props.card.r_image} role="presentation" />
               </a>
             </div>
-            <span className="title">{this.cut(this.props.card.r_title, 22)}</span>
+            <span className="title">{Strings.cut(this.props.card.r_title, 22)}</span>
             <br />
-            <span className="url">{this.cut(this.props.card.r_url, 22)}</span>
+            <span className="url">{Strings.cut(this.props.card.r_url, 22)}</span>
           </div>
         }
         <Snackbar
