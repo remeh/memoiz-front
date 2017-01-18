@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 
+import Create from 'material-ui/svg-icons/content/create';
 import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
+import Forum from 'material-ui/svg-icons/communication/forum';
 import MenuItem from 'material-ui/MenuItem';
 import PowerSettingsNew from 'material-ui/svg-icons/action/power-settings-new';
 import Subheader from 'material-ui/Subheader';
@@ -23,6 +25,13 @@ class Menu extends Component {
     })
   }
 
+  onChange = () => {
+    let s = this.state.open;
+    this.setState({
+      open: !s
+    });
+  }
+
   logout = () => {
     XHRAccount.logout().then((resp) => {
       if (resp.ok) {
@@ -31,20 +40,27 @@ class Menu extends Component {
     })
   }
 
-  // ----------------------
+  support = () => {
+    document.location = 'mailto:contact@remy.io';
+  }
 
-  // NOTE(remy): I've disabled swipe to open because
-  // it seems like having trouble with the 
-  // cards drag'n'drop.
+  scratch = () => {
+    this.onChange();
+    this.props.onScratch();
+  }
+
+  // ----------------------
 
   render() {
     return <Drawer
         docked={false}
         open={this.state.open}
-        disableSwipeToOpen={true}
-        onRequestChange={(open) => this.setState({open})}>
-          <Subheader>Firstname</Subheader>
+        onRequestChange={this.onChange}>
+          <Subheader><strong>Scratche 1.0</strong></Subheader>
           <Divider />
+          <MenuItem primaryText="Scratch something" onClick={this.scratch} leftIcon={<Create />} />
+          <Divider />
+          <MenuItem primaryText="Support" onClick={this.support} leftIcon={<Forum />} />
           <MenuItem primaryText="Logout" onClick={this.logout} leftIcon={<PowerSettingsNew />} />
       </Drawer>
   }

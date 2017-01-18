@@ -282,7 +282,10 @@ class Scratch extends Component {
         <AppBar
           onLeftIconButtonTouchTap={this.toggleMenu}
          />
-        <Menu open={this.state.menu} />
+        <Menu
+          open={this.state.menu}
+          onScratch={this.openDialog}
+        />
         <ScratchDialog 
           openDialog={this.state.scratchDialogOpen}
           onDialogClose={() => { this.setState({scratchDialogOpen: false}); }}
