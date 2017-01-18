@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
 import AppBar from 'material-ui/AppBar';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 import Card from './card.js';
+import Menu from './menu.js';
 import ScratchDialog from './scratchdialog.js';
 import XHRScratch from './xhr/scratch.js';
 import randomUuid from './uuid.js';
@@ -20,6 +21,7 @@ class Scratch extends Component {
     this.state =  {
       cards: [], // list of displayed cards
       scratchDialogOpen: false,
+      menu: false,
     }
 
     this.fetchCards();
@@ -266,12 +268,21 @@ class Scratch extends Component {
     this.openedCard = undefined;
   }
 
+  toggleMenu = () => {
+    let s = this.state;
+    s.menu = true;
+    this.setState(s);
+  }
+
   // ----------------------
 
   render() {
     return (
       <div>
-        <AppBar />
+        <AppBar
+          onLeftIconButtonTouchTap={this.toggleMenu}
+         />
+        <Menu open={this.state.menu} />
         <ScratchDialog 
           openDialog={this.state.scratchDialogOpen}
           onDialogClose={() => { this.setState({scratchDialogOpen: false}); }}
