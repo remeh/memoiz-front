@@ -155,7 +155,9 @@ class ScratchDialog extends Component {
           <br />
           <Checkbox onCheck={this.toggleEnrich} checked={this.state.enrich} label="Automatically enrich scratch information" style={styles.checkbox} />
           {this.props.card && this.props.card.last_update &&
-            <span title={prettyTime} className="scratche-creation-date">Last edit <Moment fromNow>{this.props.card.last_update}</Moment></span>
+            <div className="scratche-creation-date">
+              <span title={prettyTime}>Last edit <Moment fromNow>{this.props.card.last_update}</Moment></span>
+            </div>
           }
         </Dialog>
 

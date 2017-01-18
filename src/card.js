@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Snackbar from 'material-ui/Snackbar';
-import ReactAutoLink from 'react-autolink';
 
 import Chip from './chip.js';
 import Strings from './strings.js';
@@ -175,7 +174,7 @@ class Card extends Component {
         >
         <div className="content" onClick={this.onClick}>
 
-          {ReactAutoLink.autolink(this.getText())}
+          {this.getText()}
           {this.state.r_category !== 'Unknown' &&
             <Chip text={this.state.r_category} />
           }
