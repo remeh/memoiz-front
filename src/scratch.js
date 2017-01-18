@@ -270,7 +270,7 @@ class Scratch extends Component {
 
   toggleMenu = () => {
     let s = this.state;
-    s.menu = true;
+    s.menu = !s.menu;
     this.setState(s);
   }
 
@@ -284,6 +284,7 @@ class Scratch extends Component {
          />
         <Menu
           open={this.state.menu}
+          toggleMenu={this.toggleMenu}
           onScratch={this.openDialog}
         />
         <ScratchDialog 

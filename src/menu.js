@@ -25,13 +25,6 @@ class Menu extends Component {
     })
   }
 
-  onChange = () => {
-    let s = this.state.open;
-    this.setState({
-      open: !s
-    });
-  }
-
   logout = () => {
     XHRAccount.logout().then((resp) => {
       if (resp.ok) {
@@ -45,7 +38,7 @@ class Menu extends Component {
   }
 
   scratch = () => {
-    this.onChange();
+    this.props.toggleMenu();
     this.props.onScratch();
   }
 
@@ -55,7 +48,7 @@ class Menu extends Component {
     return <Drawer
         docked={false}
         open={this.state.open}
-        onRequestChange={this.onChange}>
+        onRequestChange={() => this.props.toggleMenu}>
           <Subheader><strong>Scratche 1.0</strong></Subheader>
           <Divider />
           <MenuItem primaryText="Scratch something" onClick={this.scratch} leftIcon={<Create />} />
