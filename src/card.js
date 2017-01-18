@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Snackbar from 'material-ui/Snackbar';
+import ReactAutoLink from 'react-autolink';
 
 import Chip from './chip.js';
 import Strings from './strings.js';
@@ -8,6 +9,7 @@ import './card.css';
 class Card extends Component {
   MaximumForLargeText = 80;
   AutoHideSnackBar = 5000; // ms
+
 
   // Lifecycle
   // ----------------------
@@ -172,7 +174,8 @@ class Card extends Component {
         onDrop={this.onDrop}
         >
         <div className="content" onClick={this.onClick}>
-          {this.getText()}
+
+          {ReactAutoLink.autolink(this.getText())}
           {this.state.r_category !== 'Unknown' &&
             <Chip text={this.state.r_category} />
           }
