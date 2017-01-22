@@ -1,4 +1,7 @@
 class XHR {
+  static domain = "//localhost:8080"
+  // static domain = "//api.memoiz.com"
+
   static getJson(url, params) {
     return XHR.requestJson(url, 'GET', params);
   }

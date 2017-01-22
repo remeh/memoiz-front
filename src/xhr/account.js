@@ -3,13 +3,13 @@ import XHR from './xhr.js';
 class XHRAccount {
   static logout() {
     return XHR.postJson(
-      'http://localhost:8080/api/1.0/accounts/logout', // XXX(remy): fix url
+      XHR.domain + '/api/1.0/accounts/logout',
     );
   }
 
   static login(email, password) {
     return XHR.postJson(
-      'http://localhost:8080/api/1.0/accounts/login', // XXX(remy): fix url
+      XHR.domain + '/api/1.0/accounts/login',
       null,
       {email: email, password: password}
     );
@@ -17,7 +17,7 @@ class XHRAccount {
 
   static signup(email, password, firstname) {
     return XHR.postJson(
-      'http://localhost:8080/api/1.0/accounts', // XXX(remy): fix url
+      XHR.domain + '/api/1.0/accounts',
       null,
       {email: email, password: password, firstname: firstname}
     );
