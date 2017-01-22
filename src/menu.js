@@ -34,7 +34,7 @@ class Menu extends Component {
   }
 
   support = () => {
-    document.location = 'mailto:contact@remy.io';
+    document.location = 'mailto:support@memoiz.com';
   }
 
   memo = () => {
