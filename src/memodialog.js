@@ -14,7 +14,7 @@ import TextField from 'material-ui/TextField';
 import Chip from './chip.js'
 import Strings from './strings.js'
 
-import './scratchdialog.css';
+import './memodialog.css';
 
 let styles = {
   iconStyle: {
@@ -28,11 +28,11 @@ let styles = {
   },
 };
 
-class ScratchDialog extends Component {
+class MemoDialog extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      scratchDialogOpen: this.props.openDialog,
+      memoDialogOpen: this.props.openDialog,
       enrich: true,
     }
   }
@@ -43,22 +43,22 @@ class ScratchDialog extends Component {
       val = nextProps.card.value;
     }
     this.setState({
-      scratchValue: val,
-      scratchDialogOpen: nextProps.openDialog,
+      memoValue: val,
+      memoDialogOpen: nextProps.openDialog,
     })
   }
 
   // ----------------------
 
   submit = () => {
-    this.props.submit(this.state.scratchValue, this.state.enrich);
+    this.props.submit(this.state.memoValue, this.state.enrich);
   }
 
   // onChange is called when the value in the
   // text field is changing.
   onChange = (event, value) => {
     this.setState({
-      scratchValue: value,
+      memoValue: value,
     });
   }
 
@@ -72,16 +72,16 @@ class ScratchDialog extends Component {
     if (this.props.card) {
       this.props.onArchive(event, this.props.card.id);
     }
-    this.setState({scratchDialogOpen: false});
+    this.setState({memoDialogOpen: false});
   } 
 
   openWikipedia = (event) => {
-    var txt = this.state.scratchValue.replace(' ', '_');
+    var txt = this.state.memoValue.replace(' ', '_');
     window.open('https://en.wikipedia.org/wiki/' + encodeURIComponent(txt));
   }
 
   openGoogle = (event) => {
-    window.open('https://google.com/search?q=' + encodeURIComponent(this.state.scratchValue));
+    window.open('https://google.com/search?q=' + encodeURIComponent(this.state.memoValue));
   }
 
   dialogActions = () => {
@@ -105,14 +105,14 @@ class ScratchDialog extends Component {
       );
     }
 
-    actions.push(<FlatButton className="scratcher-button" style={styles.cancelButton} onClick={this.onScratchDialogClose} label="Cancel" />);
-    actions.push(<FlatButton className="scratcher-button" onClick={this.submit} primary={true} label="Save"/>);
+    actions.push(<FlatButton className="memoiz-button" style={styles.cancelButton} onClick={this.onMemoDialogClose} label="Cancel" />);
+    actions.push(<FlatButton className="memoiz-button" onClick={this.submit} primary={true} label="Save"/>);
     return actions;
   }
 
-  onScratchDialogClose = () => {
+  onMemoDialogClose = () => {
     this.setState({
-      scratchDialogOpen: false,
+      memoDialogOpen: false,
       enrich: true, // force enrichment on next opening
     });
     this.props.onDialogClose();
@@ -128,12 +128,12 @@ class ScratchDialog extends Component {
         <Dialog
           className="dialog"
           modal={false}
-          open={this.state.scratchDialogOpen}
+          open={this.state.memoDialogOpen}
           autoScrollBodyContent={true}
-          onRequestClose={this.onScratchDialogClose}
+          onRequestClose={this.onMemoDialogClose}
           actions={this.dialogActions()}
         >
-          <TextField className="scratcher-input" id="scratcher-input-modal" value={this.state.scratchValue} onChange={this.onChange} onClick={this.onScratchDialogOpen} fullWidth={true} multiLine={true} placeholder="Scratch here" />
+          <TextField className="memoiz-input" id="memoiz-input-modal" value={this.state.memoValue} onChange={this.onChange} onClick={this.onMemoDialogOpen} fullWidth={true} multiLine={true} placeholder="Memo here" />
 
           {this.props.card && this.props.card.r_category !== 'Unknown' &&
             <Chip text={this.props.card.r_category} />
@@ -153,9 +153,9 @@ class ScratchDialog extends Component {
           }
 
           <br />
-          <Checkbox onCheck={this.toggleEnrich} checked={this.state.enrich} label="Automatically enrich scratch information" style={styles.checkbox} />
+          <Checkbox onCheck={this.toggleEnrich} checked={this.state.enrich} label="Automatically enrich memo information" style={styles.checkbox} />
           {this.props.card && this.props.card.last_update &&
-            <div className="scratche-creation-date">
+            <div className="memoiz-creation-date">
               <span title={prettyTime}>Last edit <Moment fromNow>{this.props.card.last_update}</Moment></span>
             </div>
           }
@@ -168,11 +168,11 @@ class ScratchDialog extends Component {
 // constructor prototype
 // ----------------------
 
-ScratchDialog.propTypes = {
+MemoDialog.propTypes = {
   submit: PropTypes.func.isRequired,
   openDialog: PropTypes.bool.isRequired,
   onArchive: PropTypes.func.isRequired,
   onDialogClose: PropTypes.func.isRequired,
 }
 
-export default ScratchDialog;
+export default MemoDialog;

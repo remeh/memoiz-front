@@ -1,6 +1,6 @@
 import XHR from './xhr.js';
 
-class XHRScratch {
+class XHRMemo {
   static archiveCard(uid, cardUid) {
     return XHR.postJson(
       'http://localhost:8080/api/1.0/cards/'+cardUid+'/archive', // XXX(remy): fix url
@@ -48,4 +48,4 @@ class XHRScratch {
   }
 }
 
-export default XHRScratch;
+export default XHRMemo;

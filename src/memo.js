@@ -5,22 +5,22 @@ import TextField from 'material-ui/TextField';
 
 import Card from './card.js';
 import Menu from './menu.js';
-import ScratchDialog from './scratchdialog.js';
-import XHRScratch from './xhr/scratch.js';
+import MemoDialog from './memodialog.js';
+import XHRMemo from './xhr/memo.js';
 import randomUuid from './uuid.js';
 
-import './scratch.css';
+import './memo.css';
 
-class Scratch extends Component {
+class Memo extends Component {
   constructor(props) {
     super(props);
 
     this.openedCard = undefined; // id of the currently opened card
-    this.scratchValue = ''; // sent to the dialog when opening a card
+    this.memoValue = ''; // sent to the dialog when opening a card
 
     this.state =  {
       cards: [], // list of displayed cards
-      scratchDialogOpen: false,
+      memoDialogOpen: false,
       menu: false,
     }
 
@@ -28,9 +28,9 @@ class Scratch extends Component {
   }
 
   putChanges = (id, text, enrich) => {
-    XHRScratch.putCard('12341234-1234-1234-1234-123412341234', id, text, enrich)
+    XHRMemo.putCard('12341234-1234-1234-1234-123412341234', id, text, enrich)
       .then((card) => {
-        // edit the scratch
+        // edit the memo
         // ----------------------
 
         var cards = this.state.cards.slice();
@@ -44,7 +44,7 @@ class Scratch extends Component {
 
         this.setState({
           cards: cards,
-          scratchDialogOpen: false,
+          memoDialogOpen: false,
         });
 
         // TODO(remy): loader in the card?
@@ -61,9 +61,9 @@ class Scratch extends Component {
   }
 
   postNewCard = (text, enrich) => {
-    XHRScratch.postCard('12341234-1234-1234-1234-123412341234', text, enrich)
+    XHRMemo.postCard('12341234-1234-1234-1234-123412341234', text, enrich)
       .then((card) => {
-      // add the scratch
+      // add the memo
       // ----------------------
 
       var cards = this.state.cards.slice();
@@ -74,7 +74,7 @@ class Scratch extends Component {
 
       this.setState({
         cards: cards,
-        scratchDialogOpen: false,
+        memoDialogOpen: false,
       });
 
       // in 2s, fetch for some rich infos
@@ -89,9 +89,9 @@ class Scratch extends Component {
   }
 
   enrich = (card) => {
-    XHRScratch.enrichCard('12341234-1234-1234-1234-123412341234', card.uid)
+    XHRMemo.enrichCard('12341234-1234-1234-1234-123412341234', card.uid)
       .then((rich) => {
-        // edit the scratch
+        // edit the memo
         // ----------------------
 
         var cards = this.state.cards.slice();
@@ -137,7 +137,7 @@ class Scratch extends Component {
   // ----------------------
 
   fetchCards = () => {
-    XHRScratch.getCards('12341234-1234-1234-1234-123412341234').then((json) => {
+    XHRMemo.getCards('12341234-1234-1234-1234-123412341234').then((json) => {
       let cards = [];
 
       for (let i = 0; i < json.length; i++) {
@@ -195,7 +195,7 @@ class Scratch extends Component {
     // backend call
 
     // TODO(remy): handle error
-    XHRScratch.switchCard('12341234-1234-1234-1234-123412341234', src_id, dst_id);
+    XHRMemo.switchCard('12341234-1234-1234-1234-123412341234', src_id, dst_id);
 
     // visually move the card
 
@@ -213,8 +213,8 @@ class Scratch extends Component {
   // ----------------------
 
   archiveCard = (event, cardUid) => {
-    XHRScratch.archiveCard('12341234-1234-1234-1234-123412341234', cardUid).then((json) => {
-        // edit the scratch
+    XHRMemo.archiveCard('12341234-1234-1234-1234-123412341234', cardUid).then((json) => {
+        // edit the memo
         // ----------------------
 
         var cards = this.state.cards.slice();
@@ -229,26 +229,26 @@ class Scratch extends Component {
 
         this.setState({
           cards: cards,
-          scratchDialogOpen: false,
+          memoDialogOpen: false,
         });
     });
   }
 
-  // Scratche dialog
+  // Memoiz dialog
   // ----------------------
 
   openDialog = (event, rEvent, openedCard) => {
     this.openedCard = openedCard;
     this.setState({
-      scratchDialogOpen: true,
+      memoDialogOpen: true,
     });
     setTimeout(() => {
-      var el = document.querySelector('#scratcher-input-modal');
+      var el = document.querySelector('#memoiz-input-modal');
       if (el) { el.focus(); }
     }, 100);
   }
 
-  // scratch adds a new card entry in the cards
+  // memo adds a new card entry in the cards
   // or sends modification of the current one.
   onSubmit = (text, enrich) => {
     if (!text.length) {
@@ -285,19 +285,19 @@ class Scratch extends Component {
         <Menu
           open={this.state.menu}
           toggleMenu={this.toggleMenu}
-          onScratch={this.openDialog}
+          onMemo={this.openDialog}
         />
-        <ScratchDialog 
-          openDialog={this.state.scratchDialogOpen}
-          onDialogClose={() => { this.setState({scratchDialogOpen: false}); }}
+        <MemoDialog 
+          openDialog={this.state.memoDialogOpen}
+          onDialogClose={() => { this.setState({memoDialogOpen: false}); }}
           submit={this.onSubmit}
           card={this.openedCard}
           onArchive={this.archiveCard}
         />
-        <div className="scratcher-container">
-          <div className="scratcher">
-            <TextField className="scratcher-input" id="scratcher-input-page" onClick={this.openDialog} fullWidth={true} multiLine={true} placeholder="Scratch here" />
-            <RaisedButton className="scratcher-button" onClick={this.submit} label="Save" fullWidth={true} />
+        <div className="memoiz-container">
+          <div className="memoiz">
+            <TextField className="memoiz-input" id="memoiz-input-page" onClick={this.openDialog} fullWidth={true} multiLine={true} placeholder="Memo here" />
+            <RaisedButton className="memoiz-button" onClick={this.submit} label="Save" fullWidth={true} />
           </div>
         </div>
         <div>
@@ -330,4 +330,4 @@ class Scratch extends Component {
   }
 }
 
-export default Scratch;
+export default Memo;

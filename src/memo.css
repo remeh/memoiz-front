@@ -6,21 +6,21 @@
   justify-content: center;
 }
 
-.scratcher-container {
+.memoiz-container {
   display: flex;
   justify-content: center;
   margin-top: 1em;
 }
 
 @media screen and (max-width: 440px) {
-  .scratcher {
+  .memoiz {
     width: 90%;
     padding-bottom: 3em;
   }
 }
 
 @media screen and (min-width:  440px) {
-  .scratcher {
+  .memoiz {
     width: 450px;
     padding-bottom: 3em;
   }

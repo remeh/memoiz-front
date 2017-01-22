@@ -37,9 +37,9 @@ class Menu extends Component {
     document.location = 'mailto:contact@remy.io';
   }
 
-  scratch = () => {
+  memo = () => {
     this.props.toggleMenu();
-    this.props.onScratch();
+    this.props.onMemo();
   }
 
   // ----------------------
@@ -49,9 +49,9 @@ class Menu extends Component {
         docked={false}
         open={this.state.open}
         onRequestChange={() => this.props.toggleMenu}>
-          <Subheader><strong>Scratche 1.0</strong></Subheader>
+          <Subheader><strong>Memoiz 1.0</strong></Subheader>
           <Divider />
-          <MenuItem primaryText="Scratch something" onClick={this.scratch} leftIcon={<Create />} />
+          <MenuItem primaryText="Memo something" onClick={this.memo} leftIcon={<Create />} />
           <Divider />
           <MenuItem primaryText="Support" onClick={this.support} leftIcon={<Forum />} />
           <MenuItem primaryText="Logout" onClick={this.logout} leftIcon={<PowerSettingsNew />} />

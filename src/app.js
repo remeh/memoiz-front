@@ -19,14 +19,14 @@ import {lightBlue900,
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Login from './login.js';
-import Scratch from './scratch.js';
+import Memo from './memo.js';
 import Signup from './signup.js';
 
 import './app.css';
 
 injectTapEventPlugin();
 
-let scratcheTheme = getMuiTheme({
+let memoizTheme = getMuiTheme({
   fontFamily: 'Open Sans, sans-serif',
   palette: {
     primary1Color: lightBlue700,
@@ -48,7 +48,7 @@ let scratcheTheme = getMuiTheme({
 
 const Webapp = React.createClass({
   render() {
-      return <MuiThemeProvider muiTheme={scratcheTheme}>
+      return <MuiThemeProvider muiTheme={memoizTheme}>
         {this.props.children}
       </MuiThemeProvider>
   }
@@ -60,7 +60,7 @@ class App extends Component {
       <Router history={browserHistory}>
         <Route path="/" component={Webapp}>
           <IndexRoute component={Login} />
-          <Route path="app" component={Scratch} />
+          <Route path="app" component={Memo} />
           <Route path="signup" component={Signup} />
           <Route path="login" component={Login} />
           <Route path="*" component={Login}/>
