@@ -50,7 +50,8 @@ class MemoDialog extends Component {
 
   // ----------------------
 
-  submit = () => {
+  submit = (e) => {
+    if (e) { e.preventDefault(); }
     this.props.submit(this.state.memoValue, this.state.enrich);
   }
 
@@ -118,6 +119,13 @@ class MemoDialog extends Component {
     this.props.onDialogClose();
   }
 
+  onKeyPress = (e) => {
+    if (e.key === 'Enter' && e.ctrlKey) {
+      e.preventDefault();
+      this.submit();
+    }
+  }
+
   // ----------------------
 
   render() {
@@ -133,7 +141,8 @@ class MemoDialog extends Component {
           onRequestClose={this.onMemoDialogClose}
           actions={this.dialogActions()}
         >
-          <TextField className="memoiz-input" id="memoiz-input-modal" value={this.state.memoValue} onChange={this.onChange} onClick={this.onMemoDialogOpen} fullWidth={true} multiLine={true} placeholder="Memo here" />
+
+          <TextField onKeyPress={this.onKeyPress} className="memoiz-input" id="memoiz-input-modal" value={this.state.memoValue} onChange={this.onChange} onClick={this.onMemoDialogOpen} fullWidth={true} multiLine={true} placeholder="Memo here" />
 
           {this.props.memo && this.props.memo.r_category !== 'Unknown' &&
             <Chip text={this.props.memo.r_category} />
