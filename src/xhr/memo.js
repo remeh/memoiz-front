@@ -4,21 +4,18 @@ class XHRMemo {
   static archiveMemo(uid, memoUid) {
     return XHR.postJson(
       XHR.domain + '/api/1.0/memos/'+memoUid+'/archive',
-      {u: uid}
     );
   }
 
   static getMemos(uid) {
     return XHR.getJson(
       XHR.domain + '/api/1.0/memos',
-      {u: uid}
     );
   }
 
   static enrichMemo(uid, memoUid) {
     return XHR.getJson(
       XHR.domain + '/api/1.0/memos/'+memoUid+'/rich',
-      {u: uid}
     );
   }
 
@@ -26,7 +23,7 @@ class XHRMemo {
     enrich = !!enrich; // force boolean
     return XHR.postJson(
       XHR.domain + '/api/1.0/memos',
-      {u: uid},
+      null,
       {text: text, enrich: enrich},
     );
   }
@@ -35,7 +32,7 @@ class XHRMemo {
     enrich = !!enrich; // force boolean
     return XHR.postJson(
       XHR.domain + '/api/1.0/memos',
-      {u: uid},
+      null,
       {memo_uid: memoUid, text: text, enrich: enrich},
     );
   }
@@ -43,7 +40,6 @@ class XHRMemo {
   static switchMemo(uid, left, right) {
     return XHR.postJson(
       XHR.domain + '/api/1.0/memos/switch/' + left + '/' + right,
-      {u: uid}
     );
   }
 }
