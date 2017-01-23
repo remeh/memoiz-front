@@ -1,48 +1,48 @@
 import XHR from './xhr.js';
 
 class XHRMemo {
-  static archiveCard(uid, cardUid) {
+  static archiveMemo(uid, memoUid) {
     return XHR.postJson(
-      XHR.domain + '/api/1.0/cards/'+cardUid+'/archive',
+      XHR.domain + '/api/1.0/memos/'+memoUid+'/archive',
       {u: uid}
     );
   }
 
-  static getCards(uid) {
+  static getMemos(uid) {
     return XHR.getJson(
-      XHR.domain + '/api/1.0/cards',
+      XHR.domain + '/api/1.0/memos',
       {u: uid}
     );
   }
 
-  static enrichCard(uid, cardUid) {
+  static enrichMemo(uid, memoUid) {
     return XHR.getJson(
-      XHR.domain + '/api/1.0/cards/'+cardUid+'/rich',
+      XHR.domain + '/api/1.0/memos/'+memoUid+'/rich',
       {u: uid}
     );
   }
 
-  static postCard(uid, text, enrich) {
+  static postMemo(uid, text, enrich) {
     enrich = !!enrich; // force boolean
     return XHR.postJson(
-      XHR.domain + '/api/1.0/cards',
+      XHR.domain + '/api/1.0/memos',
       {u: uid},
       {text: text, enrich: enrich},
     );
   }
 
-  static putCard(uid, cardUid, text, enrich) {
+  static putMemo(uid, memoUid, text, enrich) {
     enrich = !!enrich; // force boolean
     return XHR.postJson(
-      XHR.domain + '/api/1.0/cards',
+      XHR.domain + '/api/1.0/memos',
       {u: uid},
-      {card_uid: cardUid, text: text, enrich: enrich},
+      {memo_uid: memoUid, text: text, enrich: enrich},
     );
   }
 
-  static switchCard(uid, left, right) {
+  static switchMemo(uid, left, right) {
     return XHR.postJson(
-      XHR.domain + '/api/1.0/cards/switch/' + left + '/' + right,
+      XHR.domain + '/api/1.0/memos/switch/' + left + '/' + right,
       {u: uid}
     );
   }

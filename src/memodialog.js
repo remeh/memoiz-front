@@ -39,8 +39,8 @@ class MemoDialog extends Component {
 
   componentWillReceiveProps(nextProps) {
     let val = '';
-    if (nextProps.card) {
-      val = nextProps.card.value;
+    if (nextProps.memo) {
+      val = nextProps.memo.value;
     }
     this.setState({
       memoValue: val,
@@ -69,8 +69,8 @@ class MemoDialog extends Component {
   }
 
   onArchive = (event) => {
-    if (this.props.card) {
-      this.props.onArchive(event, this.props.card.id);
+    if (this.props.memo) {
+      this.props.onArchive(event, this.props.memo.id);
     }
     this.setState({memoDialogOpen: false});
   } 
@@ -87,7 +87,7 @@ class MemoDialog extends Component {
   dialogActions = () => {
     var actions = [];
 
-    if (this.props.card && this.props.card.id) {
+    if (this.props.memo && this.props.memo.id) {
       // Delete
       actions.push(<IconButton onClick={this.onDelete} tooltip="Delete" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>delete</IconButton>);
       // Archive
@@ -121,8 +121,8 @@ class MemoDialog extends Component {
   // ----------------------
 
   render() {
-    if (this.props.card && this.props.card.last_update) {
-      var prettyTime = moment(this.props.card.last_update).format('LLL');
+    if (this.props.memo && this.props.memo.last_update) {
+      var prettyTime = moment(this.props.memo.last_update).format('LLL');
     }
     return <div>
         <Dialog
@@ -135,28 +135,28 @@ class MemoDialog extends Component {
         >
           <TextField className="memoiz-input" id="memoiz-input-modal" value={this.state.memoValue} onChange={this.onChange} onClick={this.onMemoDialogOpen} fullWidth={true} multiLine={true} placeholder="Memo here" />
 
-          {this.props.card && this.props.card.r_category !== 'Unknown' &&
-            <Chip text={this.props.card.r_category} />
+          {this.props.memo && this.props.memo.r_category !== 'Unknown' &&
+            <Chip text={this.props.memo.r_category} />
           }
 
-          {this.props.card && this.props.card.r_image &&
+          {this.props.memo && this.props.memo.r_image &&
             <div className="rich">
               <div>
-                <a href={this.props.card.r_url} target="_blank" alt="Go to link">
-                  <img src={this.props.card.r_image} role="presentation" />
+                <a href={this.props.memo.r_url} target="_blank" alt="Go to link">
+                  <img src={this.props.memo.r_image} role="presentation" />
                 </a>
               </div>
-              <span className="title">{Strings.cut(this.props.card.r_title, 80)}</span>
+              <span className="title">{Strings.cut(this.props.memo.r_title, 80)}</span>
               <br />
-              <span className="url">{Strings.cut(this.props.card.r_url, 90)}</span>
+              <span className="url">{Strings.cut(this.props.memo.r_url, 90)}</span>
             </div>
           }
 
           <br />
           <Checkbox onCheck={this.toggleEnrich} checked={this.state.enrich} label="Automatically enrich memo information" style={styles.checkbox} />
-          {this.props.card && this.props.card.last_update &&
+          {this.props.memo && this.props.memo.last_update &&
             <div className="memoiz-creation-date">
-              <span title={prettyTime}>Last edit <Moment fromNow>{this.props.card.last_update}</Moment></span>
+              <span title={prettyTime}>Last edit <Moment fromNow>{this.props.memo.last_update}</Moment></span>
             </div>
           }
         </Dialog>
