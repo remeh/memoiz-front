@@ -62,7 +62,9 @@ class Signup extends Component {
     this.setState({account: a});
   }
 
-  submit = () => {
+  submit = (e) => {
+    if (e) { e.preventDefault(); }
+
     if (!this.validateFields()) {
       return;
     }
@@ -121,6 +123,7 @@ class Signup extends Component {
     return (
       <div className="login-page">
         <div className="login">
+          <form onSubmit={this.submit}>
           <h1>Sign up</h1>
           <TextField
             hintText="Email"
@@ -146,6 +149,7 @@ class Signup extends Component {
           /><br />
           <br />
           <RaisedButton label="Sign up" fullWidth={true} primary={true} onClick={this.submit}/>
+          </form>
         </div>
       </div>
     );

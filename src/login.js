@@ -30,7 +30,9 @@ class Login extends Component {
     this.setState({password: val});
   }
 
-  submit = () => {
+  submit = (e) => {
+    if (e) { e.preventDefault(); }
+
     let error = false;
 
     if (!this.state.email || this.state.email.indexOf('@') === -1) {
@@ -69,6 +71,7 @@ class Login extends Component {
     return (
       <div className="login-page">
         <div className="login">
+          <form onSubmit={this.submit}>
           <h1>Login</h1>
           <TextField
             hintText="Email"
@@ -80,9 +83,11 @@ class Login extends Component {
             type="password"
             onChange={this.onPasswordChange}
             errorText={this.state.passwordError}
+            onSubmit={this.submit}
           /><br />
           <br />
-          <RaisedButton label="Login" fullWidth={true} primary={true} onClick={this.submit}/>
+          <RaisedButton type="submit" label="Login" fullWidth={true} primary={true} onClick={this.submit}/>
+          </form>
         </div>
       </div>
     );
