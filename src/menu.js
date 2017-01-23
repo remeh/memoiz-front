@@ -37,6 +37,10 @@ class Menu extends Component {
     document.location = 'mailto:support@memoiz.com';
   }
 
+  requestChange = () => {
+    this.props.toggleMenu();
+  }
+
   memo = () => {
     this.props.toggleMenu();
     this.props.onMemo();
@@ -48,10 +52,10 @@ class Menu extends Component {
     return <Drawer
         docked={false}
         open={this.state.open}
-        onRequestChange={() => this.props.toggleMenu}>
-          <Subheader><strong>Memoiz 1.0</strong></Subheader>
+        onRequestChange={this.requestChange}>
+          <Subheader><strong>Memoiz</strong></Subheader>
           <Divider />
-          <MenuItem primaryText="Memo something" onClick={this.memo} leftIcon={<Create />} />
+          <MenuItem primaryText="Write a memo" onClick={this.memo} leftIcon={<Create />} />
           <Divider />
           <MenuItem primaryText="Support" onClick={this.support} leftIcon={<Forum />} />
           <MenuItem primaryText="Logout" onClick={this.logout} leftIcon={<PowerSettingsNew />} />
