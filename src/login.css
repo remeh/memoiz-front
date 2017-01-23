@@ -3,7 +3,6 @@ div.login-page {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .login {
@@ -14,4 +13,5 @@ div.login-page {
   left: auto;
   right: auto;
   border-radius: 3px;
+  box-shadow: 3px 3px 3px #999999;
 }
