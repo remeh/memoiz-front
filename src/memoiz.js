@@ -11,6 +11,12 @@ import randomUuid from './uuid.js';
 
 import './memoiz.css';
 
+let styles = {
+  title: {
+    fontSize: '1.4em',
+  }
+}
+
 class Memoiz extends Component {
   constructor(props) {
     super(props);
@@ -281,7 +287,15 @@ class Memoiz extends Component {
       <div>
         <AppBar
           onLeftIconButtonTouchTap={this.toggleMenu}
-         />
+          title="Memoiz"
+          titleStyle={styles.title}
+          iconElementRight={
+            <TextField
+              hintText="Search"
+              style={{marginRight: '2em'}}
+              hintStyle={{color: 'white'}}
+            />}
+        />
         <Menu
           open={this.state.menu}
           toggleMenu={this.toggleMenu}
@@ -296,7 +310,7 @@ class Memoiz extends Component {
         />
         <div className="memoiz-container">
           <div className="memoiz">
-            <TextField className="memoiz-input" id="memoiz-input-page" onClick={this.openDialog} fullWidth={true} multiLine={true} placeholder="Memo here" />
+            <TextField className="memoiz-input" id="memoiz-input-page" value="" onChange={this.openDialog} onClick={this.openDialog} fullWidth={true} multiLine={true} placeholder="Write down a memo here" />
             <RaisedButton className="memoiz-button" onClick={this.submit} label="Save" fullWidth={true} />
           </div>
         </div>
