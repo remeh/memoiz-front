@@ -9,7 +9,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import TextField from 'material-ui/TextField';
-import Toggle from 'material-ui/Toggle';
+//import Toggle from 'material-ui/Toggle';
 
 import Chip from './chip.js'
 import Strings from './strings.js'
@@ -161,13 +161,14 @@ class MemoDialog extends Component {
             </div>
           }
 
-          <br />
+          {/*<br />
           <Toggle
           label="Automatically enrich memo information"
           labelPosition="right"
           onToggle={this.toggleEnrich}
           toggled={this.state.enrich}
-          />
+          />*/}
+
           {this.props.memo && this.props.memo.last_update &&
             <div className="memoiz-creation-date">
               <span title={prettyTime}>Last edit <Moment fromNow>{this.props.memo.last_update}</Moment></span>
