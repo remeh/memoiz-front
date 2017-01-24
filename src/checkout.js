@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import XHRCheckout from './xhr/checkout.js';
+
 class Checkout extends Component {
   constructor(props) {
     super(props);
@@ -36,6 +38,7 @@ class Checkout extends Component {
     // TODO(remy): implement me.
     console.log(status);
     console.log(response);
+    XHRCheckout.checkout(response);
   }
 
   render() {
