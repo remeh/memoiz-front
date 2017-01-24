@@ -10,7 +10,6 @@ import MenuItem from 'material-ui/MenuItem';
 import PowerSettingsNew from 'material-ui/svg-icons/action/power-settings-new';
 import Subheader from 'material-ui/Subheader';
 
-import Checkout from './checkout.js';
 import XHRAccount from './xhr/account.js';
 
 class Menu extends Component {
@@ -49,13 +48,9 @@ class Menu extends Component {
     this.props.onMemo();
   }
 
-  openCheckout = () => {
-    this.setState({ checkout: true });
+  goToCheckout = () => {
     this.props.toggleMenu();
-  }
-
-  closeCheckout = () => {
-    this.setState({ checkout: false });
+    browserHistory.push('/checkout');
   }
 
   // ----------------------
@@ -69,10 +64,9 @@ class Menu extends Component {
           <Divider />
           <MenuItem primaryText="Write a memo" onClick={this.memo} leftIcon={<Create />} />
           <Divider />
-          <MenuItem primaryText="Checkout" onClick={this.openCheckout} leftIcon={<CreditCard />} />
+          <MenuItem primaryText="Checkout" onClick={this.goToCheckout} leftIcon={<CreditCard />} />
           <MenuItem primaryText="Support" onClick={this.support} leftIcon={<Forum />} />
           <MenuItem primaryText="Logout" onClick={this.logout} leftIcon={<PowerSettingsNew />} />
-          <Checkout open={this.state.checkout} onClose={this.closeCheckout} />
       </Drawer>
   }
 }
