@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -14,6 +16,11 @@ import './memoiz.css';
 let styles = {
   title: {
     fontSize: '1.4em',
+  },
+  fab: {
+    position: 'fixed',
+    right: '20px',
+    bottom: '20px',
   }
 }
 
@@ -296,6 +303,9 @@ class Memoiz extends Component {
               hintStyle={{color: 'white'}}
             />}
         />
+        <FloatingActionButton style={styles.fab} onClick={this.openDialog}>
+          <ContentAdd />
+        </FloatingActionButton>
         <Menu
           open={this.state.menu}
           toggleMenu={this.toggleMenu}
