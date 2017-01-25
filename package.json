@@ -15,7 +15,7 @@
     "react-tap-event-plugin": "^2.0.1"
   },
   "scripts": {
-    "start": "REACT_APP_API_DOMAIN='http://localhost:3000' react-scripts start",
+    "start": "REACT_APP_API_DOMAIN='http://localhost:8080' react-scripts start",
     "build": "REACT_APP_API_DOMAIN='https://api.memoiz.com' react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

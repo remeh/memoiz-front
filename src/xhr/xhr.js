@@ -1,6 +1,5 @@
 class XHR {
-  static domain = "//localhost:8080"
-  // static domain = "//api.memoiz.com"
+  static domain = process.env.REACT_APP_API_DOMAIN;
 
   static getJson(url, params) {
     return XHR.requestJson(url, 'GET', params);

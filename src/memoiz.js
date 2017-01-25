@@ -3,6 +3,7 @@ import AppBar from 'material-ui/AppBar';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 
 import Memo from './memo.js';
@@ -318,12 +319,12 @@ class Memoiz extends Component {
           memo={this.openedMemo}
           onArchive={this.archiveMemo}
         />
-        <div className="memoiz-container">
+        <Paper zDepth={2} className="memoiz-container">
           <div className="memoiz">
             <TextField className="memoiz-input" id="memoiz-input-page" value="" onChange={this.openDialog} onClick={this.openDialog} fullWidth={true} multiLine={true} placeholder="Write down a memo here" />
             <RaisedButton className="memoiz-button" onClick={this.submit} label="Save" fullWidth={true} />
           </div>
-        </div>
+        </Paper>
         <div>
           <div className="memo-container" onClick={this.handleClick}>
             {this.state.memos.map(

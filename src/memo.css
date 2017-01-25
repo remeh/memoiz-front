@@ -11,6 +11,11 @@
   /* to be able to put the inside as position absolute */
   position: relative;
   cursor: pointer;
+  background-color: white;
+}
+
+.memo:hover {
+  box-shadow: 4px 4px 8px rgba(200,200,200,50);
 }
 
 .memo .content {
