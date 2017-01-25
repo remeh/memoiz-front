@@ -89,8 +89,6 @@ class MemoDialog extends Component {
     var actions = [];
 
     if (this.props.memo && this.props.memo.id) {
-      // Delete
-      actions.push(<IconButton onClick={this.onDelete} tooltip="Delete" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>delete</IconButton>);
       // Archive
       actions.push(<IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>);
       // Menu
@@ -100,6 +98,7 @@ class MemoDialog extends Component {
           targetOrigin={{horizontal: 'left', vertical: 'top'}}
           style={styles.menuIconStyle}
         >
+          {/* TODO(remy): delete action */}
           <MenuItem onClick={this.openWikipedia} primaryText="Open on Wikipedia" />
           <MenuItem onClick={this.openGoogle} primaryText="Search on Google" />
         </IconMenu>
