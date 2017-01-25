@@ -4,14 +4,3 @@ div.login-page {
   align-items: center;
   justify-content: center;
 }
-
-.login {
-  background-color: #eeeeee;
-  max-width: 50%;
-  margin-top: 75px;
-  padding: 2em;
-  left: auto;
-  right: auto;
-  border-radius: 3px;
-  box-shadow: 3px 3px 3px #999999;
-}

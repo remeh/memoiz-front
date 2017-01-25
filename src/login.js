@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 import XHRAccount from './xhr/account.js';
 import './login.css';
+import './box.css';
 
 class Login extends Component {
 
@@ -70,7 +71,7 @@ class Login extends Component {
   render() {
     return (
       <div className="login-page">
-        <div className="login">
+        <div className="box">
           <form onSubmit={this.submit}>
           <h1>Login</h1>
           <TextField

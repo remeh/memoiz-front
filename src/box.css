@@ -1,0 +1,21 @@
+.box {
+  background-color: #eeeeee;
+  margin-top: 75px;
+  padding: 2em;
+  left: auto;
+  right: auto;
+  border-radius: 3px;
+  box-shadow: 3px 3px 3px #999999;
+}
+
+@media screen and (max-width: 550px) {
+  .box {
+    width: 90%;
+  }
+}
+
+@media screen and (min-width:  550px) {
+  .box {
+    width: 500px;
+  }
+}
