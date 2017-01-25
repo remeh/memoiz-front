@@ -13,6 +13,12 @@
   cursor: pointer;
   background-color: white;
 }
+@media screen and (max-width: 550px) {
+  .memo {
+    min-width: 190px;
+    width: 190px;
+  }
+}
 
 .memo:hover {
   box-shadow: 4px 4px 8px rgba(200,200,200,50);
