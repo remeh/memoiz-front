@@ -89,6 +89,8 @@ class Login extends Component {
           <br />
           <RaisedButton type="submit" label="Login" fullWidth={true} primary={true} onClick={this.submit}/>
           </form>
+          <br />
+          <a href="/signup">Not registered ? Click here to create an account.</a>
         </div>
       </div>
     );
