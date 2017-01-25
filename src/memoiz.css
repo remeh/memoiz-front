@@ -10,7 +10,7 @@
 .memoiz-container {
   display: flex;
   justify-content: center;
-  margin-top: 1em;
+  margin-top: 2em;
   padding-top: 1em;
   margin-right: auto;
   margin-left: auto;
@@ -20,7 +20,7 @@
   padding-bottom: 2em;
 }
 
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 550px) {
   .memoiz-container {
     width: 90%;
   }
