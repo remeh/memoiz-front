@@ -1,4 +1,5 @@
 .box {
+  position: relative;
   background-color: #eeeeee;
   margin-top: 75px;
   padding: 2em;

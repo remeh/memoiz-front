@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Lock from 'material-ui/svg-icons/action/lock';
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -112,6 +113,7 @@ class Checkout extends Component {
     return <div className="checkout box">
         <form method="POST" id="payment-form">
           
+          <Lock className="lock" />
           <span className="payment-errors"></span>
           <h3>Plan</h3>
           <RadioButtonGroup name="plan" onChange={this.planChange} defaultSelected="2">
