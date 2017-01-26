@@ -17,8 +17,14 @@ class Checkout extends Component {
 
     this.state = {
       disabledSubmit: false,
+
+      plan: '2',
+
+      card_number: '',
       month: '01',
       year: '2017',
+      cvc: '',
+      postal_code: '',
     }
   }
   
@@ -31,13 +37,19 @@ class Checkout extends Component {
       disabledSubmit: true,
     });
 
+    console.log(this.state.card_number);
+    console.log(this.state.cvc);
+    console.log(this.state.postal_code);
+    console.log(this.state.month);
+    console.log(this.state.year);
+
     // TODO(remy): gather data to send it to Stripe
     let c = {
-      number: 4242424242424242,
-      cvc: 555,
-      exp_month: 12,
-      exp_year: 19,
-      address_zip: 69100,
+      number: this.state.card_number,
+      cvc: this.state.cvc,
+      exp_month: this.state.month,
+      exp_year: this.state.year,
+      address_zip: this.state.postal_code,
     };
 
     window.Stripe.card.createToken(c, this.stripeResponseHandler);
@@ -48,22 +60,36 @@ class Checkout extends Component {
     console.log(status);
     console.log(response);
 
-    // add the plan
-    response.plan = '1';
+    // add the plan to the request.
+    response.plan = this.state.plan;
 
     XHRCheckout.checkout(response);
   }
 
-  monthChange = (ev, idx, val) => {
+  planChange = (ev, val) => {
     this.setState({
-      month: val,
+      plan: ''+val,
     });
   }
 
+  monthChange = (ev, idx, val) => {
+    this.setState({ month: val, });
+  }
+
   yearChange = (ev, idx, val) => {
-    this.setState({
-      year: val,
-    });
+    this.setState({ year: val, });
+  }
+
+  cvcChange = (ev, val) => {
+    this.setState({ cvc: val, });
+  }
+
+  cardNumberChange = (ev, val) => {
+    this.setState({ card_number: val, });
+  }
+
+  postalChange = (ev, val) => {
+    this.setState({ postal_code: val, });
   }
 
   generateMonths = () => {
@@ -88,7 +114,7 @@ class Checkout extends Component {
           
           <span className="payment-errors"></span>
           <h3>Plan</h3>
-          <RadioButtonGroup name="plan" defaultSelected="2">
+          <RadioButtonGroup name="plan" onChange={this.planChange} defaultSelected="2">
             <RadioButton
             value="1"
               label="Basic - 3 months"
@@ -106,7 +132,7 @@ class Checkout extends Component {
           <div className="card">
             <h3>Credit Card</h3>
             <div>
-              <TextField className="card-num" floatingLabelFixed={true} floatingLabelText="Card Number" />
+              <TextField className="card-num" value={this.state.card_number} onChange={this.cardNumberChange} floatingLabelFixed={true} floatingLabelText="Card Number" />
             </div>
 
             <div style={{display: 'flex'}}>
@@ -119,11 +145,11 @@ class Checkout extends Component {
             </div>
 
             <div>
-              <TextField className="cvc" floatingLabelFixed={true} floatingLabelText="CVC" />
+              <TextField className="cvc" value={this.state.cvc} onChange={this.cvcChange} floatingLabelFixed={true} floatingLabelText="CVC" />
             </div>
 
             <div>
-              <TextField className="postal-code" floatingLabelFixed={true} floatingLabelText="Postal Code" />
+              <TextField className="postal-code" value={this.state.postal_code} onChange={this.postalChange} floatingLabelFixed={true} floatingLabelText="Postal Code" />
             </div>
           </div>
 
