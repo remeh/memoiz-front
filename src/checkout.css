@@ -46,6 +46,14 @@
   margin-top: 2em;
 }
 
+.errors {
+  margin-top: 1em;
+}
+
+.success {
+  margin-top: 1em;
+}
+
 @media screen and (max-width: 550px) {
   .checkout {
     width: 90%;

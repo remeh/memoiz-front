@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Lock from 'material-ui/svg-icons/action/lock';
+import {red400, green400} from 'material-ui/styles/colors';
+
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -10,6 +12,15 @@ import XHRCheckout from './xhr/checkout.js';
 
 import './box.css';
 import './checkout.css';
+
+let styles = {
+  errors: {
+    color: red400,
+  },
+  success: {
+    color: green400,
+  },
+}
 
 class Checkout extends Component {
   constructor(props) {
@@ -26,25 +37,23 @@ class Checkout extends Component {
       year: '2017',
       cvc: '',
       postal_code: '',
+
+      error: '',
+      success: '',
     }
   }
-  
+
   close = () => {
     this.props.checkoutClose();
   }
 
+  // checkout calls stripe for payment.
   checkout = () => {
     this.setState({
       disabledSubmit: true,
+      error: '',
     });
 
-    console.log(this.state.card_number);
-    console.log(this.state.cvc);
-    console.log(this.state.postal_code);
-    console.log(this.state.month);
-    console.log(this.state.year);
-
-    // TODO(remy): gather data to send it to Stripe
     let c = {
       number: this.state.card_number,
       cvc: this.state.cvc,
@@ -57,14 +66,36 @@ class Checkout extends Component {
   }
 
   stripeResponseHandler = (status, response) => {
-    // TODO(remy): implement me.
-    console.log(status);
-    console.log(response);
+    if (status !== 200) {
+      if (status === 402) {
+        this.setState({
+          error: 'Please check your card information.',
+          disabledSubmit: false,
+        });
+      }
+      return;
+    }
 
     // add the plan to the request.
-    response.plan = this.state.plan;
+    var req = response;
+    req.plan = this.state.plan;
 
-    XHRCheckout.checkout(response);
+    XHRCheckout.checkout(req).then((resp) => {
+      // success
+      // ----------------------
+      this.setState({
+        success: "Subscription correctly done. You'll be redirected in a few seconds.",
+      });
+      setTimeout(() => {
+        document.location = '/app';
+      }, 3000);
+    }).catch((resp) => {
+      // error
+      // ----------------------
+      this.setState({
+        error: "An error occurred, please contact us at contact@memoiz.com.",
+      });
+    });
   }
 
   planChange = (ev, val) => {
@@ -112,9 +143,7 @@ class Checkout extends Component {
   render() {
     return <div className="checkout box">
         <form method="POST" id="payment-form">
-          
           <Lock className="lock" />
-          <span className="payment-errors"></span>
           <h3>Plan</h3>
           <RadioButtonGroup name="plan" onChange={this.planChange} defaultSelected="2">
             <RadioButton
@@ -154,6 +183,9 @@ class Checkout extends Component {
               <TextField className="postal-code" value={this.state.postal_code} onChange={this.postalChange} floatingLabelFixed={true} floatingLabelText="Postal Code" />
             </div>
           </div>
+
+          <div className="errors" style={styles.errors}>{this.state.error}</div>
+          <div className="success" style={styles.success}>{this.state.success}</div>
 
           <RaisedButton className="checkout-button" disabled={this.state.disabledSubmit} onClick={this.checkout} label="Submit Payment" fullWidth={true} />
         </form>
