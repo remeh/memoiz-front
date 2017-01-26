@@ -1,6 +1,12 @@
 import XHR from './xhr.js';
 
 class XHRAccount {
+  static isAuth() {
+    return XHR.getJson(
+      XHR.domain + '/api/1.0/accounts',
+    );
+  }
+
   static logout() {
     return XHR.postJson(
       XHR.domain + '/api/1.0/accounts/logout',

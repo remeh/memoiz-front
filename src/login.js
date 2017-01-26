@@ -12,6 +12,11 @@ class Login extends Component {
   constructor(props) {
     super(props);
 
+    // TODO(remy): check if the router wouldn't allow to do this ?
+    XHRAccount.isAuth().then(() => {
+      document.location = '/app';
+    });
+
     // TODO(remy): send a request to check if the cookie
     // is still up. If so -> /app
 
