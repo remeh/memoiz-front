@@ -18,7 +18,6 @@ import {lightBlue900,
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import XHRAccount from './xhr/account.js';
 import Login from './login.js';
 import Memoiz from './memoiz.js';
 import Checkout from './checkout.js';

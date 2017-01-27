@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import Lock from 'material-ui/svg-icons/action/lock';
 import {red400, green400} from 'material-ui/styles/colors';
 
-import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
 
 import XHRCheckout from './xhr/checkout.js';
@@ -33,10 +31,18 @@ class Checkout extends Component {
       plan: '2',
 
       card_number: '',
-      month: '01',
-      year: '2017',
+      month: '',
+      year: '',
       cvc: '',
       postal_code: '',
+
+      errors: {
+        card_number: '',
+        month: '',
+        year: '',
+        cvc: '',
+        postal_code: '',
+      },
 
       error: '',
       success: '',
@@ -49,10 +55,54 @@ class Checkout extends Component {
 
   // checkout calls stripe for payment.
   checkout = () => {
+    let errors = {
+        card_number: '',
+        month: '',
+        year: '',
+        cvc: '',
+        postal_code: '',
+    };
+
     this.setState({
       disabledSubmit: true,
       error: '',
+      errors: errors,
     });
+
+    let error = false;
+
+    if (this.state.card_number.length !== 16) {
+      errors.card_number = 'Please enter a valid card number.';
+      error = true;
+    }
+
+    if (this.state.month < 1 || this.state.month > 12) {
+      errors.month = ' ';
+      error = true;
+    }
+
+    if (this.state.year < 2017) {
+      errors.year = ' ';
+      error = true;
+    }
+
+    if (this.state.cvc.length < 1) {
+      errors.cvc = ' ';
+      error = true;
+    }
+
+    if (this.state.postal_code.length < 1) {
+      errors.postal_code = ' ';
+      error = true;
+    }
+
+    if (error) {
+      this.setState({
+        errors: errors,
+        disabledSubmit: false,
+      });
+      return;
+    }
 
     let c = {
       number: this.state.card_number,
@@ -104,11 +154,11 @@ class Checkout extends Component {
     });
   }
 
-  monthChange = (ev, idx, val) => {
+  monthChange = (ev, val) => {
     this.setState({ month: val, });
   }
 
-  yearChange = (ev, idx, val) => {
+  yearChange = (ev, val) => {
     this.setState({ year: val, });
   }
 
@@ -122,22 +172,6 @@ class Checkout extends Component {
 
   postalChange = (ev, val) => {
     this.setState({ postal_code: val, });
-  }
-
-  generateMonths = () => {
-    var rows = [];
-    for (let i = 1; i <= 12; i++) {
-          rows.push(<MenuItem key={i} value={i} label={i} primaryText={i} />);
-    }
-    return rows;
-  }
-
-  generateYears = () => {
-    var rows = [];
-    for (let i = 2017; i <= 2030; i++) {
-          rows.push(<MenuItem key={i} value={i} label={i} primaryText={i} />);
-    }
-    return rows;
   }
 
   render() {
@@ -163,24 +197,20 @@ class Checkout extends Component {
           <div className="card">
             <h3>Credit Card</h3>
             <div>
-              <TextField className="card-num" value={this.state.card_number} onChange={this.cardNumberChange} floatingLabelFixed={true} floatingLabelText="Card Number" />
+              <TextField className="card-num" errorText={this.state.errors.card_number} value={this.state.card_number} onChange={this.cardNumberChange} floatingLabelFixed={true} floatingLabelText="Card Number" />
             </div>
 
             <div style={{display: 'flex'}}>
-              <SelectField className="month" floatingLabelText={<span>Expiration</span>} value={this.state.month} onChange={this.monthChange}>
-                {this.generateMonths()}
-              </SelectField>
-              <SelectField className="year" floatingLabelText={<span></span>} value={this.state.year} onChange={this.yearChange}>
-                {this.generateYears()}
-              </SelectField>
+              <TextField className="month" errorText={this.state.errors.month} floatingLabelFixed={true} floatingLabelText={<span>Expiration</span>} value={this.state.month} onChange={this.monthChange} />
+              <TextField className="year" errorText={this.state.errors.year} floatingLabelText={<span></span>} value={this.state.year} onChange={this.yearChange} />
             </div>
 
             <div>
-              <TextField className="cvc" value={this.state.cvc} onChange={this.cvcChange} floatingLabelFixed={true} floatingLabelText="CVC" />
+              <TextField className="cvc" errorText={this.state.errors.cvc} value={this.state.cvc} onChange={this.cvcChange} floatingLabelFixed={true} floatingLabelText="CVC" />
             </div>
 
             <div>
-              <TextField className="postal-code" value={this.state.postal_code} onChange={this.postalChange} floatingLabelFixed={true} floatingLabelText="Postal Code" />
+              <TextField className="postal-code" errorText={this.state.errors.postal_code} value={this.state.postal_code} onChange={this.postalChange} floatingLabelFixed={true} floatingLabelText="Postal Code" />
             </div>
           </div>
 
