@@ -6,7 +6,8 @@ import Strings from './strings.js';
 import './memo.css';
 
 class Memo extends Component {
-  MaximumForLargeText = 80;
+  MaximumForVeryLargeText = 25;
+  MaximumForLargeText = 40;
   AutoHideSnackBar = 5000; // ms
 
 
@@ -50,7 +51,9 @@ class Memo extends Component {
       c += " dragged";
     }
 
-    if (this.props.memo.value.length < this.MaximumForLargeText) {
+    if (this.props.memo.value.length < this.MaximumForVeryLargeText) {
+      c += " very-large-text";
+    } else if (this.props.memo.value.length < this.MaximumForLargeText) {
       c += " large-text";
     }
 
