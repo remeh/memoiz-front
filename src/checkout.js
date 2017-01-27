@@ -175,50 +175,61 @@ class Checkout extends Component {
   }
 
   render() {
-    return <div className="checkout box">
-        <form method="POST" id="payment-form">
-          <Lock className="lock" />
-          <h3>Plan</h3>
-          <RadioButtonGroup name="plan" onChange={this.planChange} defaultSelected="2">
-            <RadioButton
-            value="1"
-              label="Basic - 3 months"
-            />
-            <RadioButton
-              value="2"
-              label="Starter - 6 months"
-            />
-            <RadioButton
-              value="3"
-              label="Year - 12 months"
-            />
-          </RadioButtonGroup>
+    return <div className="checkout">
+        <div className="checkout-form box">
+          <form method="POST" id="payment-form">
+            <Lock className="lock" />
+            <h3>Plan</h3>
+            <RadioButtonGroup name="plan" onChange={this.planChange} defaultSelected="2">
+              <RadioButton
+              value="1"
+                label="Basic - 3 months"
+              />
+              <RadioButton
+                value="2"
+                label="Starter - 6 months"
+              />
+              <RadioButton
+                value="3"
+                label="Year - 12 months"
+              />
+            </RadioButtonGroup>
 
-          <div className="card">
-            <h3>Credit Card</h3>
-            <div>
-              <TextField className="card-num" errorText={this.state.errors.card_number} value={this.state.card_number} onChange={this.cardNumberChange} floatingLabelFixed={true} floatingLabelText="Card Number" />
+            <div className="card">
+              <h3>Credit Card</h3>
+              <div>
+                <TextField className="card-num" errorText={this.state.errors.card_number} value={this.state.card_number} onChange={this.cardNumberChange} floatingLabelFixed={true} floatingLabelText="Card Number" />
+              </div>
+
+              <div style={{display: 'flex'}}>
+                <TextField className="month" errorText={this.state.errors.month} floatingLabelFixed={true} floatingLabelText={<span>Expiration</span>} value={this.state.month} onChange={this.monthChange} />
+                <TextField className="year" errorText={this.state.errors.year} floatingLabelText={<span></span>} value={this.state.year} onChange={this.yearChange} />
+              </div>
+
+              <div>
+                <TextField className="cvc" errorText={this.state.errors.cvc} value={this.state.cvc} onChange={this.cvcChange} floatingLabelFixed={true} floatingLabelText="CVC" />
+              </div>
+
+              <div>
+                <TextField className="postal-code" errorText={this.state.errors.postal_code} value={this.state.postal_code} onChange={this.postalChange} floatingLabelFixed={true} floatingLabelText="Postal Code" />
+              </div>
             </div>
 
-            <div style={{display: 'flex'}}>
-              <TextField className="month" errorText={this.state.errors.month} floatingLabelFixed={true} floatingLabelText={<span>Expiration</span>} value={this.state.month} onChange={this.monthChange} />
-              <TextField className="year" errorText={this.state.errors.year} floatingLabelText={<span></span>} value={this.state.year} onChange={this.yearChange} />
-            </div>
+            <div className="errors" style={styles.errors}>{this.state.error}</div>
+            <div className="success" style={styles.success}>{this.state.success}</div>
 
-            <div>
-              <TextField className="cvc" errorText={this.state.errors.cvc} value={this.state.cvc} onChange={this.cvcChange} floatingLabelFixed={true} floatingLabelText="CVC" />
-            </div>
-
-            <div>
-              <TextField className="postal-code" errorText={this.state.errors.postal_code} value={this.state.postal_code} onChange={this.postalChange} floatingLabelFixed={true} floatingLabelText="Postal Code" />
-            </div>
-          </div>
-
-          <div className="errors" style={styles.errors}>{this.state.error}</div>
-          <div className="success" style={styles.success}>{this.state.success}</div>
-
-          <RaisedButton className="checkout-button" disabled={this.state.disabledSubmit} onClick={this.checkout} label="Submit Payment" fullWidth={true} />
-        </form>
+            <RaisedButton className="checkout-button" disabled={this.state.disabledSubmit} onClick={this.checkout} label="Submit Payment" fullWidth={true} />
+          </form>
+        </div>
+        <div className="checkout-information">
+          <h2>Starter Plan</h2>
+          <h3>The <em>Starter Plan</em> is <strong>5$</strong> for a <strong>3 months</strong> subscriptions.</h3>
+          <hr />
+          <h3>Each plan contains all features</h3>
+          <h4>Every features is important in Memoiz, that's why we've decided to include all features, in all plans.</h4>
+          <h3>We won't automatically charge your card!</h3>
+          <h4>At the end of your subscription, we'll just ask you if you want to continue your subscription.</h4>
+        </div>
       </div>
   }
 }
