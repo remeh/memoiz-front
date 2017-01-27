@@ -296,7 +296,7 @@ class Memoiz extends Component {
       <div>
         <AppBar
           onLeftIconButtonTouchTap={this.toggleMenu}
-          title="Memoiz"
+          title={<span className="app-bar-title">Memoiz</span>}
           titleStyle={styles.title}
           iconElementRight={
             <TextField

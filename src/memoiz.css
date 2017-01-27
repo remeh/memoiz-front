@@ -21,6 +21,9 @@
 }
 
 @media screen and (max-width: 550px) {
+  .app-bar-title {
+    display: none;
+  }
   .memoiz-container {
     width: 90%;
   }
