@@ -22,6 +22,7 @@ let styles = {
     position: 'fixed',
     right: '20px',
     bottom: '20px',
+    zIndex: 5,
   }
 }
 
