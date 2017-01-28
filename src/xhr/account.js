@@ -7,6 +7,12 @@ class XHRAccount {
     );
   }
 
+  static infos() {
+    return XHR.getJson(
+      XHR.domain + '/api/1.0/accounts/infos',
+    );
+  }
+
   static logout() {
     return XHR.postJson(
       XHR.domain + '/api/1.0/accounts/logout',
