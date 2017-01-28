@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import Lock from 'material-ui/svg-icons/action/lock';
-import {red400, green400} from 'material-ui/styles/colors';
+import {red400, green400, lightGreen900} from 'material-ui/styles/colors';
 
+import AppBar from 'material-ui/AppBar';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 import XHRCheckout from './xhr/checkout.js';
+import Menu from './menu.js';
 
 import './box.css';
 import './checkout.css';
@@ -23,12 +25,32 @@ let styles = {
 class Checkout extends Component {
   constructor(props) {
     super(props);
+
     window.Stripe.setPublishableKey('pk_test_4Ukbv9lXi2SBW71FbTYsVyiK');
+
+    XHRCheckout.plans().then((response) => {
+      var plans = [];
+      for (let i = 0; i < response.order.length; i++) {
+        plans.push(response.plans[response.order[i]]);
+      }
+
+      this.setState({
+        plans: plans,
+        plan: plans[1],
+      });
+
+    }).catch((response) => {
+      console.log(response);
+      // XXX(remy): TODO TODO !!!!!!!!!!!!!!!!
+    });
 
     this.state = {
       disabledSubmit: false,
 
-      plan: '2',
+      menu: false,
+
+      plan: {},
+      plans: [],
 
       card_number: '',
       month: '',
@@ -150,7 +172,7 @@ class Checkout extends Component {
 
   planChange = (ev, val) => {
     this.setState({
-      plan: ''+val,
+      plan: this.state.plans[val],
     });
   }
 
@@ -174,61 +196,82 @@ class Checkout extends Component {
     this.setState({ postal_code: val, });
   }
 
+  toggleMenu = () => {
+    let s = this.state;
+    s.menu = !s.menu;
+    this.setState(s);
+  }
+
   render() {
-    return <div className="checkout">
-        <div className="checkout-form box">
-          <form method="POST" id="payment-form">
-            <Lock className="lock" />
-            <h3>Plan</h3>
-            <RadioButtonGroup name="plan" onChange={this.planChange} defaultSelected="2">
-              <RadioButton
-              value="1"
-                label="Basic - 3 months"
-              />
-              <RadioButton
-                value="2"
-                label="Starter - 6 months"
-              />
-              <RadioButton
-                value="3"
-                label="Year - 12 months"
-              />
-            </RadioButtonGroup>
-
-            <div className="card">
-              <h3>Credit Card</h3>
-              <div>
-                <TextField className="card-num" errorText={this.state.errors.card_number} value={this.state.card_number} onChange={this.cardNumberChange} floatingLabelFixed={true} floatingLabelText="Card Number" />
+    return <div className="checkout-page">
+        <AppBar
+          onLeftIconButtonTouchTap={this.toggleMenu}
+          title={<span className="app-bar-title">Memoiz</span>}
+          titleStyle={styles.title}
+        />
+        <Menu
+          open={this.state.menu}
+          mode={'checkout'}
+          toggleMenu={this.toggleMenu}
+        />
+        <div className="checkout">
+          <div className="checkout-form box">
+            <form method="POST" id="payment-form">
+              <div className="lock">
+                <Lock color={lightGreen900} className="lock" />
+              </div>
+              <h3>Plan</h3>
+              <div className="container-plan">
+                <div className="plans">
+                  <RadioButtonGroup name="plan" onChange={this.planChange} defaultSelected={1}>
+                    {this.state.plans.map((val, idx) => <RadioButton
+                        key={idx}
+                        value={idx}
+                        label={'' + val.name + ' - ' + val.duration}
+                      />
+                    )}
+                  </RadioButtonGroup>
+                </div>
+                <div className="price">
+                  <h1>{this.state.plan.price}</h1>
+                </div>
               </div>
 
-              <div style={{display: 'flex'}}>
-                <TextField className="month" errorText={this.state.errors.month} floatingLabelFixed={true} floatingLabelText={<span>Expiration</span>} value={this.state.month} onChange={this.monthChange} />
-                <TextField className="year" errorText={this.state.errors.year} floatingLabelText={<span></span>} value={this.state.year} onChange={this.yearChange} />
+              <div className="card">
+                <h3>Credit Card</h3>
+                <div>
+                  <TextField className="card-num" errorText={this.state.errors.card_number} value={this.state.card_number} onChange={this.cardNumberChange} floatingLabelFixed={true} floatingLabelText="Card Number" />
+                </div>
+
+                <div style={{display: 'flex'}}>
+                  <TextField className="month" errorText={this.state.errors.month} floatingLabelFixed={true} floatingLabelText={<span>Expiration</span>} value={this.state.month} onChange={this.monthChange} />
+                  <TextField className="year" errorText={this.state.errors.year} floatingLabelText={<span></span>} value={this.state.year} onChange={this.yearChange} />
+                </div>
+
+                <div>
+                  <TextField className="cvc" errorText={this.state.errors.cvc} value={this.state.cvc} onChange={this.cvcChange} floatingLabelFixed={true} floatingLabelText="CVC" />
+                </div>
+
+                <div>
+                  <TextField className="postal-code" errorText={this.state.errors.postal_code} value={this.state.postal_code} onChange={this.postalChange} floatingLabelFixed={true} floatingLabelText="Postal Code" />
+                </div>
               </div>
 
-              <div>
-                <TextField className="cvc" errorText={this.state.errors.cvc} value={this.state.cvc} onChange={this.cvcChange} floatingLabelFixed={true} floatingLabelText="CVC" />
-              </div>
+              <div className="errors" style={styles.errors}>{this.state.error}</div>
+              <div className="success" style={styles.success}>{this.state.success}</div>
 
-              <div>
-                <TextField className="postal-code" errorText={this.state.errors.postal_code} value={this.state.postal_code} onChange={this.postalChange} floatingLabelFixed={true} floatingLabelText="Postal Code" />
-              </div>
-            </div>
-
-            <div className="errors" style={styles.errors}>{this.state.error}</div>
-            <div className="success" style={styles.success}>{this.state.success}</div>
-
-            <RaisedButton className="checkout-button" disabled={this.state.disabledSubmit} onClick={this.checkout} label="Submit Payment" fullWidth={true} />
-          </form>
-        </div>
-        <div className="checkout-information">
-          <h2>Starter Plan</h2>
-          <h3>The <em>Starter Plan</em> is <strong>5$</strong> for a <strong>3 months</strong> subscriptions.</h3>
-          <hr />
-          <h3>Each plan contains all features</h3>
-          <h4>Every features is important in Memoiz, that's why we've decided to include all features, in all plans.</h4>
-          <h3>We won't automatically charge your card!</h3>
-          <h4>At the end of your subscription, we'll just ask you if you want to continue your subscription.</h4>
+              <RaisedButton className="checkout-button" secondary={true} disabled={this.state.disabledSubmit} onClick={this.checkout} label="Submit Payment" fullWidth={true} />
+            </form>
+          </div>
+          <div className="checkout-information">
+            <h2>Starter Plan</h2>
+            <h3>The <em>{this.state.plan.name} Plan</em> is <strong>{this.state.plan.price}</strong> for a <strong>{this.state.plan.duration}</strong> subscription.</h3>
+            <hr />
+            <h3>Each plan contains all features</h3>
+            <h4>Every features is important in Memoiz, that's why we've decided to include all features, in all plans.</h4>
+            <h3>We won't automatically charge your card!</h3>
+            <h4>At the end of your subscription, we'll just ask you if you want to continue your subscription.</h4>
+          </div>
         </div>
       </div>
   }

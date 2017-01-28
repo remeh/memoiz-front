@@ -310,6 +310,7 @@ class Memoiz extends Component {
         </FloatingActionButton>
         <Menu
           open={this.state.menu}
+          mode={'memoiz'}
           toggleMenu={this.toggleMenu}
           onMemo={this.openDialog}
         />

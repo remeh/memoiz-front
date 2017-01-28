@@ -8,7 +8,7 @@
 }
 
 .checkout-form {
-  margin: 2em;
+  margin-bottom: 0.2em;
   margin-top: 3em;
   padding: 2em;
   justify-content: left;
@@ -55,8 +55,24 @@
   max-width: 8em;
 }
 
+.container-plan {
+  display: flex;
+}
+
+.container-plan .plans {
+  flex: 3;
+}
+
+.container-plan .price {
+  flex: 1;
+}
+
 .checkout-button {
   margin-top: 2em;
+}
+
+.title {
+  padding-left: 8em;
 }
 
 .errors {

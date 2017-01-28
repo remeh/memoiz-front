@@ -8,6 +8,7 @@ import Divider from 'material-ui/Divider';
 import Forum from 'material-ui/svg-icons/communication/forum';
 import MenuItem from 'material-ui/MenuItem';
 import PowerSettingsNew from 'material-ui/svg-icons/action/power-settings-new';
+import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Subheader from 'material-ui/Subheader';
 
 import XHRAccount from './xhr/account.js';
@@ -16,6 +17,7 @@ class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      mode: props.mode,
       open: props.open,
       checkout: false,
     }
@@ -25,6 +27,12 @@ class Menu extends Component {
     this.setState({
       open: nextProps.open,
     })
+
+    if (nextProps.mode) {
+      this.setState({
+        mode: nextProps.mode,
+      });
+    }
   }
 
   logout = () => {
@@ -53,6 +61,11 @@ class Menu extends Component {
     browserHistory.push('/checkout');
   }
 
+  goToMemoiz = () => {
+    this.props.toggleMenu();
+    browserHistory.push('/app');
+  }
+
   // ----------------------
 
   render() {
@@ -61,10 +74,17 @@ class Menu extends Component {
         open={this.state.open}
         onRequestChange={this.requestChange}>
           <Subheader><strong>Memoiz</strong></Subheader>
-          <Divider />
-          <MenuItem primaryText="Write a memo" onClick={this.memo} leftIcon={<Create />} />
-          <Divider />
-          <MenuItem primaryText="Checkout" onClick={this.goToCheckout} leftIcon={<CreditCard />} />
+          {this.props.mode === 'memoiz' && (<div><Divider />
+            <MenuItem primaryText="Write a memo" onClick={this.memo} leftIcon={<Create />} />
+            <Divider />
+            <MenuItem primaryText="Checkout" onClick={this.goToCheckout} leftIcon={<CreditCard />} />
+              </div>
+          )}
+          {this.props.mode === 'checkout' && (<div>
+            <MenuItem primaryText="Back to application" onClick={this.goToMemoiz} leftIcon={<ArrowBack />} />
+            <Divider />
+            </div>
+          )}
           <MenuItem primaryText="Support" onClick={this.support} leftIcon={<Forum />} />
           <MenuItem primaryText="Logout" onClick={this.logout} leftIcon={<PowerSettingsNew />} />
       </Drawer>
