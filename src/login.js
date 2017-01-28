@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
+
+import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -75,27 +77,33 @@ class Login extends Component {
  
   render() {
     return (
-      <div className="login-page">
-        <div className="box">
-          <form onSubmit={this.submit}>
-          <h1>Login</h1>
-          <TextField
-            hintText="Email"
-            onChange={this.onEmailChange}
-            errorText={this.state.emailError}
-          /><br />
-          <TextField
-            hintText="Password"
-            type="password"
-            onChange={this.onPasswordChange}
-            errorText={this.state.passwordError}
-            onSubmit={this.submit}
-          /><br />
-          <br />
-          <RaisedButton type="submit" label="Login" fullWidth={true} primary={true} onClick={this.submit}/>
-          </form>
-          <br />
-          <a href="/signup">Not registered ? Click here to create an account.</a>
+      <div>
+        <AppBar
+          title={<span className="app-bar-title">Memoiz</span>}
+          iconElementLeft={<span />}
+        />
+        <div className="login-page">
+          <div className="box">
+            <form onSubmit={this.submit}>
+            <h1>Login</h1>
+            <TextField
+              hintText="Email"
+              onChange={this.onEmailChange}
+              errorText={this.state.emailError}
+            /><br />
+            <TextField
+              hintText="Password"
+              type="password"
+              onChange={this.onPasswordChange}
+              errorText={this.state.passwordError}
+              onSubmit={this.submit}
+            /><br />
+            <br />
+            <RaisedButton type="submit" label="Login" fullWidth={true} primary={true} onClick={this.submit}/>
+            </form>
+            <br />
+            <a href="/signup">Not registered ? Click here to create an account.</a>
+          </div>
         </div>
       </div>
     );

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
+
+import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -123,37 +125,43 @@ class Signup extends Component {
  
   render() {
     return (
-      <div className="login-page">
-        <div className="box">
-          <form onSubmit={this.submit}>
-          <h1>Sign up</h1>
-          <TextField
-            hintText="Email"
-            onChange={this.onEmailChange}
-            errorText={this.state.error.email}
-          /><br />
-          <TextField
-            hintText="Password"
-            type="password"
-            onChange={this.onPasswordChange}
-            errorText={this.state.error.password}
-          /><br />
-          <TextField
-            hintText="Verify password"
-            type="password"
-            onChange={this.onPasswordBisChange}
-            errorText={this.state.error.passwordbis}
-          /><br />
-          <TextField
-            hintText="Firstname"
-            onChange={this.onFirstnameChange}
-            errorText={this.state.error.firstname}
-          /><br />
-          <br />
-          <RaisedButton label="Sign up" fullWidth={true} primary={true} onClick={this.submit}/>
-          </form>
-          <br />
-          <a href="/login">You already have an account ? Click here to login.</a>
+      <div>
+        <AppBar
+          title={<span className="app-bar-title">Memoiz</span>}
+          iconElementLeft={<span />}
+        />
+        <div className="login-page">
+          <div className="box">
+            <form onSubmit={this.submit}>
+            <h1>Sign up</h1>
+            <TextField
+              hintText="Email"
+              onChange={this.onEmailChange}
+              errorText={this.state.error.email}
+            /><br />
+            <TextField
+              hintText="Password"
+              type="password"
+              onChange={this.onPasswordChange}
+              errorText={this.state.error.password}
+            /><br />
+            <TextField
+              hintText="Verify password"
+              type="password"
+              onChange={this.onPasswordBisChange}
+              errorText={this.state.error.passwordbis}
+            /><br />
+            <TextField
+              hintText="Firstname"
+              onChange={this.onFirstnameChange}
+              errorText={this.state.error.firstname}
+            /><br />
+            <br />
+            <RaisedButton label="Sign up" fullWidth={true} primary={true} onClick={this.submit}/>
+            </form>
+            <br />
+            <a href="/login">You already have an account ? Click here to login.</a>
+          </div>
         </div>
       </div>
     );

@@ -7,6 +7,7 @@ import Drawer from 'material-ui/Drawer';
 import Divider from 'material-ui/Divider';
 import Forum from 'material-ui/svg-icons/communication/forum';
 import MenuItem from 'material-ui/MenuItem';
+import Person from 'material-ui/svg-icons/social/person';
 import PowerSettingsNew from 'material-ui/svg-icons/action/power-settings-new';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Subheader from 'material-ui/Subheader';
@@ -56,14 +57,19 @@ class Menu extends Component {
     this.props.onMemo();
   }
 
+  goToApp = () => {
+    this.props.toggleMenu();
+    browserHistory.push('/app');
+  }
+
   goToCheckout = () => {
     this.props.toggleMenu();
     browserHistory.push('/checkout');
   }
 
-  goToMemoiz = () => {
+  goToSettings = () => {
     this.props.toggleMenu();
-    browserHistory.push('/app');
+    browserHistory.push('/settings');
   }
 
   // ----------------------
@@ -77,12 +83,20 @@ class Menu extends Component {
           {this.props.mode === 'memoiz' && (<div><Divider />
             <MenuItem primaryText="Write a memo" onClick={this.memo} leftIcon={<Create />} />
             <Divider />
+            <MenuItem primaryText="Settings" onClick={this.goToSettings} leftIcon={<Person />} />
             <MenuItem primaryText="Checkout" onClick={this.goToCheckout} leftIcon={<CreditCard />} />
               </div>
           )}
           {this.props.mode === 'checkout' && (<div>
-            <MenuItem primaryText="Back to application" onClick={this.goToMemoiz} leftIcon={<ArrowBack />} />
+            <MenuItem primaryText="Back to application" onClick={this.goToApp} leftIcon={<ArrowBack />} />
             <Divider />
+            <MenuItem primaryText="Settings" onClick={this.goToSettings} leftIcon={<Person />} />
+            </div>
+          )}
+          {this.props.mode === 'settings' && (<div>
+            <MenuItem primaryText="Back to application" onClick={this.goToApp} leftIcon={<ArrowBack />} />
+            <Divider />
+            <MenuItem primaryText="Checkout" onClick={this.goToCheckout} leftIcon={<CreditCard />} />
             </div>
           )}
           <MenuItem primaryText="Support" onClick={this.support} leftIcon={<Forum />} />

@@ -40,7 +40,6 @@ class Checkout extends Component {
       });
 
     }).catch((response) => {
-      console.log(response);
       // XXX(remy): TODO TODO !!!!!!!!!!!!!!!!
     });
 
@@ -150,7 +149,7 @@ class Checkout extends Component {
 
     // add the plan to the request.
     var req = response;
-    req.plan = this.state.plan;
+    req.plan = this.state.plan.id;
 
     XHRCheckout.checkout(req).then((resp) => {
       // success

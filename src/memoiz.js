@@ -298,12 +298,12 @@ class Memoiz extends Component {
           onLeftIconButtonTouchTap={this.toggleMenu}
           title={<span className="app-bar-title">Memoiz</span>}
           titleStyle={styles.title}
-          iconElementRight={
+          /*iconElementRight={
             <TextField
               hintText="Search"
               style={{marginRight: '2em'}}
               hintStyle={{color: 'white'}}
-            />}
+            />}*/
         />
         <FloatingActionButton style={styles.fab} onClick={this.openDialog}>
           <ContentAdd />
