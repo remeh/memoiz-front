@@ -17,7 +17,10 @@ class Signup extends Component {
     // TODO(remy): send a request to check if the cookie
     // is still up. If so -> /app
 
+
     this.state = {
+      disableSubmit: false,
+
       account: {
         email: '',
         password: '',
@@ -69,7 +72,14 @@ class Signup extends Component {
   submit = (e) => {
     if (e) { e.preventDefault(); }
 
+    this.setState({
+      disableSubmit: true,
+    });
+
     if (!this.validateFields()) {
+      this.setState({
+        disableSubmit: false,
+      });
       return;
     }
 
@@ -84,11 +94,20 @@ class Signup extends Component {
         });
       }, 500);
     }).catch((resp) => {
+      this.setState({
+        disableSubmit: false,
+      });
       if (!resp) {
         // TODO(remy): deal with th error!
         this.setState({passwordError: 'Error. Please try again.', password: ''});
       } else if (resp.status === 403) {
-        // TODO(remy): the password is not strong enough
+        let error = this.state.error;
+        error.password = 'Password not strong enough.';
+        this.setState({error: error});
+      } else if (resp.status === 409) {
+        let error = this.state.error;
+        error.email = 'Email already used.';
+        this.setState({error: error});
       }
     });
   }
@@ -165,7 +184,7 @@ class Signup extends Component {
               errorText={this.state.error.firstname}
             /><br />
             <br />
-            <RaisedButton label="Sign up" fullWidth={true} primary={true} onClick={this.submit}/>
+            <RaisedButton disabled={this.state.disableSubmit} label="Sign up" fullWidth={true} primary={true} onClick={this.submit}/>
             </form>
             <br />
             <a href="/login">You already have an account ? Click here to login.</a>
