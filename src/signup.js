@@ -74,7 +74,15 @@ class Signup extends Component {
     }
 
     XHRAccount.signup(this.state.account.email, this.state.account.password, this.state.account.firstname).then((resp) => {
-      browserHistory.push('/login');
+      setTimeout(() => {
+        XHRAccount.login(this.state.account.email, this.state.account.password).then((resp) => {
+          // first login, go to the onboarding
+          browserHistory.push('/onboarding');
+        }).catch((resp) => {
+          // an error occurred during login, go to the login page.
+          browserHistory.push('/login');
+        });
+      }, 500);
     }).catch((resp) => {
       if (!resp) {
         // TODO(remy): deal with th error!
