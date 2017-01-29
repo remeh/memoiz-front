@@ -172,7 +172,7 @@ class Memoiz extends Component {
   // ----------------------
 
   memoClick = (event, openedMemo) => {
-    this.openDialog(event, null, openedMemo);
+    this.openDialog(event, null, openedMemo, true);
   }
 
   memoDragStart = (event) => {};
@@ -255,15 +255,19 @@ class Memoiz extends Component {
   // Memoiz dialog
   // ----------------------
 
-  openDialog = (event, rEvent, openedMemo) => {
+  openDialog = (event, rEvent, openedMemo, edit) => {
     this.openedMemo = openedMemo;
     this.setState({
       memoDialogOpen: true,
     });
-    setTimeout(() => {
-      var el = document.querySelector('#memoiz-input-modal');
-      if (el) { el.focus(); }
-    }, 100);
+
+    edit = !!edit;
+    if (!edit) { // do not focus on the textfield in edit mode
+      setTimeout(() => {
+        var el = document.querySelector('#memoiz-input-modal');
+        if (el) { el.focus(); }
+      }, 100);
+    }
   }
 
   // memo adds a new memo entry in the memos

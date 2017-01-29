@@ -32,7 +32,7 @@
   }
 }
 
-@media screen and (min-width:  550px) {
+@media screen and (min-width: 550px) {
   .memoiz-container {
     width: 500px;
   }
