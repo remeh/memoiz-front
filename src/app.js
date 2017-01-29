@@ -21,6 +21,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Checkout from './checkout.js';
 import Login from './login.js';
 import Memoiz from './memoiz.js';
+import Onboarding from './onboarding.js';
 import Settings from './settings.js';
 import Signup from './signup.js';
 
@@ -62,6 +63,7 @@ class App extends Component {
       <Router history={browserHistory}>
         <Route path="/" component={Webapp}>
           <IndexRoute component={Login} />
+          <Route path="onboarding" component={Onboarding} />
           <Route path="checkout" component={Checkout} />
           <Route path="settings" component={Settings} />
           <Route path="app" component={Memoiz} />
