@@ -61,15 +61,18 @@ class Login extends Component {
       return;
     }
 
-    XHRAccount.login(this.state.email, this.state.password).then((resp) => {
+    let p = this.state.password;
+    this.setState({password: ''});
+
+    XHRAccount.login(this.state.email, p).then((resp) => {
       // redirect to the app on success
       browserHistory.push('/app');
     }).catch((resp) => {
-      if (!resp) {
-        this.setState({passwordError: 'Error. Please try again.', password: ''});
-      } else if (resp.status === 403) {
-        this.setState({passwordError: 'Invalid password', password: ''});
+      if (resp && resp.status === 403) {
+        this.setState({passwordError: 'Invalid password'});
+        return;
       }
+      this.setState({passwordError: 'Error. Please try again.'});
     });
   }
 
@@ -94,6 +97,7 @@ class Login extends Component {
             <TextField
               hintText="Password"
               type="password"
+              value={this.state.password}
               onChange={this.onPasswordChange}
               errorText={this.state.passwordError}
               onSubmit={this.submit}

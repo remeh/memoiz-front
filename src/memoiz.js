@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+
 import AppBar from 'material-ui/AppBar';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 
+import Helpers from './helpers.js';
 import Memo from './memo.js';
 import Menu from './menu.js';
 import MemoDialog from './memodialog.js';
@@ -36,6 +40,9 @@ class Memoiz extends Component {
     this.state =  {
       memos: [], // list of displayed memos
       memoDialogOpen: false,
+
+      alert: false,
+
       menu: false,
     }
 
@@ -70,9 +77,7 @@ class Memoiz extends Component {
         if (enrich) {
           setTimeout(() => { this.enrich(memo) }, 2000);
         }
-    });
-
-    // TODO(remy): manage error
+    }).catch((response) => Helpers.toLoginOrAlert(this, response));
   }
 
   postNewMemo = (text, enrich) => {
@@ -98,9 +103,7 @@ class Memoiz extends Component {
       if (enrich) {
         setTimeout(() => { this.enrich(memo) }, 2000);
       }
-    });
-
-    // TODO(remy): manage error
+    }).catch((response) => Helpers.toLoginOrAlert(this, response));
   }
 
   enrich = (memo) => {
@@ -162,7 +165,7 @@ class Memoiz extends Component {
       this.setState({
         memos: memos,
       });
-    });
+    }).catch((response) => Helpers.toLoginOrAlert(this, response));
   }
 
   // Memo actions
@@ -246,7 +249,7 @@ class Memoiz extends Component {
           memos: memos,
           memoDialogOpen: false,
         });
-    });
+    }).catch((response) => Helpers.toLoginOrAlert(this, response));
   }
 
   // Memoiz dialog
@@ -289,6 +292,10 @@ class Memoiz extends Component {
     this.setState(s);
   }
 
+  closeAlert = () => {
+    this.setState({alert: false});
+  }
+
   // ----------------------
 
   render() {
@@ -305,6 +312,18 @@ class Memoiz extends Component {
               hintStyle={{color: 'white'}}
             />}*/
         />
+        <Dialog
+          actions={<FlatButton
+                    label="OK"
+                    primary={true}
+                    onTouchTap={this.closeAlert}
+                  />}
+          modal={false}
+          open={this.state.alert}
+          onRequestClose={this.closeAlert}
+        >
+          An error occured on our server, sorry for that. Please try refreshing the page.
+        </Dialog>
         <FloatingActionButton style={styles.fab} onClick={this.openDialog}>
           <ContentAdd />
         </FloatingActionButton>

@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import Link from 'react-router'
 import Lock from 'material-ui/svg-icons/action/lock';
 import Mood from 'material-ui/svg-icons/social/mood';
 import {red400, green400, lightGreen900} from 'material-ui/styles/colors';
 
 import AppBar from 'material-ui/AppBar';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
+import Helpers from './helpers.js';
+import Menu from './menu.js';
 import XHRAccount from './xhr/account.js';
 import XHRCheckout from './xhr/checkout.js';
-import Menu from './menu.js';
 
 import './box.css';
 import './checkout.css';
@@ -37,7 +39,7 @@ class Checkout extends Component {
           subscribed: response.subscribed,
         });
       }
-    });
+    }).catch((response) => Helpers.toLoginOrAlert(this, response));
 
     XHRCheckout.plans().then((response) => {
       var plans = [];
@@ -49,15 +51,19 @@ class Checkout extends Component {
         plans: plans,
         plan: plans[1],
       });
-
     }).catch((response) => {
-      // XXX(remy): TODO TODO !!!!!!!!!!!!!!!!
+      this.setState({
+        disabledSubmit: true,
+      });
+      Helpers.toLoginOrAlert(this, response);
     });
 
     this.state = {
       disabledSubmit: false,
 
       menu: false,
+
+      alert: false,
 
       subscribed: false,
 
@@ -214,6 +220,10 @@ class Checkout extends Component {
     this.setState(s);
   }
 
+  closeAlert = () => {
+    this.setState({alert: false});
+  }
+
   render() {
     return <div className="checkout-page">
         <AppBar
@@ -226,7 +236,18 @@ class Checkout extends Component {
           mode={'checkout'}
           toggleMenu={this.toggleMenu}
         />
-
+        <Dialog
+          actions={<FlatButton
+                    label="OK"
+                    primary={true}
+                    onTouchTap={this.closeAlert}
+                  />}
+          modal={false}
+          open={this.state.alert}
+          onRequestClose={this.closeAlert}
+        >
+          An error occured on our server, sorry for that. Please try refreshing the page.
+        </Dialog>
         {this.state.subscribed && <div className="checkout">
           <div className="box">
             <h1>Subscription</h1>
