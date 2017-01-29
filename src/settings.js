@@ -62,8 +62,8 @@ class Settings extends Component {
             <h3>You</h3>
             <h4>{this.state.firstname} - {this.state.email}</h4>
             <h3>Subscription</h3>
-            TODO TODO TODO
-            <h4>Free trial until <strong>28 May 2017</strong></h4>
+            {this.state.subscribed && <h4><em>{this.state.plan.name} plan</em> valid until <strong><Moment format='LLL'>{this.state.planValidUntil}</Moment></strong></h4>}
+            {!this.state.subscribed && this.state.trial && <h4>Free trial until <strong><Moment format='LLL'>{this.state.trialValidUntil}</Moment></strong></h4>}
             <h3>Delete my account</h3>
           </div>
         </div>
