@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import Link from 'react-router'
 import Lock from 'material-ui/svg-icons/action/lock';
+import Mood from 'material-ui/svg-icons/social/mood';
 import {red400, green400, lightGreen900} from 'material-ui/styles/colors';
 
 import AppBar from 'material-ui/AppBar';
@@ -7,6 +9,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
+import XHRAccount from './xhr/account.js';
 import XHRCheckout from './xhr/checkout.js';
 import Menu from './menu.js';
 
@@ -28,6 +31,14 @@ class Checkout extends Component {
 
     window.Stripe.setPublishableKey('pk_test_4Ukbv9lXi2SBW71FbTYsVyiK');
 
+    XHRAccount.infos().then((response) => {
+      if (response.subscribed) {
+        this.setState({
+          subscribed: response.subscribed,
+        });
+      }
+    });
+
     XHRCheckout.plans().then((response) => {
       var plans = [];
       for (let i = 0; i < response.order.length; i++) {
@@ -47,6 +58,8 @@ class Checkout extends Component {
       disabledSubmit: false,
 
       menu: false,
+
+      subscribed: false,
 
       plan: {},
       plans: [],
@@ -213,7 +226,17 @@ class Checkout extends Component {
           mode={'checkout'}
           toggleMenu={this.toggleMenu}
         />
-        <div className="checkout">
+
+        {this.state.subscribed && <div className="checkout">
+          <div className="box">
+            <h1>Subscription</h1>
+            <h3>You are already subscribed! <Mood /></h3>
+            <h4>
+              Go to <a href="/settings">settings</a> to see your current subscription.
+            </h4>
+          </div>
+         </div>}
+        {!this.state.subscribed && <div className="checkout">
           <div className="checkout-form box">
             <form method="POST" id="payment-form">
               <div className="lock">
@@ -272,6 +295,7 @@ class Checkout extends Component {
             <h4>At the end of your subscription, we'll just ask you if you want to continue your subscription.</h4>
           </div>
         </div>
+        }
       </div>
   }
 }
