@@ -22,6 +22,7 @@ class Onboarding extends Component {
       menu: false,
       stepIndex: 0,
       memo: '',
+      backLabel: 'Back',
     }
   }
 
@@ -42,13 +43,21 @@ class Onboarding extends Component {
       });
     }
 
+    if (stepIndex === 1) {
+      this.setState({ backLabel: 'Another memo' });
+    }
+
     if (stepIndex < 2) {
-      this.setState({stepIndex: stepIndex + 1});
+      this.setState({ stepIndex: stepIndex + 1 });
+    } else {
+      // end of the onboarding
+      document.location = '/app';
     }
   };
 
   handlePrev = () => {
     const {stepIndex} = this.state;
+    this.setState({ backLabel: 'Back' });
     if (stepIndex > 0) {
       this.setState({stepIndex: stepIndex - 1});
     }
@@ -67,7 +76,7 @@ class Onboarding extends Component {
       />
       {step > 0 && (
       <FlatButton
-        label="Back"
+        label={this.state.backLabel}
         disableTouchRipple={true}
         disableFocusRipple={true}
         onTouchTap={this.handlePrev}
