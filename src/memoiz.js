@@ -50,7 +50,7 @@ class Memoiz extends Component {
   }
 
   putChanges = (id, text, enrich) => {
-    XHRMemo.putMemo('12341234-1234-1234-1234-123412341234', id, text, enrich)
+    XHRMemo.putMemo(id, text, enrich)
       .then((memo) => {
         // edit the memo
         // ----------------------
@@ -81,7 +81,7 @@ class Memoiz extends Component {
   }
 
   postNewMemo = (text, enrich) => {
-    XHRMemo.postMemo('12341234-1234-1234-1234-123412341234', text, enrich)
+    XHRMemo.postMemo(text, enrich)
       .then((memo) => {
       // add the memo
       // ----------------------
@@ -107,7 +107,7 @@ class Memoiz extends Component {
   }
 
   enrich = (memo) => {
-    XHRMemo.enrichMemo('12341234-1234-1234-1234-123412341234', memo.uid)
+    XHRMemo.enrichMemo(memo.uid)
       .then((rich) => {
         // edit the memo
         // ----------------------
@@ -155,7 +155,7 @@ class Memoiz extends Component {
   // ----------------------
 
   fetchMemos = () => {
-    XHRMemo.getMemos('12341234-1234-1234-1234-123412341234').then((json) => {
+    XHRMemo.getMemos().then((json) => {
       let memos = [];
 
       for (let i = 0; i < json.length; i++) {
@@ -213,7 +213,7 @@ class Memoiz extends Component {
     // backend call
 
     // TODO(remy): handle error
-    XHRMemo.switchMemo('12341234-1234-1234-1234-123412341234', src_id, dst_id);
+    XHRMemo.switchMemo(src_id, dst_id);
 
     // visually move the memo
 
@@ -231,7 +231,7 @@ class Memoiz extends Component {
   // ----------------------
 
   archiveMemo = (event, memoUid) => {
-    XHRMemo.archiveMemo('12341234-1234-1234-1234-123412341234', memoUid).then((json) => {
+    XHRMemo.archiveMemo(memoUid).then((json) => {
         // edit the memo
         // ----------------------
 

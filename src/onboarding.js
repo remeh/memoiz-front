@@ -36,7 +36,7 @@ class Onboarding extends Component {
 
     if (stepIndex === 1 && this.state.memo.length > 0) {
       const val = this.state.memo;
-      XHRMemo.postMemo(null, val, true);
+      XHRMemo.postMemo(val, true);
       this.setState({
         memo: '',
       });

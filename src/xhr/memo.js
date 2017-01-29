@@ -1,25 +1,25 @@
 import XHR from './xhr.js';
 
 class XHRMemo {
-  static archiveMemo(uid, memoUid) {
+  static archiveMemo(memoUid) {
     return XHR.postJson(
       XHR.domain + '/api/1.0/memos/'+memoUid+'/archive',
     );
   }
 
-  static getMemos(uid) {
+  static getMemos() {
     return XHR.getJson(
       XHR.domain + '/api/1.0/memos',
     );
   }
 
-  static enrichMemo(uid, memoUid) {
+  static enrichMemo(memoUid) {
     return XHR.getJson(
       XHR.domain + '/api/1.0/memos/'+memoUid+'/rich',
     );
   }
 
-  static postMemo(uid, text, enrich) {
+  static postMemo(text, enrich) {
     enrich = !!enrich; // force boolean
     return XHR.postJson(
       XHR.domain + '/api/1.0/memos',
@@ -28,7 +28,7 @@ class XHRMemo {
     );
   }
 
-  static putMemo(uid, memoUid, text, enrich) {
+  static putMemo(memoUid, text, enrich) {
     enrich = !!enrich; // force boolean
     return XHR.postJson(
       XHR.domain + '/api/1.0/memos',
@@ -37,7 +37,7 @@ class XHRMemo {
     );
   }
 
-  static switchMemo(uid, left, right) {
+  static switchMemo(left, right) {
     return XHR.postJson(
       XHR.domain + '/api/1.0/memos/switch/' + left + '/' + right,
     );
