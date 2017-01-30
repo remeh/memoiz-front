@@ -18,9 +18,10 @@ import {lightBlue900,
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import Archives from './archives.js';
 import Checkout from './checkout.js';
 import Login from './login.js';
-import Memoiz from './memoiz.js';
+import Memos from './memos.js';
 import Onboarding from './onboarding.js';
 import Settings from './settings.js';
 import Signup from './signup.js';
@@ -66,7 +67,8 @@ class App extends Component {
           <Route path="onboarding" component={Onboarding} />
           <Route path="checkout" component={Checkout} />
           <Route path="settings" component={Settings} />
-          <Route path="app" component={Memoiz} />
+          <Route path="memos" component={Memos} />
+          <Route path="archives" component={Archives} />
           <Route path="signup" component={Signup} />
           <Route path="login" component={Login} />
           <Route path="*" component={Login}/>

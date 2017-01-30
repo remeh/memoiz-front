@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { Step, Stepper, StepButton, StepContent } from 'material-ui/Stepper';
 
-import Menu from './menu.js';
+import { Menu, MenuModes } from './menu.js';
 import XHRMemo from './xhr/memo.js';
 
 import './box.css';
@@ -51,7 +51,7 @@ class Onboarding extends Component {
       this.setState({ stepIndex: stepIndex + 1 });
     } else {
       // end of the onboarding
-      document.location = '/app';
+      document.location = '/memos';
     }
   };
 
@@ -101,7 +101,7 @@ class Onboarding extends Component {
         />
         <Menu
           open={this.state.menu}
-          mode={'checkout'}
+          mode={MenuModes.Settings}
           toggleMenu={this.toggleMenu}
         />
         <div>

@@ -11,12 +11,12 @@ import TextField from 'material-ui/TextField';
 
 import Helpers from './helpers.js';
 import Memo from './memo.js';
-import Menu from './menu.js';
-import MemoDialog from './memodialog.js';
+import { Menu, MenuModes } from './menu.js';
+import { MemoDialog, MemoDialogModes } from './memodialog.js';
 import XHRMemo from './xhr/memo.js';
 import randomUuid from './uuid.js';
 
-import './memoiz.css';
+import './memos.css';
 
 let styles = {
   title: {
@@ -30,7 +30,7 @@ let styles = {
   }
 }
 
-class Memoiz extends Component {
+class Memos extends Component {
   constructor(props) {
     super(props);
 
@@ -333,7 +333,7 @@ class Memoiz extends Component {
         </FloatingActionButton>
         <Menu
           open={this.state.menu}
-          mode={'memoiz'}
+          mode={MenuModes.Memos}
           toggleMenu={this.toggleMenu}
           onMemo={this.openDialog}
         />
@@ -342,6 +342,7 @@ class Memoiz extends Component {
           onDialogClose={() => { this.setState({memoDialogOpen: false}); }}
           submit={this.onSubmit}
           memo={this.openedMemo}
+          mode={MemoDialogModes.Normal}
           onArchive={this.archiveMemo}
         />
         <Paper zDepth={2} className="memoiz-container">
@@ -380,4 +381,4 @@ class Memoiz extends Component {
   }
 }
 
-export default Memoiz;
+export default Memos;

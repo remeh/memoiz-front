@@ -16,11 +16,11 @@ class Login extends Component {
 
     // TODO(remy): check if the router wouldn't allow to do this ?
     XHRAccount.isAuth().then(() => {
-      document.location = '/app';
+      document.location = '/memos';
     });
 
     // TODO(remy): send a request to check if the cookie
-    // is still up. If so -> /app
+    // is still up. If so -> /memos
 
     this.state = {
       email: '',
@@ -66,7 +66,7 @@ class Login extends Component {
 
     XHRAccount.login(this.state.email, p).then((resp) => {
       // redirect to the app on success
-      browserHistory.push('/app');
+      browserHistory.push('/memos');
     }).catch((resp) => {
       if (resp && resp.status === 403) {
         this.setState({passwordError: 'Invalid password'});

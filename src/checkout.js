@@ -11,7 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 import Helpers from './helpers.js';
-import Menu from './menu.js';
+import { Menu, MenuModes } from './menu.js';
 import XHRAccount from './xhr/account.js';
 import XHRCheckout from './xhr/checkout.js';
 
@@ -177,7 +177,7 @@ class Checkout extends Component {
         success: "Subscription correctly done. You'll be redirected in a few seconds.",
       });
       setTimeout(() => {
-        document.location = '/app';
+        document.location = '/memos';
       }, 3000);
     }).catch((resp) => {
       // error
@@ -233,7 +233,7 @@ class Checkout extends Component {
         />
         <Menu
           open={this.state.menu}
-          mode={'checkout'}
+          mode={MenuModes.Checkout}
           toggleMenu={this.toggleMenu}
         />
         <Dialog

@@ -15,7 +15,7 @@ class Signup extends Component {
     super(props);
 
     // TODO(remy): send a request to check if the cookie
-    // is still up. If so -> /app
+    // is still up. If so -> /memos
 
 
     this.state = {

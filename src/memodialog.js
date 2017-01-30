@@ -27,12 +27,20 @@ let styles = {
   },
 };
 
+class MemoDialogModes {
+  static Normal = 'normal';
+  static Archives = 'archives';
+}
+
 class MemoDialog extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       memoDialogOpen: this.props.openDialog,
       enrich: true,
+
+      mode: props.mode,
     }
   }
 
@@ -57,6 +65,10 @@ class MemoDialog extends Component {
   // onChange is called when the value in the
   // text field is changing.
   onChange = (event, value) => {
+    if (this.props.mode === MemoDialogModes.Archives) {
+      return;
+    }
+
     this.setState({
       memoValue: value,
     });
@@ -88,8 +100,10 @@ class MemoDialog extends Component {
     var actions = [];
 
     if (this.props.memo && this.props.memo.id) {
-      // Archive
-      actions.push(<IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>);
+      if (this.props.mode !== MemoDialogModes.Archives) {
+        // Archive
+        actions.push(<IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>);
+      }
       // Menu
       actions.push(<IconMenu
           iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -104,8 +118,12 @@ class MemoDialog extends Component {
       );
     }
 
-    actions.push(<FlatButton className="memoiz-button" style={styles.cancelButton} onClick={this.onMemoDialogClose} label="Cancel" />);
-    actions.push(<FlatButton className="memoiz-button" onClick={this.submit} primary={true} label="Save"/>);
+    if (this.props.mode === MemoDialogModes.Archives) {
+      actions.push(<FlatButton className="memoiz-button" style={styles.cancelButton} onClick={this.onMemoDialogClose} label="Close" />);
+    } else {
+      actions.push(<FlatButton className="memoiz-button" style={styles.cancelButton} onClick={this.onMemoDialogClose} label="Cancel" />);
+      actions.push(<FlatButton className="memoiz-button" onClick={this.submit} primary={true} label="Save"/>);
+    }
     return actions;
   }
 
@@ -178,15 +196,14 @@ class MemoDialog extends Component {
     </div>
   }
 }
-//
+
 // constructor prototype
 // ----------------------
 
 MemoDialog.propTypes = {
   submit: PropTypes.func.isRequired,
   openDialog: PropTypes.bool.isRequired,
-  onArchive: PropTypes.func.isRequired,
   onDialogClose: PropTypes.func.isRequired,
 }
 
-export default MemoDialog;
+export { MemoDialog, MemoDialogModes };

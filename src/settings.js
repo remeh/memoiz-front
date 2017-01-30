@@ -6,7 +6,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
 import Helpers from './helpers.js';
-import Menu from './menu.js';
+import { Menu, MenuModes } from './menu.js';
 import XHRAccount from './xhr/account.js';
 
 import './settings.css';
@@ -60,7 +60,7 @@ class Settings extends Component {
         />
         <Menu
           open={this.state.menu}
-          mode={'settings'}
+          mode={MenuModes.Settings}
           toggleMenu={this.toggleMenu}
         />
         <Dialog

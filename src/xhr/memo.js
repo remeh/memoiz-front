@@ -7,9 +7,13 @@ class XHRMemo {
     );
   }
 
-  static getMemos() {
+  static getMemos(state) {
+    let q = "";
+    if (state) {
+      q = "?s="+state;
+    }
     return XHR.getJson(
-      XHR.domain + '/api/1.0/memos',
+      XHR.domain + '/api/1.0/memos'+q,
     );
   }
 

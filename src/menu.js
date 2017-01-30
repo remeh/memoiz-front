@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
 
+import Archive from 'material-ui/svg-icons/content/archive';
 import Create from 'material-ui/svg-icons/content/create';
 import CreditCard from 'material-ui/svg-icons/action/credit-card';
 import Drawer from 'material-ui/Drawer';
@@ -13,6 +14,12 @@ import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Subheader from 'material-ui/Subheader';
 
 import XHRAccount from './xhr/account.js';
+
+class MenuModes {
+  static Memos = 'memos';
+  static Checkout = 'checkout';
+  static Settings = 'settings';
+}
 
 class Menu extends Component {
   constructor(props) {
@@ -59,12 +66,17 @@ class Menu extends Component {
 
   goToApp = () => {
     this.props.toggleMenu();
-    browserHistory.push('/app');
+    browserHistory.push('/memos');
   }
 
   goToCheckout = () => {
     this.props.toggleMenu();
     browserHistory.push('/checkout');
+  }
+
+  goToArchives = () => {
+    this.props.toggleMenu();
+    browserHistory.push('/archives');
   }
 
   goToSettings = () => {
@@ -80,20 +92,21 @@ class Menu extends Component {
         open={this.state.open}
         onRequestChange={this.requestChange}>
           <Subheader><strong>Memoiz</strong></Subheader>
-          {this.props.mode === 'memoiz' && (<div><Divider />
+          {this.props.mode === MenuModes.Memos && (<div><Divider />
             <MenuItem primaryText="Write a memo" onClick={this.memo} leftIcon={<Create />} />
+            <MenuItem primaryText="Archives" onClick={this.goToArchives} leftIcon={<Archive />} />
             <Divider />
             <MenuItem primaryText="Settings" onClick={this.goToSettings} leftIcon={<Person />} />
             <MenuItem primaryText="Checkout" onClick={this.goToCheckout} leftIcon={<CreditCard />} />
               </div>
           )}
-          {this.props.mode === 'checkout' && (<div>
+          {this.props.mode === MenuModes.Checout && (<div>
             <MenuItem primaryText="Back to application" onClick={this.goToApp} leftIcon={<ArrowBack />} />
             <Divider />
             <MenuItem primaryText="Settings" onClick={this.goToSettings} leftIcon={<Person />} />
             </div>
           )}
-          {this.props.mode === 'settings' && (<div>
+          {this.props.mode === MenuModes.Settings && (<div>
             <MenuItem primaryText="Back to application" onClick={this.goToApp} leftIcon={<ArrowBack />} />
             <Divider />
             <MenuItem primaryText="Checkout" onClick={this.goToCheckout} leftIcon={<CreditCard />} />
@@ -105,4 +118,4 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+export { Menu, MenuModes };
