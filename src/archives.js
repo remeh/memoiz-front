@@ -106,6 +106,7 @@ class Archives extends Component {
         />
         <div>
           <div className="memo-container" onClick={this.handleClick}>
+            {this.state.memos.length === 0 && <h1>No archived memos</h1>}
             {this.state.memos.map(
               (memo) => <Memo
                   key={memo.uid}
