@@ -1,10 +1,10 @@
 .memo {
   font-family: 'Open Sans', sans-serif;
   margin: 4px;
-  padding: 0.6em;
   min-width: 220px;
   width: 220px;
   min-height: 170px;
+  max-height: 170px;
   box-shadow: 2px 2px 6px rgba(210,210,210,50);
   border: 1px solid rgba(200,200,200,50);
   word-wrap: break-word;
@@ -12,7 +12,9 @@
   position: relative;
   cursor: pointer;
   background-color: white;
+  padding-bottom: 0.5em;
 }
+
 @media screen and (max-width: 550px) {
   .memo {
     min-width: 190px;
@@ -25,26 +27,40 @@
 }
 
 .memo .content {
+  padding: 0.6em;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.memo .content.full-memo {
   height: 100%;
 }
 
+.memo .content.part-memo {
+  height: 113px;
+}
+
+.memo .content p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .memo .rich {
-  position: absolute;
-  bottom: 1px;
+  box-shadow: 0px -2px 2px #eee;
   right: 0px;
   width: 100%;
   height: 56px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #ddd;
   padding-top: 0.5em;
-
 }
 
 .memo .rich img {
   position: absolute;
   right: 0px;
-  width: 56px;
-  height: 56px;
-  bottom: -1px;
+  width: 54px;
+  height: 54px;
+  bottom: 0px;
 }
 
 .memo .rich p {

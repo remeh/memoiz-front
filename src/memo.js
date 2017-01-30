@@ -60,6 +60,13 @@ class Memo extends Component {
     return c
   }
 
+  computeContentClass = () => {
+    if (this.props.memo.r_image) {
+      return "content part-memo";
+    }
+    return "content full-memo";
+  }
+
   reset = () => {
     this.setState({dragged: false});
     this.setState({draggedOver: false});
@@ -88,7 +95,7 @@ class Memo extends Component {
     //if (this.props.memo.valuelength >= 139) { end = '...'; }
     img.innerHTML = this.props.memo.value.slice(0, 140) + end;
     img.className = 'memo';
-    img.style.cssText = 'background-color: white; top: -250px; position: absolute; max-height: 200px';
+    img.style.cssText = 'background-color: white; top: -250px; padding: 0.5em; position: absolute; max-height: 200px';
     img.id = 'drop-mirror';
     document.querySelector('body').appendChild(img);
     event.dataTransfer.setDragImage(img, -5, -5);
@@ -175,26 +182,28 @@ class Memo extends Component {
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
         >
-        <div className="content" onClick={this.onClick}>
+        <div className={this.computeContentClass()}>
+          <div onClick={this.onClick}>
 
-          {this.getText()}
-          {this.state.r_category !== 'Unknown' &&
-            <Chip text={this.state.r_category} />
-          }
-        </div>
-        { this.props.memo.r_image &&
-          <div className="rich">
-            <div className="desc">
-              <p className="title">{this.props.memo.r_title}</p>
-              <p className="url">{this.props.memo.r_url}</p>
-            </div>
-            <div>
-              <a href={this.props.memo.r_url} target="_blank" alt="Go to link">
-                <img src={this.props.memo.r_image} role="presentation" />
-              </a>
-            </div>
+            <p>{this.getText()}</p>
+            {this.state.r_category !== 'Uncategorized' &&
+              <Chip text={this.state.r_category} />
+            }
           </div>
-        }
+        </div>
+          { this.props.memo.r_image &&
+            <div className="rich">
+              <div className="desc">
+                <p className="title">{this.props.memo.r_title}</p>
+                <p className="url">{this.props.memo.r_url}</p>
+              </div>
+              <div>
+                <a href={this.props.memo.r_url} target="_blank" alt="Go to link">
+                  <img src={this.props.memo.r_image} role="presentation" />
+                </a>
+              </div>
+            </div>
+          }
         <Snackbar
           open={this.state.snackbar.open}
           message={this.state.snackbar.message}
