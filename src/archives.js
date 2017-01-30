@@ -40,6 +40,28 @@ class Archives extends Component {
     }).catch((response) => Helpers.toLoginOrAlert(this, response));
   }
 
+  restoreMemo = (event, memoUid) => {
+    XHRMemo.restoreMemo(memoUid).then((json) => {
+        // edit the memo
+        // ----------------------
+
+        var memos = this.state.memos.slice();
+
+        for (let i = 0; i < memos.length; i++) {
+          if (memos[i].uid === memoUid) {
+            // remove this entry
+            memos.splice(i, 1);
+            break;
+          }
+        }
+
+        this.setState({
+          memos: memos,
+          memoDialogOpen: false,
+        });
+    }).catch((response) => Helpers.toLoginOrAlert(this, response));
+  }
+
   toggleMenu = () => {
     let s = this.state;
     s.menu = !s.menu;
@@ -97,9 +119,10 @@ class Archives extends Component {
           mode={MenuModes.Settings}
           toggleMenu={this.toggleMenu}
         />
-        <MemoDialog 
+        <MemoDialog
           openDialog={this.state.memoDialogOpen}
           onDialogClose={() => { this.setState({memoDialogOpen: false}); }}
+          onRestore={this.restoreMemo}
           submit={this.onSubmit}
           memo={this.openedMemo}
           mode={MemoDialogModes.Archives}

@@ -7,6 +7,12 @@ class XHRMemo {
     );
   }
 
+  static restoreMemo(memoUid) {
+    return XHR.postJson(
+      XHR.domain + '/api/1.0/memos/'+memoUid+'/restore',
+    );
+  }
+
   static getMemos(state) {
     let q = "";
     if (state) {

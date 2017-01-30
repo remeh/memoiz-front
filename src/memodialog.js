@@ -85,7 +85,14 @@ class MemoDialog extends Component {
       this.props.onArchive(event, this.props.memo.id);
     }
     this.setState({memoDialogOpen: false});
-  } 
+  }
+
+  onRestore = (event) => {
+    if (this.props.memo) {
+      this.props.onRestore(event, this.props.memo.id);
+    }
+    this.setState({memoDialogOpen: false});
+  }
 
   openWikipedia = (event) => {
     var txt = this.state.memoValue.replace(' ', '_');
@@ -100,9 +107,14 @@ class MemoDialog extends Component {
     var actions = [];
 
     if (this.props.memo && this.props.memo.id) {
-      if (this.props.mode !== MemoDialogModes.Archives) {
-        // Archive
-        actions.push(<IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>);
+      switch (this.props.mode) {
+        case MemoDialogModes.Archives:
+          actions.push(<IconButton onClick={this.onRestore} tooltip="Restore" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>unarchive</IconButton>);
+          break;
+        default:
+        case MemoDialogModes.Normal:
+          actions.push(<IconButton onClick={this.onArchive} tooltip="Archive" touch={true} tooltipPosition="bottom-center" iconClassName="material-icons" iconStyle={styles.iconStyle}>archive</IconButton>);
+          break;
       }
       // Menu
       actions.push(<IconMenu
