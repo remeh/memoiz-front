@@ -12,7 +12,6 @@ import TextField from 'material-ui/TextField';
 //import Toggle from 'material-ui/Toggle';
 
 import Chip from './chip.js'
-import Strings from './strings.js'
 
 import './memodialog.css';
 
@@ -149,14 +148,15 @@ class MemoDialog extends Component {
 
           {this.props.memo && this.props.memo.r_image &&
             <div className="rich">
-              <div>
+              <div className="img">
                 <a href={this.props.memo.r_url} target="_blank" alt="Go to link">
                   <img src={this.props.memo.r_image} role="presentation" />
                 </a>
               </div>
-              <span className="title">{Strings.cut(this.props.memo.r_title, 80)}</span>
-              <br />
-              <span className="url">{Strings.cut(this.props.memo.r_url, 90)}</span>
+              <div className="desc">
+                <p className="title">{this.props.memo.r_title}</p>
+                <p className="url">{this.props.memo.r_url}</p>
+              </div>
             </div>
           }
 

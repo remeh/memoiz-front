@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Snackbar from 'material-ui/Snackbar';
 
 import Chip from './chip.js';
-import Strings from './strings.js';
+//import Strings from './strings.js';
 import './memo.css';
 
 class Memo extends Component {
@@ -66,9 +66,9 @@ class Memo extends Component {
   }
 
   getText = () => {
-    if (this.props.memo.value.length > 140) {
-      return this.props.memo.value.slice(0, 140) + '...';
-    }
+    //if (this.props.memo.value.length > 140) {
+    //  return this.props.memo.value.slice(0, 140) + '...';
+    //}
     return this.props.memo.value;
   }
 
@@ -85,7 +85,7 @@ class Memo extends Component {
 
     var img = document.createElement('div');
     var end = '';
-    if (this.props.memo.valuelength >= 139) { end = '...'; }
+    //if (this.props.memo.valuelength >= 139) { end = '...'; }
     img.innerHTML = this.props.memo.value.slice(0, 140) + end;
     img.className = 'memo';
     img.style.cssText = 'background-color: white; top: -250px; position: absolute; max-height: 200px';
@@ -184,14 +184,15 @@ class Memo extends Component {
         </div>
         { this.props.memo.r_image &&
           <div className="rich">
+            <div className="desc">
+              <p className="title">{this.props.memo.r_title}</p>
+              <p className="url">{this.props.memo.r_url}</p>
+            </div>
             <div>
               <a href={this.props.memo.r_url} target="_blank" alt="Go to link">
                 <img src={this.props.memo.r_image} role="presentation" />
               </a>
             </div>
-            <span className="title">{Strings.cut(this.props.memo.r_title, 22)}</span>
-            <br />
-            <span className="url">{Strings.cut(this.props.memo.r_url, 22)}</span>
           </div>
         }
         <Snackbar

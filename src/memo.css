@@ -35,6 +35,8 @@
   width: 100%;
   height: 56px;
   border-top: 1px solid #eee;
+  padding-top: 0.5em;
+
 }
 
 .memo .rich img {
@@ -42,15 +44,25 @@
   right: 0px;
   width: 56px;
   height: 56px;
+  bottom: -1px;
 }
 
-.memo .rich span {
-  padding-left: 1em;
-  font-size: 0.65rem;
-  width: 164px;
+.memo .rich p {
+  overflow: hidden;
+  width: 160px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 0.5em;
+  font-size: 12px;
 }
 
-.memo .rich span.title {
+@media screen and (max-width: 550px) {
+  .memo .rich p {
+    width: 130px;
+  }
+}
+
+.memo .rich p.title {
   font-weight: bold;
 }
 
