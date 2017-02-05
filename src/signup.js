@@ -161,7 +161,7 @@ class Signup extends Component {
           iconElementLeft={<span />}
         />
         <div className="signup">
-          <div className="box">
+          <div className="signup-box box">
             <form onSubmit={this.submit}>
             <h1>Sign up</h1>
             <TextField

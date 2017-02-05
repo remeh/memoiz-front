@@ -4,7 +4,7 @@
   margin-right: auto;
   display: flex;
   align-items: center;
-  flex-wrap: wrap-reverse;
+  flex-wrap: wrap;
   justify-content: center;
   padding-bottom: 1em;
 }
@@ -12,4 +12,8 @@
 .signup-information {
   margin: 2em;
   margin-bottom: 0px; 
+}
+
+.signup-box {
+  margin-top: 20px;
 }
