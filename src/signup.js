@@ -199,6 +199,8 @@ class Signup extends Component {
             <h4>For you to start using Memoiz, you do not need to provide any payment info.</h4>
             <h3>You will have access to every features</h3>
             <h4>Even during the free period, we want you to have access to every features of Memoiz, because they're all important.</h4>
+            <h3>Any questions?</h3>
+            <h4>We're reachable at <a href="mailto:contact@memoiz.com">contact@memoiz.com</a>, don't hesitate to contact us!</h4>
           </div>
         </div>
       </div>
