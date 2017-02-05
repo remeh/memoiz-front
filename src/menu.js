@@ -100,7 +100,7 @@ class Menu extends Component {
             <MenuItem primaryText="Checkout" onClick={this.goToCheckout} leftIcon={<CreditCard />} />
               </div>
           )}
-          {this.props.mode === MenuModes.Checout && (<div>
+          {this.props.mode === MenuModes.Checkout && (<div>
             <MenuItem primaryText="Back to application" onClick={this.goToApp} leftIcon={<ArrowBack />} />
             <Divider />
             <MenuItem primaryText="Settings" onClick={this.goToSettings} leftIcon={<Person />} />

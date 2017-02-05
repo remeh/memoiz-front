@@ -71,6 +71,7 @@ class Checkout extends Component {
       plans: [],
 
       card_number: '',
+      card_holder: '',
       month: '',
       year: '',
       cvc: '',
@@ -78,6 +79,7 @@ class Checkout extends Component {
 
       errors: {
         card_number: '',
+        card_holder: '',
         month: '',
         year: '',
         cvc: '',
@@ -97,6 +99,7 @@ class Checkout extends Component {
   checkout = () => {
     let errors = {
         card_number: '',
+        card_holder: '',
         month: '',
         year: '',
         cvc: '',
@@ -113,6 +116,11 @@ class Checkout extends Component {
 
     if (this.state.card_number.length !== 16) {
       errors.card_number = 'Please enter a valid card number.';
+      error = true;
+    }
+
+    if (this.state.card_holder.length <= 2) {
+      errors.card_holder = 'Please enter the cardholder name.';
       error = true;
     }
 
@@ -169,6 +177,7 @@ class Checkout extends Component {
     // add the plan to the request.
     var req = response;
     req.plan = this.state.plan.id;
+    req.card_holder = this.state.card_holder;
 
     XHRCheckout.checkout(req).then((resp) => {
       // success
@@ -204,6 +213,10 @@ class Checkout extends Component {
 
   cvcChange = (ev, val) => {
     this.setState({ cvc: val, });
+  }
+
+  cardHolderChange = (ev, val) => {
+    this.setState({ card_holder: val, });
   }
 
   cardNumberChange = (ev, val) => {
@@ -282,6 +295,9 @@ class Checkout extends Component {
 
               <div className="card">
                 <h3>Credit Card</h3>
+                <div>
+                  <TextField className="card-holder" errorText={this.state.errors.card_holder} value={this.state.card_holder} onChange={this.cardHolderChange} floatingLabelFixed={true} floatingLabelText="Cardholder Name" />
+                </div>
                 <div>
                   <TextField className="card-num" errorText={this.state.errors.card_number} value={this.state.card_number} onChange={this.cardNumberChange} floatingLabelFixed={true} floatingLabelText="Card Number" />
                 </div>
