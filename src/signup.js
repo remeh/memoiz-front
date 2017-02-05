@@ -8,6 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import XHRAccount from './xhr/account.js';
 
 import './box.css';
+import './signup.css';
 
 class Signup extends Component {
 
@@ -159,7 +160,7 @@ class Signup extends Component {
           title={<span className="app-bar-title">Memoiz</span>}
           iconElementLeft={<span />}
         />
-        <div className="login-page">
+        <div className="signup">
           <div className="box">
             <form onSubmit={this.submit}>
             <h1>Sign up</h1>
@@ -190,6 +191,14 @@ class Signup extends Component {
             </form>
             <br />
             <a href="/login">You already have an account ? Click here to login.</a>
+          </div>
+          <div className="signup-information">
+            <h2>Signing up to Memoiz is free for <em>7 days</em>.</h2>
+            <hr />
+            <h3>No payment info required</h3>
+            <h4>For you to start using Memoiz, you do not need to provide any payment info.</h4>
+            <h3>You will have access to every features</h3>
+            <h4>Even during the free period, we want you to have access to every features of Memoiz, because they're all important.</h4>
           </div>
         </div>
       </div>
