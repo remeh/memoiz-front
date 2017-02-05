@@ -82,6 +82,11 @@
   font-weight: bold;
 }
 
+.memo .rich > a {
+  text-decoration: none;
+  color: black;
+}
+
 .memo.large-text {
   font-size: 1.2em;
 }

@@ -182,8 +182,8 @@ class Memo extends Component {
         onDragLeave={this.onDragLeave}
         onDrop={this.onDrop}
         >
-        <div className={this.computeContentClass()}>
-          <div onClick={this.onClick}>
+        <div onClick={this.onClick} className={this.computeContentClass()}>
+          <div>
 
             <p>{this.getText()}</p>
             {this.state.r_category !== 'Uncategorized' &&
@@ -193,15 +193,15 @@ class Memo extends Component {
         </div>
           { this.props.memo.r_image &&
             <div className="rich">
+              <a href={this.props.memo.r_url} target="_blank" alt="Go to link">
               <div className="desc">
                 <p className="title">{this.props.memo.r_title}</p>
                 <p className="url">{this.props.memo.r_url}</p>
               </div>
               <div>
-                <a href={this.props.memo.r_url} target="_blank" alt="Go to link">
                   <img src={this.props.memo.r_image} role="presentation" />
-                </a>
               </div>
+              </a>
             </div>
           }
         <Snackbar
