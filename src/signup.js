@@ -193,14 +193,14 @@ class Signup extends Component {
             <a href="/login">You already have an account ? Click here to login.</a>
           </div>
           <div className="signup-information">
-            <h2>Signing up to Memoiz is free for <em>7 days</em>.</h2>
+            <h2>Signing up to Memoiz is free.</h2>
             <hr />
             <h3>No payment info required</h3>
-            <h4>For you to start using Memoiz, you do not need to provide any payment info.</h4>
+            <h4>To start using Memoiz, you do not need to provide any payment info.</h4>
             <h3>You will have access to every features</h3>
-            <h4>Even during the free period, we want you to have access to every features of Memoiz, because they're all important.</h4>
+            <h4>During the free period of 7 days, you will have access to every features of Memoiz, because they're all important.</h4>
             <h3>Any questions?</h3>
-            <h4>We're reachable at <a href="mailto:contact@memoiz.com">contact@memoiz.com</a>, don't hesitate to contact us!</h4>
+            <h4>We're reachable at <a href="mailto:contact@memoiz.com">contact@memoiz.com</a>, don't hesitate to send us an email!</h4>
           </div>
         </div>
       </div>
