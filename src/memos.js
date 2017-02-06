@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
+import Snackbar from 'material-ui/Snackbar';
 import TextField from 'material-ui/TextField';
 
 import Helpers from './helpers.js';
@@ -30,6 +31,8 @@ let styles = {
   }
 }
 
+const AutoHideSnackBar = 5000; // ms
+
 class Memos extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +43,11 @@ class Memos extends Component {
     this.state =  {
       memos: [], // list of displayed memos
       memoDialogOpen: false,
+
+      snackbar: {
+        open: false,
+        message: '',
+      },
 
       alert: false,
 
@@ -376,6 +384,14 @@ class Memos extends Component {
             )}
           </div>
         </div>
+        <Snackbar
+          open={this.state.snackbar.open}
+          message={this.state.snackbar.message}
+          action="undo"
+          autoHideDuration={AutoHideSnackBar}
+          //onActionTouchTap={this.handleActionTouchTap}
+          //onRequestClose={this.handleRequestClose}
+        />
       </div>
     )
   }

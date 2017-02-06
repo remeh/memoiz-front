@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Snackbar from 'material-ui/Snackbar';
 
 import Chip from './chip.js';
 //import Strings from './strings.js';
@@ -8,7 +7,6 @@ import './memo.css';
 class Memo extends Component {
   MaximumForVeryLargeText = 25;
   MaximumForLargeText = 40;
-  AutoHideSnackBar = 5000; // ms
 
 
   // Lifecycle
@@ -20,10 +18,6 @@ class Memo extends Component {
       dragged: false,
       draggedOver: false,
       r_category: this.props.memo.r_category,
-      snackbar: {
-        open: false,
-        message: '',
-      }
     }
   }
 
@@ -155,17 +149,8 @@ class Memo extends Component {
 
   onArchive = (event) => {
     event.preventDefault()
-    this.openSnackbar('This note has been archived');
     this.props.onArchive(event, this.props.memo.id);
   }
-
-  openSnackbar = (message) => {
-    this.setState({snackbar: {
-      open: true,
-      message: message,
-    }});
-  }
-
 
   // ----------------------
 
@@ -204,14 +189,6 @@ class Memo extends Component {
               </a>
             </div>
           }
-        <Snackbar
-          open={this.state.snackbar.open}
-          message={this.state.snackbar.message}
-          action="undo"
-          autoHideDuration={this.AutoHideSnackBar}
-          //onActionTouchTap={this.handleActionTouchTap}
-          //onRequestClose={this.handleRequestClose}
-        />
       </div>
     );
   }
