@@ -46,6 +46,7 @@ class Memos extends Component {
 
       snackbar: {
         open: false,
+        memoUid: '',
         message: '',
       },
 
@@ -240,23 +241,53 @@ class Memos extends Component {
 
   archiveMemo = (event, memoUid) => {
     XHRMemo.archiveMemo(memoUid).then((json) => {
-        // edit the memo
-        // ----------------------
+      // edit the memo
+      // ----------------------
 
-        var memos = this.state.memos.slice();
 
-        for (let i = 0; i < memos.length; i++) {
-          if (memos[i].uid === memoUid) {
-            // remove this entry
-            memos.splice(i, 1);
-            break;
-          }
+      let memos = this.state.memos.slice();
+      let memo = null;
+
+      for (let i = 0; i < memos.length; i++) {
+        if (memos[i].uid === memoUid) {
+          // remove this entry
+          memo = memos.splice(i, 1)[0];
+          memo.position = i;
+          break;
         }
+      }
+
+      if (memo) {
+        setTimeout(() => this.openSnackbar('Memo correctly archived.', memo), 100);
 
         this.setState({
           memos: memos,
           memoDialogOpen: false,
         });
+      }
+    }).catch((response) => Helpers.toLoginOrAlert(this, response));
+  }
+
+  undoArchive = (event) => {
+    if (!this.state.snackbar.memo) {
+      return;
+    }
+
+    // XHR
+    XHRMemo.restoreMemo(this.state.snackbar.memo.uid).then((json) => {
+      let memos = this.state.memos;
+      let memo = this.state.snackbar.memo;
+      let pos = memo.position;
+      delete memo.position;
+      memos.splice(pos, 0, memo);
+      this.setState({
+        memos: memos,
+        snackbar: {
+          open: false,
+          memo: null,
+          message: '',
+        }
+      });
     }).catch((response) => Helpers.toLoginOrAlert(this, response));
   }
 
@@ -306,6 +337,14 @@ class Memos extends Component {
 
   closeAlert = () => {
     this.setState({alert: false});
+  }
+
+  openSnackbar = (message, memoUid) => {
+    this.setState({snackbar: {
+      open: true,
+      memo: memoUid,
+      message: message,
+    }});
   }
 
   // ----------------------
@@ -389,7 +428,7 @@ class Memos extends Component {
           message={this.state.snackbar.message}
           action="undo"
           autoHideDuration={AutoHideSnackBar}
-          //onActionTouchTap={this.handleActionTouchTap}
+          onActionTouchTap={this.undoArchive}
           //onRequestClose={this.handleRequestClose}
         />
       </div>
