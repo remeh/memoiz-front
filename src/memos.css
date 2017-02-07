@@ -39,3 +39,37 @@
     width: 450px;
   }
 }
+
+.subscription-over {
+  margin: auto;
+  margin-top: 1em;
+  width: 50%;
+  padding: 1em;
+  border: 1px solid #A5D6A7;
+  background-color: #E8F5E9;
+  text-align: center;
+}
+
+@media screen and (max-width: 550px) {
+  .subscription-label {
+    padding-right: 0px;
+  }
+  .button-to-plans {
+    display: none;
+  }
+  .a-to-plans {
+    display: inherit;
+  }
+}
+
+@media screen and (min-width: 550px) {
+  .subscription-label {
+    padding-right: 2em;
+  }
+  .button-to-plans {
+    display: inherit;
+  }
+  .a-to-plans {
+    display: none;
+  }
+}

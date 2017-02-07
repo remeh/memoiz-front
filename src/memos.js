@@ -15,6 +15,7 @@ import Memo from './memo.js';
 import { Menu, MenuModes } from './menu.js';
 import { MemoDialog, MemoDialogModes } from './memodialog.js';
 import XHRMemo from './xhr/memo.js';
+import XHRAccount from './xhr/account.js';
 import randomUuid from './uuid.js';
 
 import './memos.css';
@@ -44,10 +45,15 @@ class Memos extends Component {
       memos: [], // list of displayed memos
       memoDialogOpen: false,
 
-      snackbar: {
+      undo: {
         open: false,
         memoUid: '',
         message: '',
+      },
+
+      payment: {
+        required: false,
+        plan: '',
       },
 
       alert: false,
@@ -56,6 +62,18 @@ class Memos extends Component {
     }
 
     this.fetchMemos();
+
+    XHRAccount.isAuth().catch((response) => {
+      response.json().then((json) => {
+        if (json.msg === 'payment required') {
+          var payment = { required: true };
+          if (json.plan) {
+            payment.plan = json.plan;
+          }
+          this.setState({payment: payment});
+        }
+      });
+    });
   }
 
   putChanges = (id, text, enrich) => {
@@ -269,20 +287,20 @@ class Memos extends Component {
   }
 
   undoArchive = (event) => {
-    if (!this.state.snackbar.memo) {
+    if (!this.state.undo.memo) {
       return;
     }
 
     // XHR
-    XHRMemo.restoreMemo(this.state.snackbar.memo.uid).then((json) => {
+    XHRMemo.restoreMemo(this.state.undo.memo.uid).then((json) => {
       let memos = this.state.memos;
-      let memo = this.state.snackbar.memo;
+      let memo = this.state.undo.memo;
       let pos = memo.position;
       delete memo.position;
       memos.splice(pos, 0, memo);
       this.setState({
         memos: memos,
-        snackbar: {
+        undo: {
           open: false,
           memo: null,
           message: '',
@@ -340,7 +358,7 @@ class Memos extends Component {
   }
 
   openSnackbar = (message, memoUid) => {
-    this.setState({snackbar: {
+    this.setState({undo: {
       open: true,
       memo: memoUid,
       message: message,
@@ -363,6 +381,16 @@ class Memos extends Component {
               hintStyle={{color: 'white'}}
             />}*/
         />
+        {this.state.payment.required && <div className="subscription-over">
+          {this.state.payment.plan && <span className="subscription-label">
+            Your {this.state.payment.plan} plan is over.
+          </span>}
+          {!this.state.payment.plan && <span className="subscription-label">
+            Your trial is over.
+          </span>}
+         <RaisedButton className="button-to-plans" primary={true} label="discover our plans"></RaisedButton>
+         <a className="a-to-plans" href="/checkout">Click here to discover our plans</a>
+        </div>}
         <Dialog
           actions={<FlatButton
                     label="OK"
@@ -424,8 +452,8 @@ class Memos extends Component {
           </div>
         </div>
         <Snackbar
-          open={this.state.snackbar.open}
-          message={this.state.snackbar.message}
+          open={this.state.undo.open}
+          message={this.state.undo.message}
           action="undo"
           autoHideDuration={AutoHideSnackBar}
           onActionTouchTap={this.undoArchive}

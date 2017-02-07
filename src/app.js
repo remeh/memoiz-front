@@ -50,13 +50,13 @@ let memoizTheme = getMuiTheme({
   },
 });
 
-const Webapp = React.createClass({
+class Webapp extends Component {
   render() {
       return <MuiThemeProvider muiTheme={memoizTheme}>
         {this.props.children}
       </MuiThemeProvider>
   }
-});
+};
 
 class App extends Component {
   render() {
