@@ -56,6 +56,7 @@
   }
   .button-to-plans {
     display: none;
+    background-color: red;
   }
   .a-to-plans {
     display: inherit;
@@ -67,7 +68,7 @@
     padding-right: 2em;
   }
   .button-to-plans {
-    display: inherit;
+    display: inline;
   }
   .a-to-plans {
     display: none;

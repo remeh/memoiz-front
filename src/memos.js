@@ -313,6 +313,11 @@ class Memos extends Component {
   // ----------------------
 
   openDialog = (event, rEvent, openedMemo, edit) => {
+
+    if (this.state.payment.required) {
+      return;
+    }
+
     this.openedMemo = openedMemo;
     this.setState({
       memoDialogOpen: true,
@@ -353,6 +358,10 @@ class Memos extends Component {
     this.setState(s);
   }
 
+  gotoCheckout = () => {
+    document.location = "/checkout";
+  }
+
   closeAlert = () => {
     this.setState({alert: false});
   }
@@ -388,7 +397,9 @@ class Memos extends Component {
           {!this.state.payment.plan && <span className="subscription-label">
             Your trial is over.
           </span>}
-         <RaisedButton className="button-to-plans" primary={true} label="discover our plans"></RaisedButton>
+         <div className="button-to-plans">
+           <RaisedButton primary={true} onClick={this.gotoCheckout} label="discover our plans"></RaisedButton>
+         </div>
          <a className="a-to-plans" href="/checkout">Click here to discover our plans</a>
         </div>}
         <Dialog
@@ -422,8 +433,8 @@ class Memos extends Component {
         />
         <Paper zDepth={2} className="memoiz-container">
           <div className="memoiz">
-            <TextField className="memoiz-input" id="memoiz-input-page" value="" onChange={this.openDialog} onClick={this.openDialog} fullWidth={true} multiLine={true} placeholder="Write down a memo here" />
-            <RaisedButton className="memoiz-button" onClick={this.submit} label="Save" fullWidth={true} />
+            <TextField className="memoiz-input" id="memoiz-input-page" value="" disabled={this.state.payment.required} onChange={this.openDialog} onClick={this.openDialog} fullWidth={true} multiLine={true} placeholder="Write down a memo here" />
+            <RaisedButton className="memoiz-button" disabled={this.state.payment.required} onClick={this.submit} label="Save" fullWidth={true} />
           </div>
         </Paper>
         <div>
