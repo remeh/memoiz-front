@@ -17,6 +17,7 @@ class Memo extends Component {
     this.state = {
       dragged: false,
       draggedOver: false,
+      payment: this.props.payment,
       r_category: this.props.memo.r_category,
     }
   }
@@ -25,6 +26,7 @@ class Memo extends Component {
   componentWillUnmount() {};
   componentWillReceiveProps(nextProps) {
     this.setState({
+      payment: nextProps.payment || this.state.payment,
       r_category: nextProps.memo.r_category,
     })
   }
@@ -77,6 +79,10 @@ class Memo extends Component {
   // ----------------------
 
   onDragStart = (event) => {
+    if (this.state.payment.required) {
+      return;
+    }
+
     event.dataTransfer.setData("text", this.props.memo.value);
     event.dataTransfer.setData("application/id", this.props.memo.id);
     event.dataTransfer.dropEffect = "move";

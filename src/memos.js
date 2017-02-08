@@ -451,6 +451,7 @@ class Memos extends Component {
                     r_title: memo.r_title,
                     r_image: memo.r_img,
                   }}
+                  payment={this.state.payment}
                   onDragStart={this.memoDragStart}
                   onDragOver={this.memoDragOver}
                   onDragEnd={this.memoDragEnd}
