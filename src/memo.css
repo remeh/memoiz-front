@@ -1,10 +1,11 @@
 .memo {
+  border-radius: 3px;
   font-family: 'Open Sans', sans-serif;
   margin: 4px;
   min-width: 220px;
   width: 220px;
-  min-height: 170px;
-  max-height: 170px;
+  min-height: 160px;
+  max-height: 160px;
   box-shadow: 2px 2px 6px rgba(210,210,210,50);
   border: 1px solid rgba(200,200,200,50);
   word-wrap: break-word;
@@ -17,8 +18,12 @@
 
 @media screen and (max-width: 550px) {
   .memo {
-    min-width: 190px;
-    width: 190px;
+    min-width: 47%;
+    margin: 2px;
+    width: 47%;
+  }
+  .memo.content {
+    padding: 0.3em;
   }
 }
 
@@ -38,7 +43,7 @@
 }
 
 .memo .content.part-memo {
-  height: 113px;
+  height: 103px;
 }
 
 .memo .content p {
