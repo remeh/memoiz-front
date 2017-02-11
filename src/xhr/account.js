@@ -34,6 +34,14 @@ class XHRAccount {
       {email: email, password: password, firstname: firstname}
     );
   }
+
+  static forgotPassword(email) {
+    return XHR.postJson(
+      XHR.domain + '/api/1.0/accounts/forgotpwd',
+      null,
+      {email: email}
+    );
+  }
 }
 
 export default XHRAccount;

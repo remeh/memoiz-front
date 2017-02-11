@@ -20,6 +20,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Archives from './archives.js';
 import Checkout from './checkout.js';
+import ForgotPassword from './forgotpassword.js';
 import Login from './login.js';
 import Memos from './memos.js';
 import Onboarding from './onboarding.js';
@@ -64,6 +65,7 @@ class App extends Component {
       <Router history={browserHistory}>
         <Route path="/" component={Webapp}>
           <IndexRoute component={Login} />
+          <Route path="forgotpassword" component={ForgotPassword} />
           <Route path="onboarding" component={Onboarding} />
           <Route path="checkout" component={Checkout} />
           <Route path="settings" component={Settings} />
