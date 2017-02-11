@@ -374,6 +374,13 @@ class Memos extends Component {
     }});
   }
 
+  closeSnackbar = () => {
+    this.setState({undo: {
+      open: false,
+      message: this.state.undo.message,
+    }});
+  }
+
   // ----------------------
 
   render() {
@@ -469,7 +476,7 @@ class Memos extends Component {
           action="undo"
           autoHideDuration={AutoHideSnackBar}
           onActionTouchTap={this.undoArchive}
-          //onRequestClose={this.handleRequestClose}
+          onRequestClose={this.closeSnackbar}
         />
       </div>
     )
