@@ -45,6 +45,8 @@ class Memos extends Component {
       memos: [], // list of displayed memos
       memoDialogOpen: false,
 
+      search: '',
+
       undo: {
         open: false,
         memoUid: '',
@@ -61,7 +63,7 @@ class Memos extends Component {
       menu: false,
     }
 
-    this.fetchMemos();
+    this.fetchMemos(null);
 
     XHRAccount.isAuth().catch((response) => {
       response.json().then((json) => {
@@ -181,8 +183,8 @@ class Memos extends Component {
   // XHR
   // ----------------------
 
-  fetchMemos = () => {
-    XHRMemo.getMemos().then((json) => {
+  fetchMemos = (search) => {
+    XHRMemo.getMemos(null, search).then((json) => {
       let memos = [];
 
       for (let i = 0; i < json.length; i++) {
@@ -332,6 +334,16 @@ class Memos extends Component {
     }
   }
 
+  onSearchChange = (evt, val) => {
+    this.setState({
+      search: val,
+    });
+
+    if (!val || val.length === 0) {
+      this.fetchMemos();
+    }
+  }
+
   // memo adds a new memo entry in the memos
   // or sends modification of the current one.
   onSubmit = (text, enrich) => {
@@ -350,6 +362,12 @@ class Memos extends Component {
       this.postNewMemo(text, enrich);
     }
     this.openedMemo = undefined;
+  }
+
+  search = (event) => {
+    event.preventDefault();
+
+    this.fetchMemos(this.state.search);
   }
 
   toggleMenu = () => {
@@ -390,12 +408,14 @@ class Memos extends Component {
           onLeftIconButtonTouchTap={this.toggleMenu}
           title={<span className="app-bar-title">Memoiz</span>}
           titleStyle={styles.title}
-          /*iconElementRight={
+          iconElementRight={
+            <form onSubmit={this.search}>
             <TextField
               hintText="Search"
+              onChange={this.onSearchChange}
               style={{marginRight: '2em'}}
               hintStyle={{color: 'white'}}
-            />}*/
+            /></form>}
         />
         {this.state.payment.required && <div className="subscription-over">
           {this.state.payment.plan && <span className="subscription-label">
@@ -430,7 +450,7 @@ class Memos extends Component {
           toggleMenu={this.toggleMenu}
           onMemo={this.openDialog}
         />
-        <MemoDialog 
+        <MemoDialog
           openDialog={this.state.memoDialogOpen}
           onDialogClose={() => { this.setState({memoDialogOpen: false}); }}
           submit={this.onSubmit}

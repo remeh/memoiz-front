@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 
 import Helpers from './helpers.js';
 import Memo from './memo.js';
@@ -26,8 +27,8 @@ class Archives extends Component {
     this.fetchMemos();
   }
 
-  fetchMemos = () => {
-    XHRMemo.getMemos('archived').then((json) => {
+  fetchMemos = (search) => {
+    XHRMemo.getMemos('archived', search).then((json) => {
       let memos = [];
 
       for (let i = 0; i < json.length; i++) {
@@ -87,6 +88,22 @@ class Archives extends Component {
   onSubmit = () => {
   }
 
+  onSearchChange = (evt, val) => {
+    this.setState({
+      search: val,
+    });
+
+    if (!val || val.length === 0) {
+      this.fetchMemos();
+    }
+  }
+
+  search = (event) => {
+    event.preventDefault();
+
+    this.fetchMemos(this.state.search);
+  }
+
   // ----------------------
 
   render() {
@@ -95,12 +112,14 @@ class Archives extends Component {
         <AppBar
           onLeftIconButtonTouchTap={this.toggleMenu}
           title={<span className="app-bar-title">Memoiz</span>}
-          /*iconElementRight={
+          iconElementRight={
+            <form onSubmit={this.search}>
             <TextField
               hintText="Search"
+              onChange={this.onSearchChange}
               style={{marginRight: '2em'}}
               hintStyle={{color: 'white'}}
-            />}*/
+            /></form>}
         />
         <Dialog
           actions={<FlatButton

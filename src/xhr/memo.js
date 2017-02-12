@@ -13,10 +13,16 @@ class XHRMemo {
     );
   }
 
-  static getMemos(state) {
+  static getMemos(state, search) {
     let q = "";
-    if (state) {
-      q = "?s="+state;
+    if (state || search) {
+      q = "?"
+      if (state) {
+        q += "s="+state+"&";
+      }
+      if (search) {
+        q += "se="+search+"&";
+      }
     }
     return XHR.getJson(
       XHR.domain + '/api/1.0/memos'+q,
