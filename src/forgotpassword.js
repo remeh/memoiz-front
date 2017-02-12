@@ -63,6 +63,7 @@ class ForgotPassword extends Component {
           <div className="box">
             {!this.state.sent && <form onSubmit={this.submit}>
               <h1>Password reset</h1>
+              <p>Fill here the email used to sign in to Memoiz. We will send you instructions to reset your password.</p>
               <TextField
                 hintText="Your email"
                 onChange={this.onEmailChange}

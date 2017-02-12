@@ -24,6 +24,7 @@ import ForgotPassword from './forgotpassword.js';
 import Login from './login.js';
 import Memos from './memos.js';
 import Onboarding from './onboarding.js';
+import PasswordReset from './passwordreset.js';
 import Settings from './settings.js';
 import Signup from './signup.js';
 
@@ -66,6 +67,7 @@ class App extends Component {
         <Route path="/" component={Webapp}>
           <IndexRoute component={Login} />
           <Route path="forgotpassword" component={ForgotPassword} />
+          <Route path="passwordreset" component={PasswordReset} />
           <Route path="onboarding" component={Onboarding} />
           <Route path="checkout" component={Checkout} />
           <Route path="settings" component={Settings} />

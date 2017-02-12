@@ -42,6 +42,14 @@ class XHRAccount {
       {email: email}
     );
   }
+
+  static passwordReset(pwd, token) {
+    return XHR.postJson(
+      XHR.domain + '/api/1.0/accounts/pwdreset',
+      null,
+      {pwd: pwd, token: token},
+    );
+  }
 }
 
 export default XHRAccount;

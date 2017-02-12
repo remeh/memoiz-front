@@ -4,3 +4,7 @@ div.login-page {
   align-items: center;
   justify-content: center;
 }
+
+.link-forgot {
+  padding-left: 1em;
+}

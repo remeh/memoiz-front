@@ -93,6 +93,7 @@ class Login extends Component {
               hintText="Email"
               onChange={this.onEmailChange}
               errorText={this.state.emailError}
+              tabIndex="1"
             /><br />
             <TextField
               hintText="Password"
@@ -101,12 +102,15 @@ class Login extends Component {
               onChange={this.onPasswordChange}
               errorText={this.state.passwordError}
               onSubmit={this.submit}
+              tabIndex="2"
             /><br />
             <br />
-            <RaisedButton type="submit" label="Login" fullWidth={true} primary={true} onClick={this.submit}/>
+            <RaisedButton type="submit" label="Login" primary={true} onClick={this.submit} tabIndex="3" /><a className="link-forgot" alt="Click here if you've forgot your password" href="/forgotpassword">Forgot your password?</a><br/>
             </form>
             <br />
-            <a href="/signup">Not registered ? Click here to create an account.</a>
+            <p>
+              Not registered ? <a href="/signup">Click here to create an account.</a><br/>
+            </p>
           </div>
         </div>
       </div>
