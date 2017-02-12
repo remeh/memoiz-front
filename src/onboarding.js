@@ -35,6 +35,13 @@ class Onboarding extends Component {
   handleNext = () => {
     const {stepIndex} = this.state;
 
+    if (stepIndex === 0) {
+      setTimeout(() => {
+        let e = document.querySelector('#first-memo');
+        if (e) { e.focus(); }
+      }, 150);
+    }
+
     if (stepIndex === 1 && this.state.memo.length > 0) {
       const val = this.state.memo;
       XHRMemo.postMemo(val, true);
@@ -130,7 +137,7 @@ class Onboarding extends Component {
               </StepButton>
                 <StepContent>
                   <p>Write here your favorite movie, artist or video game or whatever is on your mind.</p>
-                  <TextField hintText="e.g. John Butler Trio" onChange={this.memoChange} value={this.state.memo}/>
+                  <TextField hintText="e.g. John Butler Trio" id="first-memo" onChange={this.memoChange} value={this.state.memo}/>
                   {this.renderStepActions(1)}
               </StepContent>
               </Step>
