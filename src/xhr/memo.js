@@ -35,21 +35,27 @@ class XHRMemo {
     );
   }
 
-  static postMemo(text, enrich) {
+  static postMemo(text, enrich, reminder) {
     enrich = !!enrich; // force boolean
+    if (reminder) {
+      reminder = reminder.getTime();
+    }
     return XHR.postJson(
       XHR.domain + '/api/1.0/memos',
       null,
-      {text: text, enrich: enrich},
+      {text: text, enrich: enrich, reminder: reminder},
     );
   }
 
-  static putMemo(memoUid, text, enrich) {
+  static putMemo(memoUid, text, enrich, reminder) {
     enrich = !!enrich; // force boolean
+    if (reminder) {
+      reminder = reminder.getTime();
+    }
     return XHR.postJson(
       XHR.domain + '/api/1.0/memos',
       null,
-      {memo_uid: memoUid, text: text, enrich: enrich},
+      {memo_uid: memoUid, text: text, enrich: enrich, reminder: reminder},
     );
   }
 

@@ -78,8 +78,8 @@ class Memos extends Component {
     });
   }
 
-  putChanges = (id, text, enrich) => {
-    XHRMemo.putMemo(id, text, enrich)
+  putChanges = (id, text, enrich, reminder) => {
+    XHRMemo.putMemo(id, text, enrich, reminder)
       .then((memo) => {
         // edit the memo
         // ----------------------
@@ -109,8 +109,8 @@ class Memos extends Component {
     }).catch((response) => Helpers.toLoginOrAlert(this, response));
   }
 
-  postNewMemo = (text, enrich) => {
-    XHRMemo.postMemo(text, enrich)
+  postNewMemo = (text, enrich, reminder) => {
+    XHRMemo.postMemo(text, enrich, reminder)
       .then((memo) => {
       // add the memo
       // ----------------------
@@ -346,7 +346,7 @@ class Memos extends Component {
 
   // memo adds a new memo entry in the memos
   // or sends modification of the current one.
-  onSubmit = (text, enrich) => {
+  onSubmit = (text, enrich, reminder) => {
     if (!text.length) {
       return;
     }
@@ -357,10 +357,11 @@ class Memos extends Component {
     // ----------------------
 
     if (this.openedMemo) {
-      this.putChanges(this.openedMemo.id, text, enrich);
+      this.putChanges(this.openedMemo.id, text, enrich, reminder);
     } else {
-      this.postNewMemo(text, enrich);
+      this.postNewMemo(text, enrich, reminder);
     }
+
     this.openedMemo = undefined;
   }
 
@@ -473,6 +474,7 @@ class Memos extends Component {
                     id: memo.uid,
                     value: memo.text,
                     last_update: memo.last_update,
+                    reminder: memo.reminder,
                     r_category: memo.r_category,
                     r_url: memo.r_url,
                     r_title: memo.r_title,

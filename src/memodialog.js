@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import Moment from 'react-moment';
 
+import DatePicker from 'material-ui/DatePicker';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
@@ -9,7 +10,8 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import TextField from 'material-ui/TextField';
-//import Toggle from 'material-ui/Toggle';
+import TimePicker from 'material-ui/TimePicker';
+import Toggle from 'material-ui/Toggle';
 
 import Chip from './chip.js'
 
@@ -38,19 +40,25 @@ class MemoDialog extends Component {
 
     this.state = {
       memoDialogOpen: this.props.openDialog,
-      enrich: true,
+      automaticReminder: true,
 
       mode: props.mode,
+
+      reminderDate: null,
+      reminder: null,
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    let val = '';
     if (nextProps.memo) {
-      val = nextProps.memo.value;
+      let automaticReminder = nextProps.memo.reminder === 0;
+      this.setState({
+        memoValue: nextProps.memo.value,
+        reminder: nextProps.memo.reminder,
+        automaticReminder: automaticReminder,
+      });
     }
     this.setState({
-      memoValue: val,
       memoDialogOpen: nextProps.openDialog,
     })
   }
@@ -59,7 +67,8 @@ class MemoDialog extends Component {
 
   submit = (e) => {
     if (e) { e.preventDefault(); }
-    this.props.submit(this.state.memoValue, this.state.enrich);
+    this.props.submit(this.state.memoValue, this.state.enrich, this.state.reminder);
+    this.setState({automaticReminder: true, reminderDate: null, reminder: null});
   }
 
   // onChange is called when the value in the
@@ -71,12 +80,6 @@ class MemoDialog extends Component {
 
     this.setState({
       memoValue: value,
-    });
-  }
-
-  toggleEnrich = (event, state) => {
-    this.setState({
-      enrich: state,
     });
   }
 
@@ -142,7 +145,9 @@ class MemoDialog extends Component {
   onMemoDialogClose = () => {
     this.setState({
       memoDialogOpen: false,
-      enrich: true, // force enrichment on next opening
+      automaticReminder: true,
+      reminderDate: null,
+      reminder: null,
     });
     this.props.onDialogClose();
   }
@@ -152,6 +157,42 @@ class MemoDialog extends Component {
       e.preventDefault();
       this.submit();
     }
+  }
+
+  toggleReminder = (event, state) => {
+    this.setState({
+      automaticReminder: state,
+    });
+
+    if (state === false) {
+      setTimeout(() => {
+        if (this.datepicker) {
+          this.datepicker.openDialog();
+        }
+      }, 150);
+    }
+  }
+
+  onDateChange = (event, date) => {
+    setTimeout(() => {
+      if (this.timepicker) {
+        this.timepicker.openDialog();
+      }
+    }, 50);
+    this.setState({
+      reminderDate: date,
+    });
+  }
+
+  onTimeChange = (event, time) => {
+
+    let rd = this.state.reminderDate;
+    rd.setHours(time.getHours())
+    rd.setMinutes(time.getMinutes())
+
+    this.setState({
+      reminder: rd,
+    });
   }
 
   // ----------------------
@@ -190,21 +231,39 @@ class MemoDialog extends Component {
             </div>
           }
 
-          {/*<br />
-          <Toggle
-          label="Automatically enrich memo information"
-          labelPosition="right"
-          onToggle={this.toggleEnrich}
-          toggled={this.state.enrich}
-          />*/}
-
           {this.props.memo && this.props.memo.last_update &&
             <div className="memoiz-creation-date">
               <span title={prettyTime}>Last edit <Moment fromNow>{this.props.memo.last_update}</Moment></span>
             </div>
           }
-        </Dialog>
 
+          <br/>
+          <Toggle
+          label="Automatic reminder"
+          labelPosition="right"
+          onToggle={this.toggleReminder}
+          toggled={this.state.automaticReminder}
+          />
+          {!this.state.automaticReminder && <div>
+            <DatePicker
+              style={{display: 'none'}}
+              ref={(dp) => { this.datepicker = dp; }}
+              onChange={this.onDateChange}
+              minDate={new Date()}
+              hintText="Choose a day"
+              autoOk={true}
+            />
+            <TimePicker
+              style={{display: 'none'}}
+              ref={(tp) => { this.timepicker = tp; }}
+              onChange={this.onTimeChange}
+              open={true}
+              hintText="Choose the time"
+              autoOk={true}
+            />
+            {(this.state.reminder) && <span>Reminder set to <Moment format="llll">{this.state.reminder}</Moment></span>}
+          </div>}
+        </Dialog>
     </div>
   }
 }
