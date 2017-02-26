@@ -19,11 +19,11 @@ class XHRAccount {
     );
   }
 
-  static login(email, password) {
+  static login(email, password, timezone) {
     return XHR.postJson(
       XHR.domain + '/api/1.0/accounts/login',
       null,
-      {email: email, password: password}
+      {email: email, password: password, timezone: timezone}
     );
   }
 

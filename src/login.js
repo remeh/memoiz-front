@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { browserHistory } from 'react-router';
+import moment from 'moment';
 
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
@@ -61,10 +62,12 @@ class Login extends Component {
       return;
     }
 
+    let tz = moment.tz.guess();
+
     let p = this.state.password;
     this.setState({password: ''});
 
-    XHRAccount.login(this.state.email, p).then((resp) => {
+    XHRAccount.login(this.state.email, p, tz).then((resp) => {
       // redirect to the app on success
       browserHistory.push('/memos');
     }).catch((resp) => {
