@@ -50,7 +50,7 @@ class XHRMemo {
   static putMemo(memoUid, text, enrich, reminder) {
     enrich = !!enrich; // force boolean
     if (reminder) {
-      reminder = reminder.getTime();
+      reminder = new Date(reminder).getTime();
     }
     return XHR.postJson(
       XHR.domain + '/api/1.0/memos',

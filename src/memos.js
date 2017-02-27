@@ -89,6 +89,7 @@ class Memos extends Component {
         for (let i = 0; i < memos.length; i++) {
           if (memos[i].uid === id) {
             memos[i].text = text;
+            memos[i].reminder = reminder;
             break;
           }
         }
@@ -147,7 +148,7 @@ class Memos extends Component {
           if (memos[i].uid === memo.uid) {
             // found! edit it.
             let memo = memos[i];
-            if (rich.r_category !== 'Unknown') {
+            if (rich.r_category !== 'Uncategorized') {
               memo.r_category = rich.r_category;
             }
             if (rich.r_img) {

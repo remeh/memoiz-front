@@ -51,7 +51,7 @@ class MemoDialog extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.memo) {
-      let automaticReminder = nextProps.memo.reminder === 0;
+      let automaticReminder = !!!nextProps.memo.reminder;
       this.setState({
         memoValue: nextProps.memo.value,
         reminder: nextProps.memo.reminder,
@@ -163,13 +163,16 @@ class MemoDialog extends Component {
     this.setState({
       automaticReminder: state,
     });
-
     if (state === false) {
       setTimeout(() => {
         if (this.datepicker) {
           this.datepicker.openDialog();
         }
       }, 150);
+    } else {
+      this.setState({
+        reminder: null,
+      });
     }
   }
 
@@ -185,13 +188,19 @@ class MemoDialog extends Component {
   }
 
   onTimeChange = (event, time) => {
-
     let rd = this.state.reminderDate;
     rd.setHours(time.getHours())
     rd.setMinutes(time.getMinutes())
-
     this.setState({
       reminder: rd,
+    });
+  }
+
+  onCancelReminder = () => {
+    this.setState({
+      automaticReminder: true,
+      reminderDate: null,
+      reminder: null,
     });
   }
 
@@ -236,19 +245,19 @@ class MemoDialog extends Component {
               <span title={prettyTime}>Last edit <Moment fromNow>{this.props.memo.last_update}</Moment></span>
             </div>
           }
-
           <br/>
           <Toggle
-          label="Automatic reminder"
-          labelPosition="right"
-          onToggle={this.toggleReminder}
-          toggled={this.state.automaticReminder}
+            label="Automatic reminder"
+            labelPosition="right"
+            onToggle={this.toggleReminder}
+            toggled={this.state.automaticReminder}
           />
           {!this.state.automaticReminder && <div>
             <DatePicker
               style={{display: 'none'}}
               ref={(dp) => { this.datepicker = dp; }}
               onChange={this.onDateChange}
+              onDismiss={this.onCancelReminder}
               minDate={new Date()}
               hintText="Choose a day"
               autoOk={true}
@@ -257,12 +266,13 @@ class MemoDialog extends Component {
               style={{display: 'none'}}
               ref={(tp) => { this.timepicker = tp; }}
               onChange={this.onTimeChange}
+              onDismiss={this.onCancelReminder}
               open={true}
               hintText="Choose the time"
               autoOk={true}
             />
-            {(this.state.reminder) && <span>Reminder set to <Moment format="llll">{this.state.reminder}</Moment></span>}
           </div>}
+          {!this.state.automaticReminder && <span>Reminder set to <Moment format="llll">{this.state.reminder}</Moment></span>}
         </Dialog>
     </div>
   }
