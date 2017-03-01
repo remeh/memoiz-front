@@ -8,15 +8,17 @@ import './chip.css';
 class Chip extends Component {
 
   render() {
-    if (!this.props.text) {
+    if (!this.props.text && !(this.props.reminder > 0)) {
       return null
     }
 
     return <div className="chip-container">
-      <div className="chip">
-        {this.props.text}
-      </div>
-        {this.props.reminder > 0 && <Alarm style={{marginLeft: '4px', width: '18px', height: '18px'}} color={grey500} />}
+      {this.props.text &&
+        <div className="chip">
+          {this.props.text}
+        </div>
+      }
+      {this.props.reminder > 0 && <Alarm style={{marginLeft: '4px', width: '18px', height: '18px'}} color={grey500} />}
     </div>
   }
 }
