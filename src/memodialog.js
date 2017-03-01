@@ -73,8 +73,10 @@ class MemoDialog extends Component {
 
   submit = (e) => {
     if (e) { e.preventDefault(); }
-    this.props.submit(this.state.memoValue, this.state.enrich, this.state.reminder);
-    this.setState({automaticReminder: true, reminderDate: null, reminder: null});
+    this.props.submit(this.state.memoValue, true, this.state.reminder);
+    setTimeout(() => {
+      this.setState({automaticReminder: true, reminderDate: null, reminder: null})
+    }, 300);
   }
 
   // onChange is called when the value in the
@@ -274,6 +276,7 @@ class MemoDialog extends Component {
               onChange={this.onTimeChange}
               onDismiss={this.onCancelReminder}
               open={true}
+              format={'24hr'}
               hintText="Choose the time"
               autoOk={true}
             />
