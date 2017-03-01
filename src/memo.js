@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import Chip from './chip.js';
-//import Strings from './strings.js';
 import './memo.css';
 
 class Memo extends Component {
@@ -18,6 +17,7 @@ class Memo extends Component {
       dragged: false,
       draggedOver: false,
       payment: this.props.payment,
+      reminder: this.props.reminder,
       r_category: this.props.memo.r_category,
     }
   }
@@ -178,7 +178,7 @@ class Memo extends Component {
           <div>
             <p>{this.getText()}</p>
             {this.state.r_category !== 'Uncategorized' &&
-              <Chip text={this.state.r_category} />
+              <Chip text={this.state.r_category} reminder={this.props.memo.reminder && this.props.memo.reminder > 0}/>
             }
           </div>
         </div>
