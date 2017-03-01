@@ -50,19 +50,23 @@ class MemoDialog extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let val = '';
     if (nextProps.memo) {
-      val = nextProps.memo.value;
       let automaticReminder = !!!nextProps.memo.reminder;
       this.setState({
         reminder: nextProps.memo.reminder,
         automaticReminder: automaticReminder,
+        memoValue: nextProps.memo.value,
+        memoDialogOpen: nextProps.openDialog,
+      });
+    } else {
+      this.setState({
+        memoValue: '',
+        reminder: null,
+        reminderDate: null,
+        automaticReminder: true,
+        memoDialogOpen: nextProps.openDialog,
       });
     }
-    this.setState({
-      memoValue: val,
-      memoDialogOpen: nextProps.openDialog,
-    })
   }
 
   // ----------------------
