@@ -144,7 +144,6 @@ class MemoDialog extends Component {
     if (this.props.mode === MemoDialogModes.Archives) {
       actions.push(<FlatButton className="memoiz-button" style={styles.cancelButton} onClick={this.onMemoDialogClose} label="Close" />);
     } else {
-      actions.push(<FlatButton className="memoiz-button" style={styles.cancelButton} onClick={this.onMemoDialogClose} label="Cancel" />);
       actions.push(<FlatButton className="memoiz-button" onClick={this.submit} primary={true} label="Save"/>);
     }
     return actions;
