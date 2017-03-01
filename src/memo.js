@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Chip from './chip.js';
+import moment from 'moment';
 import './memo.css';
 
 class Memo extends Component {
@@ -178,7 +179,7 @@ class Memo extends Component {
           <div>
             <p>{this.getText()}</p>
             {this.state.r_category !== 'Uncategorized' &&
-              <Chip text={this.state.r_category} reminder={this.props.memo.reminder && this.props.memo.reminder > 0}/>
+              <Chip text={this.state.r_category} reminder={this.props.memo.reminder && this.props.memo.reminder > 0 && moment(this.props.memo.reminder).isAfter()}/>
             }
           </div>
         </div>
