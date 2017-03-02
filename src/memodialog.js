@@ -229,7 +229,7 @@ class MemoDialog extends Component {
 
           <TextField onKeyPress={this.onKeyPress} className="memoiz-input" id="memoiz-input-modal" value={this.state.memoValue} onChange={this.onChange} onClick={this.onMemoDialogOpen} fullWidth={true} multiLine={true} placeholder="Write your memo here" />
 
-          {this.props.memo && this.props.memo.r_category !== 'Unknown' &&
+          {this.props.memo && this.props.memo.r_category !== 'Uncategorized' &&
             <Chip text={this.props.memo.r_category} />
           }
 
