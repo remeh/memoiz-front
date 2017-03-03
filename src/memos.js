@@ -62,6 +62,9 @@ class Memos extends Component {
       alert: false,
 
       menu: false,
+
+      // categories available in the memos
+      categories: [],
     }
 
     this.fetchMemos(null);
@@ -76,6 +79,16 @@ class Memos extends Component {
           this.setState({payment: payment});
         }
       });
+    });
+  }
+
+  updateCats = () => {
+    let cats = {};
+    for (let i = 0; i < this.state.memos.length; i++) {
+      cats[this.state.memos[i].r_category] = true;
+    }
+    this.setState({
+      categories: Object.keys(cats),
     });
   }
 
@@ -196,6 +209,8 @@ class Memos extends Component {
       this.setState({
         memos: memos,
       });
+
+      this.updateCats();
     }).catch((response) => Helpers.toLoginOrAlert(this, response));
   }
 
@@ -336,7 +351,7 @@ class Memos extends Component {
     }
   }
 
-  onSearchChange = (evt, val) => {
+  onSearchChange = (val) => {
     this.setState({
       search: val,
     });
@@ -367,9 +382,7 @@ class Memos extends Component {
     this.openedMemo = undefined;
   }
 
-  search = (event) => {
-    event.preventDefault();
-
+  search = () => {
     this.fetchMemos(this.state.search);
   }
 
@@ -411,7 +424,7 @@ class Memos extends Component {
           onLeftIconButtonTouchTap={this.toggleMenu}
           title={<span className="app-bar-title">Memoiz</span>}
           titleStyle={styles.title}
-          iconElementRight={<Searchbar onSearchChange={this.onSearchChange} onSubmit={this.search} />}
+          iconElementRight={<Searchbar categories={this.state.categories} onSearchChange={this.onSearchChange} onSubmit={this.search} />}
         />
         {this.state.payment.required && <div className="subscription-over">
           {this.state.payment.plan && <span className="subscription-label">
