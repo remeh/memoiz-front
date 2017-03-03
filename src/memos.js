@@ -14,6 +14,7 @@ import Helpers from './helpers.js';
 import Memo from './memo.js';
 import { Menu, MenuModes } from './menu.js';
 import { MemoDialog, MemoDialogModes } from './memodialog.js';
+import Searchbar from './searchbar.js';
 import XHRMemo from './xhr/memo.js';
 import XHRAccount from './xhr/account.js';
 import randomUuid from './uuid.js';
@@ -410,14 +411,7 @@ class Memos extends Component {
           onLeftIconButtonTouchTap={this.toggleMenu}
           title={<span className="app-bar-title">Memoiz</span>}
           titleStyle={styles.title}
-          iconElementRight={
-            <form onSubmit={this.search}>
-            <TextField
-              hintText="Search"
-              onChange={this.onSearchChange}
-              style={{marginRight: '2em'}}
-              hintStyle={{color: 'white'}}
-            /></form>}
+          iconElementRight={<Searchbar onSearchChange={this.onSearchChange} onSubmit={this.search} />}
         />
         {this.state.payment.required && <div className="subscription-over">
           {this.state.payment.plan && <span className="subscription-label">
