@@ -183,7 +183,8 @@ class Memo extends Component {
             }
           </div>
         </div>
-        {this.props.memo.r_image &&
+        {/* with image*/}
+        {this.props.memo.r_title && this.props.memo.r_image &&
           <div className="rich">
             <a href={this.props.memo.r_url} target="_blank" alt="Go to link">
             <div className="desc">
@@ -191,12 +192,22 @@ class Memo extends Component {
               <p className="url">{this.props.memo.r_url}</p>
             </div>
             <div>
-                <img src={this.props.memo.r_image} role="presentation" />
+              <img src={this.props.memo.r_image} role="presentation" />
             </div>
             </a>
           </div>
         }
-
+        {/* with image*/}
+        {this.props.memo.r_title && !this.props.memo.r_image &&
+          <div className="rich">
+            <a href={this.props.memo.r_url} target="_blank" alt="Go to link">
+            <div className="desc-without-image">
+              <p className="title">{this.props.memo.r_title}</p>
+              <p className="url">{this.props.memo.r_url}</p>
+            </div>
+            </a>
+          </div>
+        }
       </div>
     );
   }

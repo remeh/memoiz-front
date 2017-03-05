@@ -233,7 +233,7 @@ class MemoDialog extends Component {
             <Chip text={this.props.memo.r_category} />
           }
 
-          {this.props.memo && this.props.memo.r_image &&
+          {this.props.memo && this.props.memo.r_title &&
             <div className="rich">
               <div className="img">
                 <a href={this.props.memo.r_url} target="_blank" alt="Go to link">
