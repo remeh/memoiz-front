@@ -89,6 +89,9 @@
   .memo .rich p {
     width: 130px;
   }
+  .memo .rich .desc-without-image>p {
+    width: 165px;
+  }
 }
 
 .memo .rich p.title {
