@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
 import Moment from 'react-moment';
 
+import Close from 'material-ui/svg-icons/navigation/close';
 import DatePicker from 'material-ui/DatePicker';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -211,6 +212,11 @@ class MemoDialog extends Component {
     });
   }
 
+  removeEnrich = (event) => {
+    this.props.onUnrich(event, this.props.memo.id);
+    this.setState({memoDialogOpen: false});
+  }
+
   // ----------------------
 
   render() {
@@ -235,6 +241,7 @@ class MemoDialog extends Component {
 
           {this.props.memo && this.props.memo.r_title &&
             <div className="rich">
+              <a onClick={this.removeEnrich} href="#"><div className="remove-rich"><Close style={{width: '16px', height: '16px'}} /></div></a>
               <div className="img">
                 <a href={this.props.memo.r_url} target="_blank" alt="Go to link">
                   <img src={this.props.memo.r_image} role="presentation" />

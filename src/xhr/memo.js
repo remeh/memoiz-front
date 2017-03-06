@@ -64,6 +64,12 @@ class XHRMemo {
       XHR.domain + '/api/1.0/memos/switch/' + left + '/' + right,
     );
   }
+
+  static unrichMemo(memoUid) {
+    return XHR.postJson(
+      XHR.domain + '/api/1.0/memos/' + memoUid + '/unrich',
+    );
+  };
 }
 
 export default XHRMemo;

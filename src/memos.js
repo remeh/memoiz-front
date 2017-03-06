@@ -276,6 +276,36 @@ class Memos extends Component {
   // memos actions
   // ----------------------
 
+  unrichMemo = (event, memoUid) => {
+    if (event) { event.preventDefault(); }
+
+    XHRMemo.unrichMemo(memoUid).then((json) => {
+      // edit the memo
+      // ----------------------
+
+      let memos = this.state.memos.slice();
+      let memo = null;
+
+      for (let i = 0; i < memos.length; i++) {
+        if (memos[i].uid === memoUid) {
+          memo = memos[i];
+          memo.r_url = null;
+          memo.r_image = null;
+          memo.r_title = null;
+          memos[i] = memo;
+          break;
+        }
+      }
+
+      if (memo) {
+        this.setState({
+          memos: memos,
+          memoDialogOpen: false,
+        });
+      }
+    }).catch((response) => Helpers.toLoginOrAlert(this, response));
+  }
+
   archiveMemo = (event, memoUid) => {
     XHRMemo.archiveMemo(memoUid).then((json) => {
       // edit the memo
@@ -466,6 +496,7 @@ class Memos extends Component {
           memo={this.openedMemo}
           mode={MemoDialogModes.Normal}
           onArchive={this.archiveMemo}
+          onUnrich={this.unrichMemo}
         />
         <Paper zDepth={2} className="memoiz-container">
           <div className="memoiz">
