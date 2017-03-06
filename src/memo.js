@@ -197,7 +197,7 @@ class Memo extends Component {
             </a>
           </div>
         }
-        {/* with image*/}
+        {/* without image*/}
         {this.props.memo.r_title && !this.props.memo.r_image &&
           <div className="rich">
             <a href={this.props.memo.r_url} target="_blank" alt="Go to link">

@@ -15,6 +15,12 @@ class Chip extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      text: nextProps.text,
+    })
+  }
+
   className = () => {
     let c = 'chip';
     if (this.props.editMode) {

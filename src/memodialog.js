@@ -58,6 +58,7 @@ class MemoDialog extends Component {
         automaticReminder: automaticReminder,
         memoValue: nextProps.memo.value,
         memoDialogOpen: nextProps.openDialog,
+        r_category: nextProps.memo.r_category,
       });
     } else {
       this.setState({
@@ -65,6 +66,7 @@ class MemoDialog extends Component {
         reminder: null,
         reminderDate: null,
         automaticReminder: true,
+        r_category: 'Uncategorized',
         memoDialogOpen: nextProps.openDialog,
       });
     }
@@ -214,14 +216,13 @@ class MemoDialog extends Component {
 
   removeEnrich = (event) => {
     this.props.onUnrich(event, this.props.memo.id);
-    this.setState({memoDialogOpen: false});
+    this.onMemoDialogClose();
   }
 
   removeCat = (event) => {
     this.props.onRemoveCat(event, this.props.memo.id);
-    console.log(this.props.memo.id);
     this.props.memo.r_category = 'Uncategorized';
-    // TODO(remy): visually remove cat
+    this.onMemoDialogClose();
   }
 
   // ----------------------
@@ -242,8 +243,8 @@ class MemoDialog extends Component {
 
           <TextField onKeyPress={this.onKeyPress} className="memoiz-input" id="memoiz-input-modal" value={this.state.memoValue} onChange={this.onChange} onClick={this.onMemoDialogOpen} fullWidth={true} multiLine={true} placeholder="Write your memo here" />
 
-          {this.props.memo && this.props.memo.r_category !== 'Uncategorized' &&
-            <Chip removeCat={this.removeCat} editMode={true} text={this.props.memo.r_category} />
+          {this.props.memo && this.state.r_category !== 'Uncategorized' &&
+            <Chip removeCat={this.removeCat} editMode={true} text={this.state.r_category} />
           }
 
           {this.props.memo && this.props.memo.r_title &&
