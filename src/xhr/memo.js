@@ -70,6 +70,12 @@ class XHRMemo {
       XHR.domain + '/api/1.0/memos/' + memoUid + '/unrich',
     );
   };
+
+  static removeCat(memoUid) {
+    return XHR.postJson(
+      XHR.domain + '/api/1.0/memos/' + memoUid + '/unsetcat',
+    );
+  };
 }
 
 export default XHRMemo;

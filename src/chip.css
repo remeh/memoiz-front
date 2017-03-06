@@ -14,4 +14,17 @@
   border-radius: 3px;
   font-weight: bold;
   font-size: 1rem;
+  transition: all 0.5s;
+}
+
+.chip.editmode {
+  cursor: pointer;
+  padding-top: 0em;
+}
+
+.chip.ready-to-close {
+  font-size: 1.1rem;
+  padding: 1em;
+  padding-top: 0.4em;
+  background-color: #D32F2F;
 }

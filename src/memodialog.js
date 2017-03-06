@@ -217,6 +217,13 @@ class MemoDialog extends Component {
     this.setState({memoDialogOpen: false});
   }
 
+  removeCat = (event) => {
+    this.props.onRemoveCat(event, this.props.memo.id);
+    console.log(this.props.memo.id);
+    this.props.memo.r_category = 'Uncategorized';
+    // TODO(remy): visually remove cat
+  }
+
   // ----------------------
 
   render() {
@@ -236,7 +243,7 @@ class MemoDialog extends Component {
           <TextField onKeyPress={this.onKeyPress} className="memoiz-input" id="memoiz-input-modal" value={this.state.memoValue} onChange={this.onChange} onClick={this.onMemoDialogOpen} fullWidth={true} multiLine={true} placeholder="Write your memo here" />
 
           {this.props.memo && this.props.memo.r_category !== 'Uncategorized' &&
-            <Chip text={this.props.memo.r_category} />
+            <Chip removeCat={this.removeCat} editMode={true} text={this.props.memo.r_category} />
           }
 
           {this.props.memo && this.props.memo.r_title &&

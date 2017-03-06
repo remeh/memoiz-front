@@ -179,7 +179,7 @@ class Memo extends Component {
           <div>
             <p>{this.getText()}</p>
             {this.state.r_category !== 'Uncategorized' &&
-              <Chip text={this.state.r_category} reminder={this.props.memo.reminder && this.props.memo.reminder > 0 && moment(this.props.memo.reminder).isAfter()}/>
+              <Chip editMode={false} text={this.state.r_category} reminder={this.props.memo.reminder && this.props.memo.reminder > 0 && moment(this.props.memo.reminder).isAfter()}/>
             }
           </div>
         </div>
